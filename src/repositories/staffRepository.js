@@ -5,7 +5,7 @@ export default class staffRepository extends IstaffRepository {
 
     constructor() {
         super()
-        this.collection = db.collection('usuarios-node')
+        this.collection = db.collection('staff-node')
     }
 
     async create(staff) {
@@ -24,37 +24,37 @@ export default class staffRepository extends IstaffRepository {
 
     async delete(id) {
         await this.collection.doc(id).delete();
-        return { id, messaje: 'Usuario Eliminado'}
+        return { id, messaje: 'Staff Eliminado'}
     }
     
     async getAll() {
-        const usuarios = await this.collection.get()
-        return usuarios.docs.map((doc) => ({
+        const correos = await this.collection.get()
+        return correos.docs.map((doc) => ({
         id: doc.id,
         ...doc.data()
         }));
     } 
     
     async findByFullname(nombre, apaterno, amaterno) {
-        const usuario = await this.collection
+        const correo = await this.collection
             .where('nombre', '==', nombre)      
             .where('apaterno', '==', apaterno)      
             .where('amaterno', '==', amaterno)
             .get()      
         
-        return usuario.empty ? null : { id: usuario.docs[0].id, ...usuario.docs[0].data() } 
+        return correo.empty ? null : { id: correo.docs[0].id, ...correo.docs[0].data() } 
     } 
     
     async findByStaff(staff) {
-        const usuario = await this.collection.where('usuario' , '==', staff).get()   
+        const correo = await this.collection.where('correo' , '==', staff).get()   
         
-        return usuario.empty ? null : { id: usuario.docs[0].id, ...usuario.docs[0].data() } 
+        return correo.empty ? null : { id: correo.docs[0].id, ...correo.docs[0].data() } 
     } 
     
     async findByRol(rol) {
-        const usuario = await this.collection.where('rol' , '==', rol).get()   
+        const correo = await this.collection.where('rol' , '==', rol).get()   
         
-        return usuario.empty ? null : { id: usuario.docs[0].id, ...usuario.docs[0].data() } 
+        return correo.empty ? null : { id: correo.docs[0].id, ...correo.docs[0].data() } 
     }
     
     async updateSessionToken(staffId, sessionToken) {
@@ -69,8 +69,8 @@ export default class staffRepository extends IstaffRepository {
     }
 
     async getById(id) {
-        const usuario = await this.collection.doc(id).get() 
+        const correo = await this.collection.doc(id).get() 
         
-        return !usuario.exists ? null : { id: usuario.id, ...usuario.data() } 
+        return !correo.exists ? null : { id: correo.id, ...correo.data() } 
     } 
 }

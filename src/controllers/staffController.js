@@ -1,5 +1,4 @@
 import staffService from "../services/staffService.js"
-import TokenService from "../services/tokenService.js"
 
 export default class staffController {
     constructor() {
@@ -17,8 +16,8 @@ export default class staffController {
 
     async getBystaff(req, res, next) {
         try {
-            const { usuario } = req.params
-            const staff = await this.staffService.findByStaff(usuario)
+            const { correo } = req.params
+            const staff = await this.staffService.findByStaff(correo)
             res.json({staff})
         } catch (error) {
             next(error)
@@ -70,8 +69,8 @@ export default class staffController {
 
     async login(req, res, next) {
         try {
-            const { usuario, password } = req.body
-            const token = await this.staffService.login(usuario, password)
+            const { correo, password } = req.body
+            const token = await this.staffService.login(correo, password)
             res.json({token})
         } catch (error) {
             next(error)
@@ -97,7 +96,7 @@ export default class staffController {
         try {
             const { id } = req.params
             await this.staffService.unlockstaff(id)
-            res.status(204).json({ message: 'Usuario desbloqueado' })
+            res.status(204).json({ message: 'Staff desbloqueado' })
         } catch (error) {
             next(error)
         }
@@ -105,14 +104,14 @@ export default class staffController {
 
     async getstaffBystaffname(req, res, next) {
         try {
-            const { usuario } = req.staff
-            if(!usuario) {
-                throw { message: 'Usuario no encontrado', statusCode: 404 }
+            const { correo } = req.staff
+            if(!correo) {
+                throw { message: 'Staff no encontrado', statusCode: 404 }
             }
 
-            const staff = await this.staffService.getBystaff(usuario)
+            const staff = await this.staffService.getBystaff(correo)
             if(!staff) {
-                throw { message: 'Usuario no encontrado', statusCode: 404 }
+                throw { message: 'Staff no encontrado', statusCode: 404 }
             }
             res.json({staff})
         } catch (error) {

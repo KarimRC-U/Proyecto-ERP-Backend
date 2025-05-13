@@ -1,8 +1,8 @@
 export default class IstaffRepository {
     /*
-    Crear Usuario
-    @partam {onjeto} - Datos del Usuario
-    @return {Promise<Objeto>} - Usuario Creado
+    Crear Staff
+    @partam {onjeto} - Datos del Staff
+    @return {Promise<Objeto>} - Staff Creado
     */
 
     create(staff) {

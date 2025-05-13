@@ -1,6 +1,7 @@
 import staffRepository from "../repositories/staffRepository.js"
 import TokenService from "./tokenService.js"
-import { Usuario } from "../models/Usuario.js"
+import { Staff } from "../models/Staff.js"
+import { TokenService } from "./tokenService.js"
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 
@@ -14,10 +15,10 @@ export default class staffService {
         return await this.staffRepository.getAll()
     }
 
-    async findByStaff(usuario) {
-        const staff = this.staffRepository.findByStaff(usuario)
+    async findByStaff(correo) {
+        const staff = this.staffRepository.findByStaff(correo)
         if(!staff) {
-            throw { message: 'Usuario No Encontrado', statusCode: 404 }
+            throw { message: 'Staff No Encontrado', statusCode: 404 }
         }
 
         return staff
@@ -28,23 +29,27 @@ export default class staffService {
     }
 
     async create(staffData) {
-        const { nombre, apaterno, amaterno, usuario, password } = staffData
+        const { nombre, apaterno, amaterno, correo, password } = staffData;
 
-        // Verificar que sea un usuario único
-        const uniquestaff = await this.staffRepository.findByStaff(usuario)
-        if(uniquestaff) {
-            throw { message: 'El usuario ya existe', statusCode: 400 }
+        // Verificar que sea un correo único
+        const uniquestaff = await this.staffRepository.findByStaff(correo);
+        if (uniquestaff) {
+            throw { message: 'El correo ya existe', statusCode: 400 };
         }
 
         // Verificar si no hay otro registro con el mismo nombre
-        const uniqueFullname = await this.staffRepository.findByFullname(nombre, apaterno, amaterno)
-        if(uniqueFullname) {
-            throw { message: 'Ya existe un usuario con el mismo nombre completo', statusCode: 400 }
+        const uniqueFullname = await this.staffRepository.findByFullname(nombre, apaterno, amaterno);
+        if (uniqueFullname) {
+            throw { message: 'Ya existe un correo con el mismo nombre completo', statusCode: 400 };
         }
 
-        const hashedPassword = await bcrypt.hash(password, 10)
-        const newstaff = new Usuario({ ...staffData, password: hashedPassword })
-        return this.staffRepository.create({...newstaff})
+        // Generar un staffid único
+        const randomDigits = Math.floor(100 + Math.random() * 900); // Generar un número aleatorio de 3 dígitos
+        const staffid = `${nombre[0]}${apaterno[0]}${amaterno[0]}${randomDigits}`.toUpperCase();
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const newstaff = new Staff({ ...staffData, password: hashedPassword, staffid });
+        return this.staffRepository.create({ ...newstaff });
     }
 
     async update(id, staffData) {
@@ -52,14 +57,14 @@ export default class staffService {
         const updatestaff = await this.staffRepository.getById(id)
 
         if (!updatestaff) {
-            throw { message: 'Usuario No Encontrado', statusCode: 404 }
+            throw { message: 'Staff No Encontrado', statusCode: 404 }
         }
 
         if(password) {
             updatestaff.password = await bcrypt.hash(password, 10)
         }
 
-        const newstaff = new Usuario({ ...updatestaff, ...staffData, password: updatestaff.password })
+        const newstaff = new Staff({ ...updatestaff, ...staffData, password: updatestaff.password })
 
         return this.staffRepository.update(id, { ...newstaff })
     }
@@ -67,25 +72,28 @@ export default class staffService {
     async delete(id) {
         const staffExists = await this.staffRepository.getById(id)
         if(!staffExists) {
-            throw { message: 'Usuario No Encontrado', statusCode: 404 }
+            throw { message: 'Staff No Encontrado', statusCode: 404 }
         }
 
         await this.staffRepository.delete(id)
     }
 
-    async login(usuario, password) {
-        const staff = await this.staffRepository.findByStaff(usuario)
+    async login(correo, password) {
+        const staff = await this.staffRepository.findByStaff(correo)
         if(!staff) {
-            throw { message: 'El usuario no existe', statusCode: 404 }
+            throw { message: 'El correo no existe', statusCode: 404 }
         }
 
         if(staff.bloqueado) {
-            throw { message: 'Usuario Bloqueado, contacta al administrador.', statusCode: 401 }
+            throw { message: 'Staff Bloqueado, contacta al administrador.', statusCode: 401 }
         }
 
         const existingToken = await this.staffRepository.getSessionToken(staff.id)
         console.log(existingToken);
-        if(existingToken) {
+        
+        if (TokenService.isTokenRevoked(existingToken)) {
+            await this.staffRepository.updateSessionToken(staff.id, null)
+        }else if(existingToken) {
             throw { message: 'Ya hay un sesión activa', statusCode: 401 }
         }
 
@@ -97,7 +105,7 @@ export default class staffService {
 
         const token = jwt.sign({ 
             id: staff.id, 
-            usuario: staff.usuario, 
+            correo: staff.correo, 
             rol: staff.rol
         }, process.env.JWT_SECRET, { expiresIn: '1h' })
 
@@ -119,7 +127,7 @@ export default class staffService {
     async unlockstaff(id) {
         const staff = await this.staffRepository.getById(id)
         if(!staff) {
-            throw { message: 'El usuario no existe', statusCode: 404 }
+            throw { message: 'El correo no existe', statusCode: 404 }
         }
 
         await this.staffRepository.update(id, { bloqueado: false, intentos: 0 })
@@ -131,16 +139,16 @@ export default class staffService {
         console.log('@@@ intentos => ', intentos, staff)
         if(intentos >= 3) {
             await this.staffRepository.update(id, { bloqueado: true })
-            throw { message: 'Usuario Bloqueado despues de 3 intentos, contacta al Administrados', statusCode: 401 }
+            throw { message: 'Staff Bloqueado despues de 3 intentos, contacta al Administrados', statusCode: 401 }
         }
         await this.staffRepository.update(id, { intentos })
     }
     
-    async getBystaff(usuario) {
-        const staff = await this.staffRepository.findByStaff(usuario)
+    async getBystaff(correo) {
+        const staff = await this.staffRepository.findByStaff(correo)
 
         if(!staff) {
-            throw { message: 'El usuario no existe', statusCode: 404 }
+            throw { message: 'El correo no existe', statusCode: 404 }
         }
 
         return staff
