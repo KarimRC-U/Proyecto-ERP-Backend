@@ -1,7 +1,7 @@
 export class Staff {
     static allowedRoles = ["I.T.", "P.M.", "R.H.", "Admin", "None"];
 
-    constructor({nombre, apaterno, amaterno, designacion, telefono, genero, estado, correo, password, rol = 'None', staffid, bloqueado = false, intentos = 0}) {
+    constructor({nombre, apaterno, amaterno, designacion, telefono, genero, estado, correo, password, rol = 'None', staffid, bloqueado = false, intentos = 0, imagen = null}) {
         this.nombre = nombre;
         this.apaterno = apaterno;
         this.amaterno = amaterno;
@@ -15,5 +15,6 @@ export class Staff {
         this.staffid = staffid;
         this.bloqueado = bloqueado;
         this.intentos = intentos;
+        this.imagen = imagen;
     }
 }
