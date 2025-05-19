@@ -1,6 +1,6 @@
 import express from 'express'
 import staffRoutes from './staffRoutes.js'
-import pacienteRoutes from './pacienteRoutes.js'
+import budgetRoutes from './budgetRoutes.js'
 
 const router = express.Router()
 
@@ -9,6 +9,6 @@ router.get('/', (req, res) => {
 })
 
 router.use('/staffs', staffRoutes)
-router.use('/pacientes', pacienteRoutes)
+router.use('/budgets', budgetRoutes)
 
 export default router

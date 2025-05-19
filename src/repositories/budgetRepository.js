@@ -1,19 +1,19 @@
-import IstaffRepository from "../interfaces/IstaffRepository.js"
+import IbudgetRepository from "../interfaces/IbudgetRepository.js"
 import { db } from "../config/firebase.js";
 
-export default class staffRepository extends IstaffRepository {
+export default class budgetRepository extends IbudgetRepository {
 
     constructor() {
         super()
-        this.collection = db.collection('staff-node')
+        this.collection = db.collection('budget-node')
     }
 
-    async create(staff) {
-        const staffCreated = await this.collection.add(staff)
+    async create(budget) {
+        const budgetCreated = await this.collection.add(budget)
 
         return {
-            id: staffCreated.id,
-            ...staff
+            id: budgetCreated.id,
+            ...budget
         }
     }
 
@@ -24,7 +24,7 @@ export default class staffRepository extends IstaffRepository {
 
     async delete(id) {
         await this.collection.doc(id).delete();
-        return { id, messaje: 'Staff Eliminado'}
+        return { id, messaje: 'budget Eliminado'}
     }
     
     async getAll() {
@@ -45,27 +45,27 @@ export default class staffRepository extends IstaffRepository {
         return correo.empty ? null : { id: correo.docs[0].id, ...correo.docs[0].data() } 
     } 
     
-    async findByCorreo(staff) {
-        const correo = await this.collection.where('correo' , '==', staff).get()   
+    async findByCorreo(budget) {
+        const correo = await this.collection.where('correo' , '==', budget).get()   
         
         return correo.empty ? null : { id: correo.docs[0].id, ...correo.docs[0].data() } 
     } 
     
-    async findByRol(rol) {
+    async findByRol(rol)  {
         const correo = await this.collection.where('rol' , '==', rol).get()   
         
         return correo.empty ? null : { id: correo.docs[0].id, ...correo.docs[0].data() } 
     }
     
-    async updateSessionToken(staffId, sessionToken) {
-        const staff = this.collection.doc(staffId)
-        await staff.update({ currentSessionToken: sessionToken })
+    async updateSessionToken(budgetId, sessionToken) {
+        const budget = this.collection.doc(budgetId)
+        await budget.update({ currentSessionToken: sessionToken })
     }
 
-    async getSessionToken(staffId) {
-        const staff = this.collection.doc(staffId)
-        const staffLogged = await staff.get()
-        return staffLogged.exists ? staffLogged.data().currentSessionToken : null
+    async getSessionToken(budgetId) {
+        const budget = this.collection.doc(budgetId)
+        const budgetLogged = await budget.get()
+        return budgetLogged.exists ? budgetLogged.data().currentSessionToken : null
     }
 
     async getById(id) {

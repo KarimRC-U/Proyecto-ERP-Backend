@@ -1,14 +1,14 @@
-import staffService from "../services/staffService.js"
+import budgetService from "../services/budgetService.js"
 
-export default class staffController {
+export default class budgetController {
     constructor() {
-        this.staffService = new staffService()
+        this.budgetService = new budgetService()
     }
 
     async getAll(req, res, next) {
         try {
-            const staffs = await this.staffService.getAll()
-            res.json({staffs})
+            const budgets = await this.budgetService.getAll()
+            res.json({budgets})
         } catch (error) {
             next(error)
         }
@@ -17,7 +17,7 @@ export default class staffController {
     async getBystaff(req, res, next) {
         try {
             const { correo } = req.params
-            const staff = await this.staffService.findByCorreo(correo)
+            const staff = await this.budgetService.findByCorreo(correo)
             res.json({staff})
         } catch (error) {
             next(error)
@@ -27,7 +27,7 @@ export default class staffController {
     async getByRol(req, res, next) {
         try {
             const { rol } = req.params
-            const staff = await this.staffService.findByRol(rol)
+            const staff = await this.budgetService.findByRol(rol)
             res.json(staff)
         } catch (error) {
             next(error)
@@ -66,56 +66,21 @@ export default class staffController {
             next(error)
         }
     }
-
-    async login(req, res, next) {
-        try {
-            const { correo, password } = req.body
-            const token = await this.staffService.login(correo, password)
-            res.json({token})
-        } catch (error) {
-            next(error)
-        }
-    }
     
-    async logout(req, res, next) {
-        try {
-            const authHeader = req.headers.authorization
-            if(!authHeader) {
-                throw { message: 'Token no proporcionado', statusCode: 400 }
-            }
-            const token = authHeader.split(' ')[1]
-            const staffId = req.staff.id
-            await this.staffService.logout(staffId, token)
-            res.status(204).json({ message: 'Sesión cerrada' })
-        } catch (error) {
-            next(error)
-        }
-    }
-
-    async unlockstaff(req, res, next) {
-        try {
-            const { id } = req.params
-            await this.staffService.unlockstaff(id)
-            res.status(204).json({ message: 'Staff desbloqueado' })
-        } catch (error) {
-            next(error)
-        }
-    }
-
-    async getstaffBystaffname(req, res, next) {
+    async getBudgetByStaff(req, res, next) {
         try {
             const { correo } = req.staff
             if(!correo) {
                 throw { message: 'Staff no encontrado', statusCode: 404 }
             }
 
-            const staff = await this.staffService.getBystaff(correo)
+            const staff = await this.budgetService.getBystaff(correo)
             if(!staff) {
                 throw { message: 'Staff no encontrado', statusCode: 404 }
             }
             res.json({staff})
         } catch (error) {
-            next(staff)
+            next(error)
         }
     }
 }

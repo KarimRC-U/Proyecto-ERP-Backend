@@ -1,7 +1,6 @@
 import staffRepository from "../repositories/staffRepository.js"
-import TokenService from "./tokenService.js"
 import { Staff } from "../models/Staff.js"
-import { TokenService } from "./tokenService.js"
+import TokenService from "./tokenService.js"
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 
@@ -15,8 +14,8 @@ export default class staffService {
         return await this.staffRepository.getAll()
     }
 
-    async findByStaff(correo) {
-        const staff = this.staffRepository.findByStaff(correo)
+    async findByCorreo(correo) {
+        const staff = this.staffRepository.findByCorreo(correo)
         if(!staff) {
             throw { message: 'Staff No Encontrado', statusCode: 404 }
         }
@@ -31,20 +30,17 @@ export default class staffService {
     async create(staffData) {
         const { nombre, apaterno, amaterno, correo, password } = staffData;
 
-        // Verificar que sea un correo único
-        const uniquestaff = await this.staffRepository.findByStaff(correo);
+        const uniquestaff = await this.staffRepository.findByCorreo(correo);
         if (uniquestaff) {
             throw { message: 'El correo ya existe', statusCode: 400 };
         }
 
-        // Verificar si no hay otro registro con el mismo nombre
         const uniqueFullname = await this.staffRepository.findByFullname(nombre, apaterno, amaterno);
         if (uniqueFullname) {
             throw { message: 'Ya existe un correo con el mismo nombre completo', statusCode: 400 };
         }
 
-        // Generar un staffid único
-        const randomDigits = Math.floor(100 + Math.random() * 900); // Generar un número aleatorio de 3 dígitos
+        const randomDigits = Math.floor(100 + Math.random() * 900);
         const staffid = `${nombre[0]}${apaterno[0]}${amaterno[0]}${randomDigits}`.toUpperCase();
 
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -79,7 +75,7 @@ export default class staffService {
     }
 
     async login(correo, password) {
-        const staff = await this.staffRepository.findByStaff(correo)
+        const staff = await this.staffRepository.findByCorreo(correo)
         if(!staff) {
             throw { message: 'El correo no existe', statusCode: 404 }
         }
@@ -145,7 +141,7 @@ export default class staffService {
     }
     
     async getBystaff(correo) {
-        const staff = await this.staffRepository.findByStaff(correo)
+        const staff = await this.staffRepository.findByCorreo(correo)
 
         if(!staff) {
             throw { message: 'El correo no existe', statusCode: 404 }
