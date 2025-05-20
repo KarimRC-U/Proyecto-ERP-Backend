@@ -12,10 +12,10 @@ export default class IbudgetRepository {
     getAll() {
         throw new Error('Metodo no implementado')
     }
-    findByFullname(nombre, apaterno, amaterno) {
+    findByNumber(budgetNo) {
         throw new Error('Metodo no implementado')
     }
-    findByRol(rol) {
+    findByDate(date) {
         throw new Error('Metodo no implementado')
     }
     getById(id) {

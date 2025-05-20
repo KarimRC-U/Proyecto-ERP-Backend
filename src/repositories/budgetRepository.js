@@ -28,49 +28,27 @@ export default class budgetRepository extends IbudgetRepository {
     }
     
     async getAll() {
-        const correos = await this.collection.get()
-        return correos.docs.map((doc) => ({
+        const presupuestos = await this.collection.get()
+        return presupuestos.docs.map((doc) => ({
         id: doc.id,
         ...doc.data()
         }));
     } 
     
-    async findByFullname(nombre, apaterno, amaterno) {
-        const correo = await this.collection
-            .where('nombre', '==', nombre)      
-            .where('apaterno', '==', apaterno)      
-            .where('amaterno', '==', amaterno)
+    async findByNumber(budgetNo) {
+        const numero = await this.collection
+            .where('numero', '==', budgetNo)      
             .get()      
-        
-        return correo.empty ? null : { id: correo.docs[0].id, ...correo.docs[0].data() } 
+        return numero.empty ? null : { id: numero.docs[0].id, ...numero.docs[0].data() } 
     } 
     
-    async findByCorreo(budget) {
-        const correo = await this.collection.where('correo' , '==', budget).get()   
-        
-        return correo.empty ? null : { id: correo.docs[0].id, ...correo.docs[0].data() } 
-    } 
-    
-    async findByRol(rol)  {
-        const correo = await this.collection.where('rol' , '==', rol).get()   
-        
-        return correo.empty ? null : { id: correo.docs[0].id, ...correo.docs[0].data() } 
+    async findByDate(date)  {
+        const presupuesto = await this.collection.where('date' , '==', date).get()   
+        return presupuesto.empty ? null : { id: presupuesto.docs[0].id, ...presupuesto.docs[0].data() } 
     }
     
-    async updateSessionToken(budgetId, sessionToken) {
-        const budget = this.collection.doc(budgetId)
-        await budget.update({ currentSessionToken: sessionToken })
-    }
-
-    async getSessionToken(budgetId) {
-        const budget = this.collection.doc(budgetId)
-        const budgetLogged = await budget.get()
-        return budgetLogged.exists ? budgetLogged.data().currentSessionToken : null
-    }
-
     async getById(id) {
-        const correo = await this.collection.doc(id).get() 
-        
-        return !correo.exists ? null : { id: correo.id, ...correo.data() } 
+        const presupuesto = await this.collection.doc(id).get() 
+        return !presupuesto.exists ? null : { id: presupuesto.id, ...presupuesto.data() } 
     } 
 }
