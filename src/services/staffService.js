@@ -28,7 +28,7 @@ export default class staffService {
     }
 
     async create(staffData) {
-        const { nombre, apaterno, amaterno, correo, password } = staffData;
+        const { nombre, apaterno, amaterno, correo, password, designacion, telefono, genero, estado, rol, imagen } = staffData;
 
         const uniquestaff = await this.staffRepository.findByCorreo(correo);
         if (uniquestaff) {
@@ -37,7 +37,7 @@ export default class staffService {
 
         const uniqueFullname = await this.staffRepository.findByFullname(nombre, apaterno, amaterno);
         if (uniqueFullname) {
-            throw { message: 'Ya existe un correo con el mismo nombre completo', statusCode: 400 };
+            throw { message: 'Ya existe un correo identico.', statusCode: 400 };
         }
 
         const randomDigits = Math.floor(100 + Math.random() * 900);
@@ -81,7 +81,7 @@ export default class staffService {
         }
 
         if(staff.bloqueado) {
-            throw { message: 'Staff Bloqueado, contacta al administrador.', statusCode: 401 }
+            throw { message: 'Cuenta Bloqueada, contacta al administrador.', statusCode: 401 }
         }
 
         const existingToken = await this.staffRepository.getSessionToken(staff.id)
