@@ -1,9 +1,4 @@
 export default class IstaffRepository {
-    /*
-    Crear Staff
-    @partam {onjeto} - Datos del Staff
-    @return {Promise<Objeto>} - Staff Creado
-    */
 
     create(staff) {
         throw new Error('Metodo no implementado')
