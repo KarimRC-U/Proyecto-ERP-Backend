@@ -37,7 +37,7 @@ export default class staffService {
 
         const uniqueFullname = await this.staffRepository.findByFullname(nombre, apaterno, amaterno);
         if (uniqueFullname) {
-            throw { message: 'Ya existe un correo identico.', statusCode: 400 };
+            throw { message: 'Ya existe un usuario con el mismo nombre completo.', statusCode: 400 };
         }
 
         const randomDigits = Math.floor(100 + Math.random() * 900);
