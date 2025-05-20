@@ -8,27 +8,27 @@ export default class budgetController {
     async getAll(req, res, next) {
         try {
             const budgets = await this.budgetService.getAll()
-            res.json({budgets})
+            res.json({ budgets })
         } catch (error) {
             next(error)
         }
     }
 
-    async getBystaff(req, res, next) {
+    async getByNumber(req, res, next) {
         try {
-            const { correo } = req.params
-            const staff = await this.budgetService.findByCorreo(correo)
-            res.json({staff})
+            const { budgetNo } = req.params
+            const budget = await this.budgetService.findByNumber(budgetNo)
+            res.json({ budget })
         } catch (error) {
             next(error)
         }
     }
 
-    async getByRol(req, res, next) {
+    async getByDate(req, res, next) {
         try {
-            const { rol } = req.params
-            const staff = await this.budgetService.findByRol(rol)
-            res.json(staff)
+            const { date } = req.params
+            const budget = await this.budgetService.findByDate(date)
+            res.json({ budget })
         } catch (error) {
             next(error)
         }
@@ -36,12 +36,10 @@ export default class budgetController {
 
     async create(req, res, next) {
         try {
-            const staffData = req.body
-            console.log(staffData);
-            const staff = await this.staffService.create(staffData)
-            res.status(201).json(staff)
+            const budgetData = req.body
+            const budget = await this.budgetService.create(budgetData)
+            res.status(201).json(budget)
         } catch (error) {
-            console.log(error);
             next(error)
         }
     }
@@ -49,9 +47,9 @@ export default class budgetController {
     async update(req, res, next) {
         try {
             const { id } = req.params
-            const staffData = req.body
-            const staff = await this.staffService.update(id, staffData)
-            res.json(staff)
+            const budgetData = req.body
+            const budget = await this.budgetService.update(id, budgetData)
+            res.json(budget)
         } catch (error) {
             next(error)
         }
@@ -60,25 +58,17 @@ export default class budgetController {
     async delete(req, res, next) {
         try {
             const { id } = req.params
-            const staff = await this.staffService.delete(id)
-            res.json(204).end()
+            await this.budgetService.delete(id)
+            res.status(204).end()
         } catch (error) {
             next(error)
         }
     }
-    
-    async getBudgetByStaff(req, res, next) {
-        try {
-            const { correo } = req.staff
-            if(!correo) {
-                throw { message: 'Staff no encontrado', statusCode: 404 }
-            }
 
-            const staff = await this.budgetService.getBystaff(correo)
-            if(!staff) {
-                throw { message: 'Staff no encontrado', statusCode: 404 }
-            }
-            res.json({staff})
+    async getAnnualBudget(req, res, next) {
+        try {
+            const result = await this.budgetService.getAnnualBudget()
+            res.json(result)
         } catch (error) {
             next(error)
         }

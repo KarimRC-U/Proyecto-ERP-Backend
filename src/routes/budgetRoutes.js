@@ -22,26 +22,38 @@ const budgetRoutes = [
     {
         method: 'put',
         path: '/update/modified/:id',
-       // middleware: [authMiddleware, roleMiddleware('admin')],
+        // middleware: [authMiddleware, roleMiddleware('admin')],
         handle: 'update'
     },
     {
         method: 'put',
         path: '/update/approve/:id',
-       // middleware: [authMiddleware, roleMiddleware('admin')],
+        // middleware: [authMiddleware, roleMiddleware('admin')],
         handle: 'update'
     },
     {
         method: 'delete',
         path: '/delete/:id',
-       // middleware: [authMiddleware, roleMiddleware('admin')],
+        // middleware: [authMiddleware, roleMiddleware('admin')],
         handle: 'delete'
     },
     {
         method: 'get',
-        path: '/staff',
-       // middleware: [authMiddleware],
-        handle: 'getBudgetByStaff'
+        path: '/number/:budgetNo',
+        // middleware: [authMiddleware],
+        handle: 'getByNumber'
+    },
+    {
+        method: 'get',
+        path: '/date/:date',
+        // middleware: [authMiddleware],
+        handle: 'getByDate'
+    },
+    {
+        method: 'get',
+        path: '/annual',
+        // middleware: [authMiddleware, roleMiddleware('admin')],
+        handle: 'getAnnualBudget'
     }
 ]
 

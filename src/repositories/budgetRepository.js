@@ -37,7 +37,7 @@ export default class budgetRepository extends IbudgetRepository {
     
     async findByNumber(budgetNo) {
         const numero = await this.collection
-            .where('numero', '==', budgetNo)      
+            .where('budgetNo', '==', budgetNo)      
             .get()      
         return numero.empty ? null : { id: numero.docs[0].id, ...numero.docs[0].data() } 
     } 
@@ -51,4 +51,21 @@ export default class budgetRepository extends IbudgetRepository {
         const presupuesto = await this.collection.doc(id).get() 
         return !presupuesto.exists ? null : { id: presupuesto.id, ...presupuesto.data() } 
     } 
+
+    async getAnnualBudget() {
+        const now = new Date();
+        const year = now.getFullYear();
+        const start = new Date(`${year}-01-01`);
+        const end = new Date(`${year}-12-31`);
+        const snapshot = await this.collection
+            .where('date', '>=', start.toISOString().split('T')[0])
+            .where('date', '<=', end.toISOString().split('T')[0])
+            .get();
+        let total = 0;
+        snapshot.forEach(doc => {
+            const data = doc.data();
+            total += Number(data.budgetedAmount) || 0;
+        });
+        return { year, totalBudgetedAmount: total };
+    }
 }

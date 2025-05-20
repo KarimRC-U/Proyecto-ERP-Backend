@@ -12,6 +12,9 @@ export default class IbudgetRepository {
     getAll() {
         throw new Error('Metodo no implementado')
     }
+    getAnnualBudget() {
+        throw new Error('Metodo no implementado')
+    }
     findByNumber(budgetNo) {
         throw new Error('Metodo no implementado')
     }

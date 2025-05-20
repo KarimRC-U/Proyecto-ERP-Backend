@@ -26,41 +26,27 @@ export default class budgetService {
     }
 
     async create(budgetData) {
-        const { nombre, apaterno, amaterno, presupuesto, password } = budgetData;
+        const { budgetNo } = budgetData;
 
-        const uniquebudget = await this.budgetRepository.findByNumber(presupuesto);
+        const uniquebudget = await this.budgetRepository.findByNumber(budgetNo);
         if (uniquebudget) {
             throw { message: 'El presupuesto ya existe', statusCode: 400 };
         }
 
-        const uniqueFullname = await this.budgetRepository.findByNumber(nombre, apaterno, amaterno);
-        if (uniqueFullname) {
-            throw { message: 'Ya existe un presupuesto con el mismo nombre completo', statusCode: 400 };
-        }
-
-        const randomDigits = Math.floor(100 + Math.random() * 900);
-        const budgetid = `${nombre[0]}${apaterno[0]}${amaterno[0]}${randomDigits}`.toUpperCase();
-
-        const hashedPassword = await bcrypt.hash(password, 10);
-        const newbudget = new Budget({ ...budgetData, password: hashedPassword, budgetid });
+        const newbudget = new Budget(budgetData);
         return this.budgetRepository.create({ ...newbudget });
     }
 
     async update(id, budgetData) {
-        const { password } = budgetData
-        const updatebudget = await this.budgetRepository.getById(id)
+        const existingBudget = await this.budgetRepository.getById(id);
 
-        if (!updatebudget) {
-            throw { message: 'Presupuesto no Encontrado', statusCode: 404 }
+        if (!existingBudget) {
+            throw { message: 'Presupuesto no Encontrado', statusCode: 404 };
         }
 
-        if (password) {
-            updatebudget.password = await bcrypt.hash(password, 10)
-        }
+        const updatedBudget = new Budget({ ...existingBudget, ...budgetData });
 
-        const newbudget = new Budget({ ...updatebudget, ...budgetData, password: updatebudget.password })
-
-        return this.budgetRepository.update(id, { ...newbudget })
+        return this.budgetRepository.update(id, { ...updatedBudget });
     }
 
     async delete(id) {
@@ -68,7 +54,10 @@ export default class budgetService {
         if (!budgetExists) {
             throw { message: 'Budget No Encontrado', statusCode: 404 }
         }
-
         await this.budgetRepository.delete(id)
+    }
+
+    async getAnnualBudget() {
+        return await this.budgetRepository.getAnnualBudget();
     }
 }
