@@ -27,30 +27,30 @@ export default class logisticsRepository extends IlogisticsRepository {
     }
 
     async getAll() {
-        const snapshot = await this.collection.get()
-        return snapshot.docs.map((doc) => ({
+        const datosDB = await this.collection.get()
+        return datosDB.docs.map((doc) => ({
             id: doc.id,
             ...doc.data()
         }))
     }
 
     async findByFullname(nombre, apaterno, amaterno) {
-        const snapshot = await this.collection
+        const datosDB = await this.collection
             .where('nombre', '==', nombre)
             .where('apaterno', '==', apaterno)
             .where('amaterno', '==', amaterno)
             .get()
-        return snapshot.empty ? null : { id: snapshot.docs[0].id, ...snapshot.docs[0].data() }
+        return datosDB.empty ? null : { id: datosDB.docs[0].id, ...datosDB.docs[0].data() }
     }
 
     async findByCorreo(correo) {
-        const snapshot = await this.collection.where('correo', '==', correo).get()
-        return snapshot.empty ? null : { id: snapshot.docs[0].id, ...snapshot.docs[0].data() }
+        const datosDB = await this.collection.where('correo', '==', correo).get()
+        return datosDB.empty ? null : { id: datosDB.docs[0].id, ...datosDB.docs[0].data() }
     }
 
     async findByRol(rol) {
-        const snapshot = await this.collection.where('rol', '==', rol).get()
-        return snapshot.empty ? null : { id: snapshot.docs[0].id, ...snapshot.docs[0].data() }
+        const datosDB = await this.collection.where('rol', '==', rol).get()
+        return datosDB.empty ? null : { id: datosDB.docs[0].id, ...datosDB.docs[0].data() }
     }
 
     async updateSessionToken(logisticsId, sessionToken) {

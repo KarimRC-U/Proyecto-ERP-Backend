@@ -14,26 +14,6 @@ export default class payrollController {
         }
     }
 
-    async getByNumber(req, res, next) {
-        try {
-            const { payrollNo } = req.params
-            const payroll = await this.payrollService.findByNumber(payrollNo)
-            res.json({ payroll })
-        } catch (error) {
-            next(error)
-        }
-    }
-
-    async getByDate(req, res, next) {
-        try {
-            const { date } = req.params
-            const payroll = await this.payrollService.findByDate(date)
-            res.json({ payroll })
-        } catch (error) {
-            next(error)
-        }
-    }
-
     async create(req, res, next) {
         try {
             const payrollData = req.body
@@ -65,12 +45,44 @@ export default class payrollController {
         }
     }
 
-    async getAnnualBudget(req, res, next) {
+    async getMonthGrossSalary(req, res, next) {
         try {
-            const result = await this.payrollService.getAnnualBudget()
-            res.json(result)
+            const { month, year } = req.params;
+            const total = await this.payrollService.getMonthGrossSalary(month, year);
+            res.json({ month, year, grossSalary: total });
         } catch (error) {
-            next(error)
+            next(error);
         }
     }
+
+    async getMonthNetSalary(req, res, next) {
+        try {
+            const { month, year } = req.params;
+            const total = await this.payrollService.getMonthNetSalary(month, year);
+            res.json({ month, year, netSalary: total });
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    async getMonthTotalTax(req, res, next) {
+        try {
+            const { month, year } = req.params;
+            const total = await this.payrollService.getMonthTotalTax(month, year);
+            res.json({ month, year, totalTax: total });
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    async getMonthTotalLoan(req, res, next) {
+        try {
+            const { month, year } = req.params;
+            const total = await this.payrollService.getMonthTotalLoan(month, year);
+            res.json({ month, year, totalLoan: total });
+        } catch (error) {
+            next(error);
+        }
+    }
+
 }

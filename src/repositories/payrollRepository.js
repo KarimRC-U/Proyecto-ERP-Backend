@@ -27,45 +27,67 @@ export default class payrollRepository extends IpayrollRepository {
     }
 
     async getAll() {
-        const snapshot = await this.collection.get()
-        return snapshot.docs.map((doc) => ({
+        const datosDB = await this.collection.get()
+        return datosDB.docs.map((doc) => ({
             id: doc.id,
             ...doc.data()
         }))
     }
 
-    async findByFullname(nombre, apaterno, amaterno) {
-        const snapshot = await this.collection
-            .where('nombre', '==', nombre)
-            .where('apaterno', '==', apaterno)
-            .where('amaterno', '==', amaterno)
-            .get()
-        return snapshot.empty ? null : { id: snapshot.docs[0].id, ...snapshot.docs[0].data() }
-    }
-
-    async findById(id) {
-        const snapshot = await this.collection.where('id', '==', id).get()
-        return snapshot.empty ? null : { id: snapshot.docs[0].id, ...snapshot.docs[0].data() }
-    }
-
-    async findByRol(rol) {
-        const snapshot = await this.collection.where('rol', '==', rol).get()
-        return snapshot.empty ? null : { id: snapshot.docs[0].id, ...snapshot.docs[0].data() }
-    }
-
-    async updateSessionToken(payrollId, sessionToken) {
-        const payroll = this.collection.doc(payrollId)
-        await payroll.update({ currentSessionToken: sessionToken })
-    }
-
-    async getSessionToken(payrollId) {
-        const payroll = this.collection.doc(payrollId)
-        const payrollLogged = await payroll.get()
-        return payrollLogged.exists ? payrollLogged.data().currentSessionToken : null
-    }
-
     async getById(id) {
         const doc = await this.collection.doc(id).get()
         return !doc.exists ? null : { id: doc.id, ...doc.data() }
+    }
+
+    async getMonthGrossSalary(month, year) {
+        const datosDB = await this.collection
+            .where('paymentMonth', '==', month)
+            .where('paymentYear', '==', year)
+            .get();
+        let total = 0;
+        datosDB.forEach(doc => {
+            const data = doc.data();
+            total += Number(data.grossSalary) || 0;
+        });
+        return total;
+    }
+
+    async getMonthNetSalary(month, year) {
+        const datosDB = await this.collection
+            .where('paymentMonth', '==', month)
+            .where('paymentYear', '==', year)
+            .get();
+        let total = 0;
+        datosDB.forEach(doc => {
+            const data = doc.data();
+            total += Number(data.netSalary) || 0;
+        });
+        return total;
+    }
+
+    async getMonthTotalTax(month, year) {
+        const datosDB = await this.collection
+            .where('paymentMonth', '==', month)
+            .where('paymentYear', '==', year)
+            .get();
+        let total = 0;
+        datosDB.forEach(doc => {
+            const data = doc.data();
+            total += Number(data.taxOrPaye) || 0;
+        });
+        return total;
+    }
+
+    async getMonthTotalLoan(month, year) {
+        const datosDB = await this.collection
+            .where('paymentMonth', '==', month)
+            .where('paymentYear', '==', year)
+            .get();
+        let total = 0;
+        datosDB.forEach(doc => {
+            const data = doc.data();
+            total += Number(data.loanAmount) || 0;
+        });
+        return total;
     }
 }

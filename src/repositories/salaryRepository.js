@@ -27,8 +27,8 @@ export default class salaryRepository extends IsalaryRepository {
     }
 
     async getAll() {
-        const snapshot = await this.collection.get()
-        return snapshot.docs.map((doc) => ({
+        const datosDB = await this.collection.get()
+        return datosDB.docs.map((doc) => ({
             id: doc.id,
             ...doc.data()
         }))
@@ -40,10 +40,10 @@ export default class salaryRepository extends IsalaryRepository {
     }
 
     async findByTitleAndLevel(title, level) {
-        const snapshot = await this.collection
+        const datosDB = await this.collection
             .where('title', '==', title)
             .where('level', '==', level)
             .get()
-        return snapshot.empty ? null : { id: snapshot.docs[0].id, ...snapshot.docs[0].data() }
+        return datosDB.empty ? null : { id: datosDB.docs[0].id, ...datosDB.docs[0].data() }
     }
 }

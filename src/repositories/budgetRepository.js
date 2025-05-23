@@ -57,12 +57,12 @@ export default class budgetRepository extends IbudgetRepository {
         const year = now.getFullYear();
         const start = new Date(`${year}-01-01`);
         const end = new Date(`${year}-12-31`);
-        const snapshot = await this.collection
+        const datosDB = await this.collection
             .where('date', '>=', start.toISOString().split('T')[0])
             .where('date', '<=', end.toISOString().split('T')[0])
             .get();
         let total = 0;
-        snapshot.forEach(doc => {
+        datosDB.forEach(doc => {
             const data = doc.data();
             total += Number(data.budgetedAmount) || 0;
         });

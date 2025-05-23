@@ -34,12 +34,12 @@ export default class TokenService {
     /*static async cleanupExpiredTokens() {
         try {
             const now = Date.now();
-            const snapshot = await db.collection('revoked_tokens')
+            const datosDB = await db.collection('revoked_tokens')
                 .where('expiresAt', '<=', now)
                 .get();
 
             const batch = db.batch();
-            snapshot.forEach(doc => batch.delete(doc.ref));
+            datosDB.forEach(doc => batch.delete(doc.ref));
             await batch.commit();
         } catch (error) {
             throw { message: 'Error al limpiar tokens expirados', statusCode: 500 };

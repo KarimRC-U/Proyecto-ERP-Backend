@@ -39,9 +39,23 @@ const payrollRoutes = [
     },
     {
         method: 'get',
-        path: '/payroll',
-       // middleware: [authMiddleware],
-        handle: 'getPayrollByPayroll'
+        path: '/gross/:month/:year',
+        handle: 'getMonthGrossSalary'
+    },
+    {
+        method: 'get',
+        path: '/net/:month/:year',
+        handle: 'getMonthNetSalary'
+    },
+    {
+        method: 'get',
+        path: '/tax/:month/:year',
+        handle: 'getMonthTotalTax'
+    },
+    {
+        method: 'get',
+        path: '/loan/:month/:year',
+        handle: 'getMonthTotalLoan'
     }
 ]
 
