@@ -3,18 +3,16 @@ import { Staff } from "./Staff.js"
 export class Memo {
     constructor({
         memoNo,
-        sentFrom,
+        sentFrom, 
         sentTo = [],
         date,
-        attachments = false, 
+        attachments = false,
         memoType,
-        body 
+        body
     }) {
         this.memoNo = memoNo;
-        this.sentFrom = sentFrom instanceof Staff ? sentFrom : new Staff(sentFrom);
-        this.sentTo = Array.isArray(sentTo)
-            ? sentTo.map(staff => staff instanceof Staff ? staff : new Staff(staff))
-            : [];
+        this.sentFrom = sentFrom;
+        this.sentTo = Array.isArray(sentTo) ? sentTo : [];
         this.date = date;
         this.attachments = attachments;
         this.memoType = memoType;
