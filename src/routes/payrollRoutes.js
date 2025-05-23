@@ -39,9 +39,9 @@ const payrollRoutes = [
     },
     {
         method: 'get',
-        path: '/staff',
+        path: '/payroll',
        // middleware: [authMiddleware],
-        handle: 'getPayrollByStaff'
+        handle: 'getPayrollByPayroll'
     }
 ]
 

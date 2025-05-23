@@ -34,38 +34,16 @@ export default class salaryRepository extends IsalaryRepository {
         }))
     }
 
-    async findByFullname(nombre, apaterno, amaterno) {
-        const snapshot = await this.collection
-            .where('nombre', '==', nombre)
-            .where('apaterno', '==', apaterno)
-            .where('amaterno', '==', amaterno)
-            .get()
-        return snapshot.empty ? null : { id: snapshot.docs[0].id, ...snapshot.docs[0].data() }
-    }
-
-    async findByCorreo(correo) {
-        const snapshot = await this.collection.where('correo', '==', correo).get()
-        return snapshot.empty ? null : { id: snapshot.docs[0].id, ...snapshot.docs[0].data() }
-    }
-
-    async findByRol(rol) {
-        const snapshot = await this.collection.where('rol', '==', rol).get()
-        return snapshot.empty ? null : { id: snapshot.docs[0].id, ...snapshot.docs[0].data() }
-    }
-
-    async updateSessionToken(salaryId, sessionToken) {
-        const salary = this.collection.doc(salaryId)
-        await salary.update({ currentSessionToken: sessionToken })
-    }
-
-    async getSessionToken(salaryId) {
-        const salary = this.collection.doc(salaryId)
-        const salaryLogged = await salary.get()
-        return salaryLogged.exists ? salaryLogged.data().currentSessionToken : null
-    }
-
     async getById(id) {
         const doc = await this.collection.doc(id).get()
         return !doc.exists ? null : { id: doc.id, ...doc.data() }
+    }
+
+    async findByTitleAndLevel(title, level) {
+        const snapshot = await this.collection
+            .where('title', '==', title)
+            .where('level', '==', level)
+            .get()
+        return snapshot.empty ? null : { id: snapshot.docs[0].id, ...snapshot.docs[0].data() }
     }
 }

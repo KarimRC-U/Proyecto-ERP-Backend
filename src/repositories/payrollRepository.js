@@ -43,8 +43,8 @@ export default class payrollRepository extends IpayrollRepository {
         return snapshot.empty ? null : { id: snapshot.docs[0].id, ...snapshot.docs[0].data() }
     }
 
-    async findByCorreo(correo) {
-        const snapshot = await this.collection.where('correo', '==', correo).get()
+    async findById(id) {
+        const snapshot = await this.collection.where('id', '==', id).get()
         return snapshot.empty ? null : { id: snapshot.docs[0].id, ...snapshot.docs[0].data() }
     }
 

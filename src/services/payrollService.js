@@ -14,8 +14,8 @@ export default class payrollService {
         return await this.payrollRepository.getAll()
     }
 
-    async findByCorreo(correo) {
-        const payroll = this.payrollRepository.findByCorreo(correo)
+    async findById(id) {
+        const payroll = this.payrollRepository.findById(id)
         if (!payroll) {
             throw { message: 'Payroll No Encontrado', statusCode: 404 }
         }
@@ -27,42 +27,42 @@ export default class payrollService {
         return await this.payrollRepository.findByRol(rol)
     }
 
-    async create(staffData) {
-        const { nombre, apaterno, amaterno, correo, password } = staffData;
+    async create(payrollData) {
+        const { nombre, apaterno, amaterno, id, password } = payrollData;
 
-        const uniquestaff = await this.staffRepository.findByCorreo(correo);
-        if (uniquestaff) {
-            throw { message: 'El correo ya existe', statusCode: 400 };
+        const uniquepayroll = await this.payrollRepository.findById(id);
+        if (uniquepayroll) {
+            throw { message: 'El id ya existe', statusCode: 400 };
         }
 
-        const uniqueFullname = await this.staffRepository.findByFullname(nombre, apaterno, amaterno);
+        const uniqueFullname = await this.payrollRepository.findByFullname(nombre, apaterno, amaterno);
         if (uniqueFullname) {
-            throw { message: 'Ya existe un correo con el mismo nombre completo', statusCode: 400 };
+            throw { message: 'Ya existe un id con el mismo nombre completo', statusCode: 400 };
         }
 
         const randomDigits = Math.floor(100 + Math.random() * 900);
-        const staffid = `${nombre[0]}${apaterno[0]}${amaterno[0]}${randomDigits}`.toUpperCase();
+        const payrollid = `${nombre[0]}${apaterno[0]}${amaterno[0]}${randomDigits}`.toUpperCase();
 
         const hashedPassword = await bcrypt.hash(password, 10);
-        const newstaff = new Payroll({ ...staffData, password: hashedPassword, staffid });
-        return this.staffRepository.create({ ...newstaff });
+        const newpayroll = new Payroll({ ...payrollData, password: hashedPassword, payrollid });
+        return this.payrollRepository.create({ ...newpayroll });
     }
 
-    async update(id, staffData) {
-        const { password } = staffData
-        const updatestaff = await this.staffRepository.getById(id)
+    async update(id, payrollData) {
+        const { password } = payrollData
+        const updatepayroll = await this.payrollRepository.getById(id)
 
-        if (!updatestaff) {
-            throw { message: 'Staff No Encontrado', statusCode: 404 }
+        if (!updatepayroll) {
+            throw { message: 'Payroll No Encontrado', statusCode: 404 }
         }
 
         if (password) {
-            updatestaff.password = await bcrypt.hash(password, 10)
+            updatepayroll.password = await bcrypt.hash(password, 10)
         }
 
-        const newstaff = new Payroll({ ...updatestaff, ...staffData, password: updatestaff.password })
+        const newpayroll = new Payroll({ ...updatepayroll, ...payrollData, password: updatepayroll.password })
 
-        return this.payrollRepository.update(id, { ...newstaff })
+        return this.payrollRepository.update(id, { ...newpayroll })
     }
 
     async delete(id) {
@@ -74,11 +74,11 @@ export default class payrollService {
         await this.payrollRepository.delete(id)
     }
 
-    async getByPayroll(correo) {
-        const staff = await this.staffRepository.findByCorreo(correo)
+    async getByPayroll(id) {
+        const payroll = await this.payrollRepository.findById(id)
 
-        if (!staff) {
-            throw { message: 'El correo no existe', statusCode: 404 }
+        if (!payroll) {
+            throw { message: 'El id no existe', statusCode: 404 }
         }
 
         return payroll

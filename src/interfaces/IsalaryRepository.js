@@ -14,4 +14,7 @@ export default class IsalaryRepository {
     getById(id) {
         throw new Error('Metodo no implementado')
     }
+    findByTitleAndLevel(title, level) {
+        throw new Error('Metodo no implementado')
+    }
 }

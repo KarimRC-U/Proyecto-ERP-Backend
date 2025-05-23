@@ -39,9 +39,9 @@ const salaryRoutes = [
     },
     {
         method: 'get',
-        path: '/staff',
-       // middleware: [authMiddleware],
-        handle: 'getSalaryByStaff'
+        path: '/:id',
+        //middleware: [authMiddleware, roleMiddleware('admin')],
+        handle: 'getById'
     }
 ]
 

@@ -5,35 +5,6 @@ export default class salaryController {
         this.salaryService = new salaryService()
     }
 
-    async getAll(req, res, next) {
-        try {
-            const salarys = await this.salaryService.getAll()
-            res.json({ salarys })
-        } catch (error) {
-            next(error)
-        }
-    }
-
-    async getByNumber(req, res, next) {
-        try {
-            const { salaryNo } = req.params
-            const salary = await this.salaryService.findByNumber(salaryNo)
-            res.json({ salary })
-        } catch (error) {
-            next(error)
-        }
-    }
-
-    async getByDate(req, res, next) {
-        try {
-            const { date } = req.params
-            const salary = await this.salaryService.findByDate(date)
-            res.json({ salary })
-        } catch (error) {
-            next(error)
-        }
-    }
-
     async create(req, res, next) {
         try {
             const salaryData = req.body
@@ -65,12 +36,23 @@ export default class salaryController {
         }
     }
 
-    async getAnnualBudget(req, res, next) {
+    async getAll(req, res, next) {
         try {
-            const result = await this.salaryService.getAnnualBudget()
-            res.json(result)
+            const salarys = await this.salaryService.getAll()
+            res.json({ salarys })
         } catch (error) {
             next(error)
         }
     }
+
+    async getById(req, res, next) {
+        try {
+            const { id } = req.params
+            const salary = await this.salaryService.getById(id)
+            res.json({ salary })
+        } catch (error) {
+            next(error)
+        }
+    }
+
 }
