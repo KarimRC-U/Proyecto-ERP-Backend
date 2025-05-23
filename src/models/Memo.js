@@ -1,6 +1,8 @@
 import { Staff } from "./Staff.js"
 
 export class Memo {
+    static allowedTypes = ["sent", "received"];
+
     constructor({
         memoNo,
         sentFrom, 
@@ -15,7 +17,7 @@ export class Memo {
         this.sentTo = Array.isArray(sentTo) ? sentTo : [];
         this.date = date;
         this.attachments = attachments;
-        this.memoType = memoType;
+        this.memoType = Memo.allowedTypes.includes(memoType) ? memoType : "sent";
         this.body = body;
     }
 }

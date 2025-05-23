@@ -60,6 +60,12 @@ const memoRoutes = [
         path: '/count/total',
         // middleware: [authMiddleware],
         handle: 'getTotalCount'
+    },
+    {
+        method: 'get',
+        path: '/details/:id',
+        // middleware: [authMiddleware],
+        handle: 'getMemoDetails'
     }
 ]
 

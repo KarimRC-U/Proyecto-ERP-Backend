@@ -68,4 +68,9 @@ export default class memoRepository extends ImemoRepository {
         });
         return results;
     }
+
+    async getMemoDetails(id) {
+        const doc = await this.collection.doc(id).get();
+        return !doc.exists ? null : { id: doc.id, ...doc.data() };
+    }
 }

@@ -52,7 +52,7 @@ export default class memoService {
     async findByNumber(memoNo) {
         const memo = await this.memoRepository.findByNumber(memoNo)
         if (!memo) {
-            throw { message: 'El presupuesto no existe', statusCode: 404 }
+            throw { message: 'El memo no existe', statusCode: 404 }
         }
         return memo
     }
@@ -64,4 +64,12 @@ export default class memoService {
     async getTotalCount() {
         return await this.memoRepository.getTotalCount();
     }
+
+    async getMemoDetails(id) {
+    const memo = await this.memoRepository.getMemoDetails(id);
+    if (!memo) {
+        throw { message: 'Memo no encontrado', statusCode: 404 };
+    }
+    return memo;
+}
 }

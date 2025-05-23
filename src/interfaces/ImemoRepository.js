@@ -24,4 +24,7 @@ export default class ImemoRepository {
     getTotalCount() {
         throw new Error('Metodo no implementado')
     }
+    getMemoDetails(id) {
+        throw new Error('Metodo no implementado')
+    }
 }

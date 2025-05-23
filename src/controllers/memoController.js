@@ -84,4 +84,14 @@ export default class memoController {
         }
     }
 
+    async getMemoDetails(req, res, next) {
+        try {
+            const { id } = req.params;
+            const memo = await this.memoService.getMemoDetails(id);
+            res.json({ memo });
+        } catch (error) {
+            next(error);
+        }
+    }
+
 }
