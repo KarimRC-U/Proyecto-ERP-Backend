@@ -24,48 +24,48 @@ export default class memoRepository extends ImemoRepository {
 
     async delete(id) {
         await this.collection.doc(id).delete();
-        return { id, messaje: 'memo Eliminado'}
+        return { id, messaje: 'Memo Eliminado' }
     }
-    
+
     async getAll() {
-        const presupuestos = await this.collection.get()
-        return presupuestos.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data()
+        const memos = await this.collection.get()
+        return memos.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data()
         }));
-    } 
-    
+    }
+
     async findByNumber(memoNo) {
         const numero = await this.collection
-            .where('memoNo', '==', memoNo)      
-            .get()      
-        return numero.empty ? null : { id: numero.docs[0].id, ...numero.docs[0].data() } 
-    } 
-    
-    async findByDate(date)  {
-        const presupuesto = await this.collection.where('date' , '==', date).get()   
-        return presupuesto.empty ? null : { id: presupuesto.docs[0].id, ...presupuesto.docs[0].data() } 
+            .where('memoNo', '==', memoNo)
+            .get()
+        return numero.empty ? null : { id: numero.docs[0].id, ...numero.docs[0].data() }
     }
-    
-    async getById(id) {
-        const presupuesto = await this.collection.doc(id).get() 
-        return !presupuesto.exists ? null : { id: presupuesto.id, ...presupuesto.data() } 
-    } 
 
-    async getAnnualBudget() {
-        const now = new Date();
-        const year = now.getFullYear();
-        const start = new Date(`${year}-01-01`);
-        const end = new Date(`${year}-12-31`);
-        const snapshot = await this.collection
-            .where('date', '>=', start.toISOString().split('T')[0])
-            .where('date', '<=', end.toISOString().split('T')[0])
-            .get();
-        let total = 0;
-        snapshot.forEach(doc => {
+    async findByDate(date) {
+        const memo = await this.collection.where('date', '==', date).get()
+        return memo.empty ? null : { id: memo.docs[0].id, ...memo.docs[0].data() }
+    }
+
+
+    async getTotalCount() {
+        const cuenta = await this.collection.get();
+        return cuenta.size;
+    }
+
+    async findByKeywords(keywords) {
+        const busqueda = await this.collection.get();
+        const lowerKeywords = keywords.toLowerCase();
+        const results = [];
+        busqueda.forEach(doc => {
             const data = doc.data();
-            total += Number(data.memoedAmount) || 0;
+            if (
+                (data.body && data.body.toLowerCase().includes(lowerKeywords)) ||
+                (data.memoType && data.memoType.toLowerCase().includes(lowerKeywords))
+            ) {
+                results.push({ id: doc.id, ...data });
+            }
         });
-        return { year, totalBudgetedAmount: total };
+        return results;
     }
 }

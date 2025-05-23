@@ -5,35 +5,6 @@ export default class memoController {
         this.memoService = new memoService()
     }
 
-    async getAll(req, res, next) {
-        try {
-            const memos = await this.memoService.getAll()
-            res.json({ memos })
-        } catch (error) {
-            next(error)
-        }
-    }
-
-    async getByNumber(req, res, next) {
-        try {
-            const { memoNo } = req.params
-            const memo = await this.memoService.findByNumber(memoNo)
-            res.json({ memo })
-        } catch (error) {
-            next(error)
-        }
-    }
-
-    async getByDate(req, res, next) {
-        try {
-            const { date } = req.params
-            const memo = await this.memoService.findByDate(date)
-            res.json({ memo })
-        } catch (error) {
-            next(error)
-        }
-    }
-
     async create(req, res, next) {
         try {
             const memoData = req.body
@@ -65,12 +36,52 @@ export default class memoController {
         }
     }
 
-    async getAnnualBudget(req, res, next) {
+    async getAll(req, res, next) {
         try {
-            const result = await this.memoService.getAnnualBudget()
-            res.json(result)
+            const memos = await this.memoService.getAll()
+            res.json({ memos })
         } catch (error) {
             next(error)
         }
     }
+
+    async getByNumber(req, res, next) {
+        try {
+            const { memoNo } = req.params
+            const memo = await this.memoService.findByNumber(memoNo)
+            res.json({ memo })
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    async getByDate(req, res, next) {
+        try {
+            const { date } = req.params
+            const memo = await this.memoService.findByDate(date)
+            res.json({ memo })
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    async getByKeywords(req, res, next) {
+        try {
+            const { keywords } = req.params
+            const memos = await this.memoService.getByKeywords(keywords)
+            res.json({ memos })
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    async getTotalCount(req, res, next) {
+        try {
+            const count = await this.memoService.getTotalCount()
+            res.json({ count })
+        } catch (error) {
+            next(error)
+        }
+    }
+
 }

@@ -2,6 +2,7 @@ import { Staff } from "./Staff.js"
 
 export class Memo {
     constructor({
+        memoNo,
         sentFrom,
         sentTo = [],
         date,
@@ -9,6 +10,7 @@ export class Memo {
         memoType,
         body 
     }) {
+        this.memoNo = memoNo;
         this.sentFrom = sentFrom instanceof Staff ? sentFrom : new Staff(sentFrom);
         this.sentTo = Array.isArray(sentTo)
             ? sentTo.map(staff => staff instanceof Staff ? staff : new Staff(staff))

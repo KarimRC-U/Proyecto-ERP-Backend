@@ -9,28 +9,12 @@ export default class memoService {
         this.tokenService = new TokenService()
     }
 
-    async getAll() {
-        return await this.memoRepository.getAll()
-    }
-
-    async findByDate(date) {
-        return await this.memoRepository.findByDate(date)
-    }
-
-    async findByNumber (memoNo) {
-        const memo = await this.memoRepository.findByNumber(memoNo)
-        if (!memo) {
-            throw { message: 'El presupuesto no existe', statusCode: 404 }
-        }
-        return memo
-    }
-
     async create(memoData) {
         const { memoNo } = memoData;
 
         const uniquememo = await this.memoRepository.findByNumber(memoNo);
         if (uniquememo) {
-            throw { message: 'El presupuesto ya existe', statusCode: 400 };
+            throw { message: 'Este memo ya existe', statusCode: 400 };
         }
 
         const newmemo = new Memo(memoData);
@@ -41,7 +25,7 @@ export default class memoService {
         const existingMemo = await this.memoRepository.getById(id);
 
         if (!existingMemo) {
-            throw { message: 'Presupuesto no Encontrado', statusCode: 404 };
+            throw { message: 'Memo no Encontrado', statusCode: 404 };
         }
 
         const updatedMemo = new Memo({ ...existingMemo, ...memoData });
@@ -57,7 +41,27 @@ export default class memoService {
         await this.memoRepository.delete(id)
     }
 
-    async getAnnualMemo() {
-        return await this.memoRepository.getAnnualMemo();
+    async getAll() {
+        return await this.memoRepository.getAll()
+    }
+
+    async findByDate(date) {
+        return await this.memoRepository.findByDate(date)
+    }
+
+    async findByNumber(memoNo) {
+        const memo = await this.memoRepository.findByNumber(memoNo)
+        if (!memo) {
+            throw { message: 'El presupuesto no existe', statusCode: 404 }
+        }
+        return memo
+    }
+
+    async getByKeywords(keywords) {
+        return await this.memoRepository.findByKeywords(keywords);
+    }
+
+    async getTotalCount() {
+        return await this.memoRepository.getTotalCount();
     }
 }

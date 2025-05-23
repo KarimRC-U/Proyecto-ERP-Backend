@@ -51,9 +51,15 @@ const memoRoutes = [
     },
     {
         method: 'get',
-        path: '/annual',
-        // middleware: [authMiddleware, roleMiddleware('admin')],
-        handle: 'getAnnualMemo'
+        path: '/keywords/:keywords',
+        // middleware: [authMiddleware],
+        handle: 'getByKeywords'
+    },
+    {
+        method: 'get',
+        path: '/count/total',
+        // middleware: [authMiddleware],
+        handle: 'getTotalCount'
     }
 ]
 
