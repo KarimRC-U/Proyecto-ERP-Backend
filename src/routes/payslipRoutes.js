@@ -22,26 +22,26 @@ const payslipRoutes = [
     {
         method: 'put',
         path: '/update/modified/:id',
-       // middleware: [authMiddleware, roleMiddleware('admin')],
+        // middleware: [authMiddleware, roleMiddleware('admin')],
         handle: 'update'
     },
     {
         method: 'put',
         path: '/update/approve/:id',
-       // middleware: [authMiddleware, roleMiddleware('admin')],
+        // middleware: [authMiddleware, roleMiddleware('admin')],
         handle: 'update'
     },
     {
         method: 'delete',
         path: '/delete/:id',
-       // middleware: [authMiddleware, roleMiddleware('admin')],
+        // middleware: [authMiddleware, roleMiddleware('admin')],
         handle: 'delete'
     },
     {
         method: 'get',
-        path: '/staff',
-       // middleware: [authMiddleware],
-        handle: 'getPayslipByStaff'
+        path: '/staff/:staffid',
+        // middleware: [authMiddleware, roleMiddleware('admin')],
+        handle: 'getPayslipsByStaffId'
     }
 ]
 

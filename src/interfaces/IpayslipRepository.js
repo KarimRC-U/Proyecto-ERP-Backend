@@ -14,4 +14,7 @@ export default class IpayslipRepository {
     getById(id) {
         throw new Error('Metodo no implementado')
     }
+    getPayslipsByStaffId(id) {
+        throw new Error('Metodo no implementado')
+    }
 }

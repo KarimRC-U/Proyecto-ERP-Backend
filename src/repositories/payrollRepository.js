@@ -40,12 +40,12 @@ export default class payrollRepository extends IpayrollRepository {
     }
 
     async getMonthGrossSalary(month, year) {
-        const datosDB = await this.collection
+        const payslips = await db.collection('payslip-node')
             .where('paymentMonth', '==', month)
             .where('paymentYear', '==', year)
             .get();
         let total = 0;
-        datosDB.forEach(doc => {
+        payslips.forEach(doc => {
             const data = doc.data();
             total += Number(data.grossSalary) || 0;
         });
@@ -53,12 +53,12 @@ export default class payrollRepository extends IpayrollRepository {
     }
 
     async getMonthNetSalary(month, year) {
-        const datosDB = await this.collection
+        const payslips = await db.collection('payslip-node')
             .where('paymentMonth', '==', month)
             .where('paymentYear', '==', year)
             .get();
         let total = 0;
-        datosDB.forEach(doc => {
+        payslips.forEach(doc => {
             const data = doc.data();
             total += Number(data.netSalary) || 0;
         });
@@ -66,12 +66,12 @@ export default class payrollRepository extends IpayrollRepository {
     }
 
     async getMonthTotalTax(month, year) {
-        const datosDB = await this.collection
+        const payslips = await db.collection('payslip-node')
             .where('paymentMonth', '==', month)
             .where('paymentYear', '==', year)
             .get();
         let total = 0;
-        datosDB.forEach(doc => {
+        payslips.forEach(doc => {
             const data = doc.data();
             total += Number(data.taxOrPaye) || 0;
         });
@@ -79,12 +79,12 @@ export default class payrollRepository extends IpayrollRepository {
     }
 
     async getMonthTotalLoan(month, year) {
-        const datosDB = await this.collection
+        const payslips = await db.collection('payslip-node')
             .where('paymentMonth', '==', month)
             .where('paymentYear', '==', year)
             .get();
         let total = 0;
-        datosDB.forEach(doc => {
+        payslips.forEach(doc => {
             const data = doc.data();
             total += Number(data.loanAmount) || 0;
         });

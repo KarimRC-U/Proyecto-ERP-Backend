@@ -73,4 +73,14 @@ export default class payslipController {
             next(error)
         }
     }
+
+    async getPayslipsByStaffId(req, res, next) {
+        try {
+            const { staffid } = req.params;
+            const payslips = await this.payslipService.getPayslipsByStaffId(staffid);
+            res.json({ payslips });
+        } catch (error) {
+            next(error);
+        }
+    }
 }

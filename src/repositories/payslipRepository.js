@@ -68,4 +68,11 @@ export default class payslipRepository extends IpayslipRepository {
         const doc = await this.collection.doc(id).get()
         return !doc.exists ? null : { id: doc.id, ...doc.data() }
     }
+
+    async findByStaffId(staffid) {
+        const snapshot = await this.collection.where('staffid', '==', staffid).get();
+        return snapshot.empty
+            ? []
+            : snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    }
 }
