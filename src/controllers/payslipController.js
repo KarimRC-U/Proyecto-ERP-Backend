@@ -65,14 +65,6 @@ export default class payslipController {
         }
     }
 
-    async getAnnualBudget(req, res, next) {
-        try {
-            const result = await this.payslipService.getAnnualBudget()
-            res.json(result)
-        } catch (error) {
-            next(error)
-        }
-    }
 
     async getPayslipsByStaffId(req, res, next) {
         try {

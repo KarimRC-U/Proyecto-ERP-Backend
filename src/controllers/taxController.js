@@ -65,12 +65,4 @@ export default class taxController {
         }
     }
 
-    async getAnnualBudget(req, res, next) {
-        try {
-            const result = await this.taxService.getAnnualBudget()
-            res.json(result)
-        } catch (error) {
-            next(error)
-        }
-    }
 }

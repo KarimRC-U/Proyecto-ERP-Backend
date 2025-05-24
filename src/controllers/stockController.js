@@ -65,12 +65,4 @@ export default class stockController {
         }
     }
 
-    async getAnnualBudget(req, res, next) {
-        try {
-            const result = await this.stockService.getAnnualBudget()
-            res.json(result)
-        } catch (error) {
-            next(error)
-        }
-    }
 }

@@ -65,12 +65,4 @@ export default class trainingController {
         }
     }
 
-    async getAnnualBudget(req, res, next) {
-        try {
-            const result = await this.trainingService.getAnnualBudget()
-            res.json(result)
-        } catch (error) {
-            next(error)
-        }
-    }
 }

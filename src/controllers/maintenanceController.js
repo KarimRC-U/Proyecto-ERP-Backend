@@ -65,12 +65,4 @@ export default class maintenanceController {
         }
     }
 
-    async getAnnualBudget(req, res, next) {
-        try {
-            const result = await this.maintenanceService.getAnnualBudget()
-            res.json(result)
-        } catch (error) {
-            next(error)
-        }
-    }
 }

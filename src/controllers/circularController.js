@@ -1,14 +1,14 @@
-import budgetService from "../services/budgetService.js"
+import circularService from "../services/circularService.js"
 
-export default class budgetController {
+export default class circularController {
     constructor() {
-        this.budgetService = new budgetService()
+        this.circularService = new circularService()
     }
 
     async getAll(req, res, next) {
         try {
-            const budgets = await this.budgetService.getAll()
-            res.json({ budgets })
+            const circulars = await this.circularService.getAll()
+            res.json({ circulars })
         } catch (error) {
             next(error)
         }
@@ -16,9 +16,9 @@ export default class budgetController {
 
     async getByNumber(req, res, next) {
         try {
-            const { budgetNo } = req.params
-            const budget = await this.budgetService.findByNumber(budgetNo)
-            res.json({ budget })
+            const { circularNo } = req.params
+            const circular = await this.circularService.findByNumber(circularNo)
+            res.json({ circular })
         } catch (error) {
             next(error)
         }
@@ -27,8 +27,8 @@ export default class budgetController {
     async getByDate(req, res, next) {
         try {
             const { date } = req.params
-            const budget = await this.budgetService.findByDate(date)
-            res.json({ budget })
+            const circular = await this.circularService.findByDate(date)
+            res.json({ circular })
         } catch (error) {
             next(error)
         }
@@ -36,9 +36,9 @@ export default class budgetController {
 
     async create(req, res, next) {
         try {
-            const budgetData = req.body
-            const budget = await this.budgetService.create(budgetData)
-            res.status(201).json(budget)
+            const circularData = req.body
+            const circular = await this.circularService.create(circularData)
+            res.status(201).json(circular)
         } catch (error) {
             next(error)
         }
@@ -47,9 +47,9 @@ export default class budgetController {
     async update(req, res, next) {
         try {
             const { id } = req.params
-            const budgetData = req.body
-            const budget = await this.budgetService.update(id, budgetData)
-            res.json(budget)
+            const circularData = req.body
+            const circular = await this.circularService.update(id, circularData)
+            res.json(circular)
         } catch (error) {
             next(error)
         }
@@ -58,19 +58,11 @@ export default class budgetController {
     async delete(req, res, next) {
         try {
             const { id } = req.params
-            await this.budgetService.delete(id)
+            await this.circularService.delete(id)
             res.status(204).end()
         } catch (error) {
             next(error)
         }
     }
 
-    async getAnnualBudget(req, res, next) {
-        try {
-            const result = await this.budgetService.getAnnualBudget()
-            res.json(result)
-        } catch (error) {
-            next(error)
-        }
-    }
 }

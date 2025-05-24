@@ -65,12 +65,4 @@ export default class logisticsController {
         }
     }
 
-    async getAnnualBudget(req, res, next) {
-        try {
-            const result = await this.logisticsService.getAnnualBudget()
-            res.json(result)
-        } catch (error) {
-            next(error)
-        }
-    }
 }
