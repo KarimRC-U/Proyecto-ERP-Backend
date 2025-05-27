@@ -65,7 +65,46 @@ export default class logisticsRepository extends IlogisticsRepository {
     }
 
     async getById(id) {
-        const doc = await this.collection.doc(id).get()
-        return !doc.exists ? null : { id: doc.id, ...doc.data() }
+        const doc = await this.collection.doc(id).get();
+        return !doc.exists ? null : { id: doc.id, ...doc.data() };
+    }
+
+    async getByTitle(title) {
+        const snapshot = await this.collection.where('title', '==', title).get();
+        return snapshot.empty
+            ? []
+            : snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    }
+
+    async getByStaff(staffid) {
+        const snapshot = await this.collection.where('requestedBy.staffid', '==', staffid).get();
+        return snapshot.empty
+            ? []
+            : snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    }
+
+    async getTotalRequests() {
+        const snapshot = await this.collection.get();
+        return snapshot.size;
+    }
+
+    async getTotalCosts() {
+        const snapshot = await this.collection.get();
+        let total = 0;
+        snapshot.forEach(doc => {
+            const data = doc.data();
+            total += Number(data.amount) || 0;
+        });
+        return total;
+    }
+
+    async getPending() {
+        const snapshot = await this.collection.where('status', '==', 'Pending').get();
+        return snapshot.size;
+    }
+
+    async getApproved() {
+        const snapshot = await this.collection.where('status', '==', 'Approved').get();
+        return snapshot.size;
     }
 }

@@ -83,4 +83,36 @@ export default class logisticsService {
 
         return logistics
     }
+
+    async getById(id) {
+        const logistics = await this.logisticsRepository.getById(id);
+        if (!logistics) {
+            throw { message: 'Logistics No Encontrado', statusCode: 404 };
+        }
+        return logistics;
+    }
+
+    async getByTitle(title) {
+        return await this.logisticsRepository.getByTitle(title);
+    }
+
+    async getByStaff(staffid) {
+        return await this.logisticsRepository.getByStaff(staffid);
+    }
+
+    async getTotalRequests() {
+        return await this.logisticsRepository.getTotalRequests();
+    }
+
+    async getTotalCosts() {
+        return await this.logisticsRepository.getTotalCosts();
+    }
+
+    async getPending() {
+        return await this.logisticsRepository.getPending();
+    }
+
+    async getApproved() {
+        return await this.logisticsRepository.getApproved();
+    }
 }

@@ -1,7 +1,8 @@
 export class Logistics {
     static allowedStatuses = ["Pending", "Approved", "Rejected", "Completed"];
 
-    constructor({ title, purpose, amount, requestedBy, sentTo, date, status = "Pending" }) {
+    constructor({ id, title, purpose, amount, requestedBy, sentTo, date, status = "Pending" }) {
+        this.id = id;
         this.title = title;
         this.purpose = purpose;
         this.amount = amount;

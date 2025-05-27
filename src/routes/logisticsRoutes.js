@@ -22,20 +22,62 @@ const logisticsRoutes = [
     {
         method: 'put',
         path: '/update/modified/:id',
-       // middleware: [authMiddleware, roleMiddleware('admin')],
+        // middleware: [authMiddleware, roleMiddleware('admin')],
         handle: 'update'
     },
     {
         method: 'put',
         path: '/update/approve/:id',
-       // middleware: [authMiddleware, roleMiddleware('admin')],
+        // middleware: [authMiddleware, roleMiddleware('admin')],
         handle: 'update'
     },
     {
         method: 'delete',
         path: '/delete/:id',
-       // middleware: [authMiddleware, roleMiddleware('admin')],
+        // middleware: [authMiddleware, roleMiddleware('admin')],
         handle: 'delete'
+    },
+    {
+        method: 'get',
+        path: '/id/:id',
+        // middleware: [authMiddleware, roleMiddleware('admin')],
+        handle: 'getById'
+    },
+    {
+        method: 'get',
+        path: '/title/:title',
+        // middleware: [authMiddleware, roleMiddleware('admin')],
+        handle: 'getByTitle'
+    },
+    {
+        method: 'get',
+        path: '/staff/:staffid',
+        // middleware: [authMiddleware, roleMiddleware('admin')],
+        handle: 'getByStaff'
+    },
+    {
+        method: 'get',
+        path: '/count/total',
+        // middleware: [authMiddleware, roleMiddleware('admin')],
+        handle: 'getTotalRequests'
+    },
+    {
+        method: 'get',
+        path: '/costs/total',
+        // middleware: [authMiddleware, roleMiddleware('admin')],
+        handle: 'getTotalCosts'
+    },
+    {
+        method: 'get',
+        path: '/count/pending',
+        // middleware: [authMiddleware, roleMiddleware('admin')],
+        handle: 'getPending'
+    },
+    {
+        method: 'get',
+        path: '/count/approved',
+        // middleware: [authMiddleware, roleMiddleware('admin')],
+        handle: 'getApproved'
     }
 ]
 

@@ -65,4 +65,69 @@ export default class logisticsController {
         }
     }
 
+    async getById(req, res, next) {
+        try {
+            const { id } = req.params;
+            const logistics = await this.logisticsService.getById(id);
+            res.json({ logistics });
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    async getByTitle(req, res, next) {
+        try {
+            const { title } = req.params;
+            const logisticss = await this.logisticsService.getByTitle(title);
+            res.json({ logisticss });
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    async getByStaff(req, res, next) {
+        try {
+            const { staffid } = req.params;
+            const logisticss = await this.logisticsService.getByStaff(staffid);
+            res.json({ logisticss });
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    async getTotalRequests(req, res, next) {
+        try {
+            const total = await this.logisticsService.getTotalRequests();
+            res.json({ total });
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    async getTotalCosts(req, res, next) {
+        try {
+            const total = await this.logisticsService.getTotalCosts();
+            res.json({ total });
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    async getPending(req, res, next) {
+        try {
+            const total = await this.logisticsService.getPending();
+            res.json({ total });
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    async getApproved(req, res, next) {
+        try {
+            const total = await this.logisticsService.getApproved();
+            res.json({ total });
+        } catch (error) {
+            next(error);
+        }
+    }
 }
