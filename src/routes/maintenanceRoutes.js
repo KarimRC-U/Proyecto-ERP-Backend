@@ -39,9 +39,43 @@ const maintenanceRoutes = [
     },
     {
         method: 'get',
-        path: '/staff',
-       // middleware: [authMiddleware],
-        handle: 'getMaintenanceByStaff'
+        path: '/count/total',
+        handle: 'getTotalSchedules'
+    },
+    {
+        method: 'get',
+        path: '/count/completed',
+        handle: 'getTotalCompleted'
+    },
+    {
+        method: 'get',
+        path: '/count/pending',
+        handle: 'getTotalPending'
+    },
+    {
+        method: 'get',
+        path: '/count/overdue',
+        handle: 'getTotalOverdue'
+    },
+    {
+        method: 'get',
+        path: '/item/name/:itemName',
+        handle: 'getByItemName'
+    },
+    {
+        method: 'get',
+        path: '/item/number/:itemNumber',
+        handle: 'getByItemNumber'
+    },
+    {
+        method: 'get',
+        path: '/date/:date',
+        handle: 'getByDate'
+    },
+    {
+        method: 'get',
+        path: '/details/:itemName/:itemNumber',
+        handle: 'getDetails'
     }
 ]
 

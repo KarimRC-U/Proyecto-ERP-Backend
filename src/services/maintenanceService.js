@@ -1,68 +1,33 @@
 import maintenanceRepository from "../repositories/maintenanceRepository.js"
-import { Maintenance } from "../models/Maintenance.js"
-import TokenService from "./tokenService.js"
-import bcrypt from 'bcrypt'
-import jwt from 'jsonwebtoken'
+import { MaintenanceSchedule } from "../models/Maintenance.js"
 
 export default class maintenanceService {
     constructor() {
         this.maintenanceRepository = new maintenanceRepository()
-        this.tokenService = new TokenService()
     }
 
-    async getAll() {
-        return await this.maintenanceRepository.getAll()
+    async create(maintenanceData) {
+        const { itemName, itemNumber, date, type, isRecurring = false, status = "Unknown" } = maintenanceData;
+        const newMaintenance = new MaintenanceSchedule({ itemName, itemNumber, date, type, isRecurring, status });
+        return this.maintenanceRepository.create({ ...newMaintenance });
     }
 
-    async findByCorreo(correo) {
-        const maintenance = this.maintenanceRepository.findByCorreo(correo)
-        if (!maintenance) {
+    async update(id, maintenanceData) {
+        const { itemName, itemNumber, date, type, isRecurring = false, status = "Unknown" } = maintenanceData;
+        const existingMaintenance = await this.maintenanceRepository.getById(id);
+        if (!existingMaintenance) {
             throw { message: 'Maintenance No Encontrado', statusCode: 404 }
         }
-
-        return maintenance
-    }
-
-    async findByRol(rol) {
-        return await this.maintenanceRepository.findByRol(rol)
-    }
-
-    async create(staffData) {
-        const { nombre, apaterno, amaterno, correo, password } = staffData;
-
-        const uniquestaff = await this.staffRepository.findByCorreo(correo);
-        if (uniquestaff) {
-            throw { message: 'El correo ya existe', statusCode: 400 };
-        }
-
-        const uniqueFullname = await this.staffRepository.findByFullname(nombre, apaterno, amaterno);
-        if (uniqueFullname) {
-            throw { message: 'Ya existe un correo con el mismo nombre completo', statusCode: 400 };
-        }
-
-        const randomDigits = Math.floor(100 + Math.random() * 900);
-        const staffid = `${nombre[0]}${apaterno[0]}${amaterno[0]}${randomDigits}`.toUpperCase();
-
-        const hashedPassword = await bcrypt.hash(password, 10);
-        const newstaff = new Maintenance({ ...staffData, password: hashedPassword, staffid });
-        return this.staffRepository.create({ ...newstaff });
-    }
-
-    async update(id, staffData) {
-        const { password } = staffData
-        const updatestaff = await this.staffRepository.getById(id)
-
-        if (!updatestaff) {
-            throw { message: 'Staff No Encontrado', statusCode: 404 }
-        }
-
-        if (password) {
-            updatestaff.password = await bcrypt.hash(password, 10)
-        }
-
-        const newstaff = new Maintenance({ ...updatestaff, ...staffData, password: updatestaff.password })
-
-        return this.maintenanceRepository.update(id, { ...newstaff })
+        const updatedMaintenance = new MaintenanceSchedule({
+            ...existingMaintenance,
+            itemName,
+            itemNumber,
+            date,
+            type,
+            isRecurring,
+            status
+        });
+        return this.maintenanceRepository.update(id, { ...updatedMaintenance });
     }
 
     async delete(id) {
@@ -70,17 +35,42 @@ export default class maintenanceService {
         if (!maintenanceExists) {
             throw { message: 'Maintenance No Encontrado', statusCode: 404 }
         }
-
         await this.maintenanceRepository.delete(id)
     }
 
-    async getByMaintenance(correo) {
-        const staff = await this.staffRepository.findByCorreo(correo)
+    async getAll() {
+        return await this.maintenanceRepository.getAll()
+    }
 
-        if (!staff) {
-            throw { message: 'El correo no existe', statusCode: 404 }
-        }
+    async getTotalSchedules() {
+        return await this.maintenanceRepository.getTotalSchedules();
+    }
 
-        return maintenance
+    async getTotalCompleted() {
+        return await this.maintenanceRepository.getTotalCompleted();
+    }
+
+    async getTotalPending() {
+        return await this.maintenanceRepository.getTotalPending();
+    }
+
+    async getTotalOverdue() {
+        return await this.maintenanceRepository.getTotalOverdue();
+    }
+
+    async getByItemName(itemName) {
+        return await this.maintenanceRepository.getByItemName(itemName);
+    }
+
+    async getByItemNumber(itemNumber) {
+        return await this.maintenanceRepository.getByItemNumber(itemNumber);
+    }
+
+    async getByDate(date) {
+        return await this.maintenanceRepository.getByDate(date);
+    }
+
+    async getDetails(itemName, itemNumber) {
+        return await this.maintenanceRepository.getDetails(itemName, itemNumber);
     }
 }

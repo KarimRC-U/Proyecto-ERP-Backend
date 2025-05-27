@@ -60,4 +60,12 @@ export default class budgetService {
     async getAnnualBudget() {
         return await this.budgetRepository.getAnnualBudget();
     }
+
+    async getById(id) {
+        const budget = await this.budgetRepository.getById(id);
+        if (!budget) {
+            throw { message: 'Presupuesto no encontrado', statusCode: 404 };
+        }
+        return budget;
+    }
 }

@@ -11,7 +11,28 @@ export default class ImaintenanceRepository {
     getAll() {
         throw new Error('Metodo no implementado')
     }
-    getById(id) {
+    getTotalSchedules() {
+        throw new Error('Metodo no implementado')
+    }
+    getTotalCompleted() {
+        throw new Error('Metodo no implementado')
+    }
+    getTotalPending() {
+        throw new Error('Metodo no implementado')
+    }
+    getTotalOverdue() {
+        throw new Error('Metodo no implementado')
+    }
+    getByItemName(itemName) {
+        throw new Error('Metodo no implementado')
+    }
+    getByItemNumber(itemNumber) {
+        throw new Error('Metodo no implementado')
+    }
+    getByDate(date) {
+        throw new Error('Metodo no implementado')
+    }
+    getDetails(itemName, itemNumber) {
         throw new Error('Metodo no implementado')
     }
 }
