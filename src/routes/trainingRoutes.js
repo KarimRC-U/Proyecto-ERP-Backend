@@ -36,12 +36,6 @@ const trainingRoutes = [
         path: '/delete/:id',
        // middleware: [authMiddleware, roleMiddleware('admin')],
         handle: 'delete'
-    },
-    {
-        method: 'get',
-        path: '/staff',
-       // middleware: [authMiddleware],
-        handle: 'getTrainingByStaff'
     }
 ]
 
