@@ -22,20 +22,50 @@ const circularRoutes = [
     {
         method: 'put',
         path: '/update/modified/:id',
-       // middleware: [authMiddleware, roleMiddleware('admin')],
+        // middleware: [authMiddleware, roleMiddleware('admin')],
         handle: 'update'
     },
     {
         method: 'put',
         path: '/update/approve/:id',
-       // middleware: [authMiddleware, roleMiddleware('admin')],
+        // middleware: [authMiddleware, roleMiddleware('admin')],
         handle: 'update'
     },
     {
         method: 'delete',
         path: '/delete/:id',
-       // middleware: [authMiddleware, roleMiddleware('admin')],
+        // middleware: [authMiddleware, roleMiddleware('admin')],
         handle: 'delete'
+    },
+    {
+        method: 'get',
+        path: '/id/:id',
+        // middleware: [authMiddleware, roleMiddleware('admin')],
+        handle: 'getById'
+    },
+    {
+        method: 'get',
+        path: '/date/:date',
+        // middleware: [authMiddleware, roleMiddleware('admin')],
+        handle: 'getByDate'
+    },
+    {
+        method: 'get',
+        path: '/date/:date/order/:order',
+        // middleware: [authMiddleware, roleMiddleware('admin')],
+        handle: 'getByDateOrder'
+    },
+    {
+        method: 'get',
+        path: '/keywords/:keywords',
+        // middleware: [authMiddleware, roleMiddleware('admin')],
+        handle: 'getByKeywords'
+    },
+    {
+        method: 'get',
+        path: '/count/total',
+        // middleware: [authMiddleware, roleMiddleware('admin')],
+        handle: 'getTotalCirculars'
     }
 ]
 

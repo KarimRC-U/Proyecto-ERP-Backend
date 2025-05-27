@@ -10,23 +10,6 @@ export default class circularService {
         this.tokenService = new TokenService()
     }
 
-    async getAll() {
-        return await this.circularRepository.getAll()
-    }
-
-    async findByCorreo(correo) {
-        const circular = this.circularRepository.findByCorreo(correo)
-        if (!circular) {
-            throw { message: 'Circular No Encontrado', statusCode: 404 }
-        }
-
-        return circular
-    }
-
-    async findByRol(rol) {
-        return await this.circularRepository.findByRol(rol)
-    }
-
     async create(staffData) {
         const { nombre, apaterno, amaterno, correo, password } = staffData;
 
@@ -74,13 +57,31 @@ export default class circularService {
         await this.circularRepository.delete(id)
     }
 
-    async getByCircular(correo) {
-        const staff = await this.staffRepository.findByCorreo(correo)
+    async getAll() {
+        return await this.circularRepository.getAll()
+    }
 
-        if (!staff) {
-            throw { message: 'El correo no existe', statusCode: 404 }
+    async getById(id) {
+        const circular = await this.circularRepository.getById(id);
+        if (!circular) {
+            throw { message: 'Circular no encontrado', statusCode: 404 };
         }
+        return circular;
+    }
 
-        return circular
+    async getByDate(date) {
+        return await this.circularRepository.getByDate(date);
+    }
+
+    async getByDateOrder(date, order = 'asc') {
+        return await this.circularRepository.getByDateOrder(date, order);
+    }
+
+    async getByKeywords(keywords) {
+        return await this.circularRepository.findByKeywords(keywords);
+    }
+
+    async getTotalCirculars() {
+        return await this.circularRepository.getTotalCirculars();
     }
 }

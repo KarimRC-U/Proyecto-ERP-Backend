@@ -9,10 +9,12 @@ export default class circularRepository extends IcircularRepository {
     }
 
     async create(circular) {
-        const circularCreated = await this.collection.add(circular)
+        const id = await this.getNextId();
+        const circularWithId = { ...circular, id };
+        const circularCreated = await this.collection.add(circularWithId);
         return {
             id: circularCreated.id,
-            ...circular
+            ...circularWithId
         }
     }
 
@@ -34,38 +36,52 @@ export default class circularRepository extends IcircularRepository {
         }))
     }
 
-    async findByFullname(nombre, apaterno, amaterno) {
-        const datosDB = await this.collection
-            .where('nombre', '==', nombre)
-            .where('apaterno', '==', apaterno)
-            .where('amaterno', '==', amaterno)
-            .get()
-        return datosDB.empty ? null : { id: datosDB.docs[0].id, ...datosDB.docs[0].data() }
-    }
-
-    async findByCorreo(correo) {
-        const datosDB = await this.collection.where('correo', '==', correo).get()
-        return datosDB.empty ? null : { id: datosDB.docs[0].id, ...datosDB.docs[0].data() }
-    }
-
-    async findByRol(rol) {
-        const datosDB = await this.collection.where('rol', '==', rol).get()
-        return datosDB.empty ? null : { id: datosDB.docs[0].id, ...datosDB.docs[0].data() }
-    }
-
-    async updateSessionToken(circularId, sessionToken) {
-        const circular = this.collection.doc(circularId)
-        await circular.update({ currentSessionToken: sessionToken })
-    }
-
-    async getSessionToken(circularId) {
-        const circular = this.collection.doc(circularId)
-        const circularLogged = await circular.get()
-        return circularLogged.exists ? circularLogged.data().currentSessionToken : null
-    }
-
     async getById(id) {
-        const doc = await this.collection.doc(id).get()
-        return !doc.exists ? null : { id: doc.id, ...doc.data() }
+        const snapshot = await this.collection.where('id', '==', Number(id)).get();
+        return snapshot.empty ? null : { id: snapshot.docs[0].id, ...snapshot.docs[0].data() };
+    }
+
+    async getByDate(date) {
+        const snapshot = await this.collection.where('date', '==', date).get();
+        return snapshot.empty
+            ? []
+            : snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    }
+
+    async getByDateOrder(date, order = 'asc') {
+        const snapshot = await this.collection
+            .where('date', '==', date)
+            .orderBy('title', order)
+            .get();
+        return snapshot.empty
+            ? []
+            : snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    }
+
+    async findByKeywords(keywords) {
+        const lowerKeywords = keywords.toLowerCase();
+        const snapshot = await this.collection.get();
+        const results = [];
+        snapshot.forEach(doc => {
+            const data = doc.data();
+            if (
+                (data.title && data.title.toLowerCase().includes(lowerKeywords)) ||
+                (data.message && data.message.toLowerCase().includes(lowerKeywords))
+            ) {
+                results.push({ id: doc.id, ...data });
+            }
+        });
+        return results;
+    }
+
+    async getTotalCirculars() {
+        const snapshot = await this.collection.get();
+        return snapshot.size;
+    }
+
+    async getNextId() {
+        const snapshot = await this.collection.orderBy('id', 'desc').limit(1).get();
+        if (snapshot.empty) return 0;
+        return (snapshot.docs[0].data().id || 0) + 1;
     }
 }

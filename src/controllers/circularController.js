@@ -5,34 +5,6 @@ export default class circularController {
         this.circularService = new circularService()
     }
 
-    async getAll(req, res, next) {
-        try {
-            const circulars = await this.circularService.getAll()
-            res.json({ circulars })
-        } catch (error) {
-            next(error)
-        }
-    }
-
-    async getByNumber(req, res, next) {
-        try {
-            const { circularNo } = req.params
-            const circular = await this.circularService.findByNumber(circularNo)
-            res.json({ circular })
-        } catch (error) {
-            next(error)
-        }
-    }
-
-    async getByDate(req, res, next) {
-        try {
-            const { date } = req.params
-            const circular = await this.circularService.findByDate(date)
-            res.json({ circular })
-        } catch (error) {
-            next(error)
-        }
-    }
 
     async create(req, res, next) {
         try {
@@ -62,6 +34,64 @@ export default class circularController {
             res.status(204).end()
         } catch (error) {
             next(error)
+        }
+    }
+
+    async getAll(req, res, next) {
+        try {
+            const circulars = await this.circularService.getAll()
+            res.json({ circulars })
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    async getById(req, res, next) {
+        try {
+            const { id } = req.params;
+            const circular = await this.circularService.getById(id);
+            res.json({ circular });
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    async getByDate(req, res, next) {
+        try {
+            const { date } = req.params;
+            const circulars = await this.circularService.getByDate(date);
+            res.json({ circulars });
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    async getByDateOrder(req, res, next) {
+        try {
+            const { date, order } = req.params;
+            const circulars = await this.circularService.getByDateOrder(date, order || 'asc');
+            res.json({ circulars });
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    async getByKeywords(req, res, next) {
+        try {
+            const { keywords } = req.params;
+            const circulars = await this.circularService.getByKeywords(keywords);
+            res.json({ circulars });
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    async getTotalCirculars(req, res, next) {
+        try {
+            const total = await this.circularService.getTotalCirculars();
+            res.json({ total });
+        } catch (error) {
+            next(error);
         }
     }
 

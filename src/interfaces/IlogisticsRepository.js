@@ -14,4 +14,22 @@ export default class IlogisticsRepository {
     getById(id) {
         throw new Error('Metodo no implementado')
     }
+    getByTitle(title) {
+        throw new Error('Metodo no implementado')
+    }
+    getByStaff(staffid) {
+        throw new Error('Metodo no implementado')
+    }
+    getTotalRequests() {
+        throw new Error('Metodo no implementado')
+    }
+    getTotalCosts() {
+        throw new Error('Metodo no implementado')
+    }
+    getPending() {
+        throw new Error('Metodo no implementado')
+    }
+    getApproved() {
+        throw new Error('Metodo no implementado')
+    }
 }

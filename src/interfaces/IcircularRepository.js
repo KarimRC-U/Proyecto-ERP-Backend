@@ -14,4 +14,16 @@ export default class IcircularRepository {
     getById(id) {
         throw new Error('Metodo no implementado')
     }
+    getByDate(date) {
+        throw new Error('Metodo no implementado')
+    }
+    getByDateOrder(date, order) {
+        throw new Error('Metodo no implementado')
+    }
+    findByKeywords(keywords) {
+        throw new Error('Metodo no implementado')
+    }
+    getTotalCirculars() {
+        throw new Error('Metodo no implementado')
+    }
 }
