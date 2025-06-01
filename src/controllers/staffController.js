@@ -60,8 +60,8 @@ export default class staffController {
     async delete(req, res, next) {
         try {
             const { id } = req.params
-            const staff = await this.staffService.delete(id)
-            res.json(204).end()
+            await this.staffService.delete(id)
+            res.status(204).end()
         } catch (error) {
             next(error)
         }

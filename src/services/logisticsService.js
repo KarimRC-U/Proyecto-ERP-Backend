@@ -1,8 +1,6 @@
 import logisticsRepository from "../repositories/logisticsRepository.js"
 import { Logistics } from "../models/Logistics.js"
 import TokenService from "./tokenService.js"
-import bcrypt from 'bcrypt'
-import jwt from 'jsonwebtoken'
 
 export default class logisticsService {
     constructor() {
@@ -37,21 +35,13 @@ export default class logisticsService {
         return this.logisticsRepository.create({ ...newLogistics });
     }
 
-    async update(id, staffData) {
-        const { password } = staffData
-        const updatestaff = await this.staffRepository.getById(id)
-
-        if (!updatestaff) {
-            throw { message: 'Staff No Encontrado', statusCode: 404 }
+    async update(id, logisticsData) {
+        const existingLogistics = await this.logisticsRepository.getById(id);
+        if (!existingLogistics) {
+            throw { message: 'Logistics No Encontrado', statusCode: 404 }
         }
-
-        if (password) {
-            updatestaff.password = await bcrypt.hash(password, 10)
-        }
-
-        const newstaff = new Logistics({ ...updatestaff, ...staffData, password: updatestaff.password })
-
-        return this.logisticsRepository.update(id, { ...newstaff })
+        const updatedLogistics = new Logistics({ ...existingLogistics, ...logisticsData });
+        return this.logisticsRepository.update(id, { ...updatedLogistics });
     }
 
     async delete(id) {

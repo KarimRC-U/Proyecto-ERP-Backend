@@ -27,42 +27,20 @@ export default class trainingService {
         return await this.trainingRepository.findByRol(rol)
     }
 
-    async create(staffData) {
-        const { nombre, apaterno, amaterno, correo, password } = staffData;
+    async create(trainingData) {
+        const { description, startDate, type, duration, mode, status } = trainingData;
 
-        const uniquestaff = await this.staffRepository.findByCorreo(correo);
-        if (uniquestaff) {
-            throw { message: 'El correo ya existe', statusCode: 400 };
-        }
-
-        const uniqueFullname = await this.staffRepository.findByFullname(nombre, apaterno, amaterno);
-        if (uniqueFullname) {
-            throw { message: 'Ya existe un correo con el mismo nombre completo', statusCode: 400 };
-        }
-
-        const randomDigits = Math.floor(100 + Math.random() * 900);
-        const staffid = `${nombre[0]}${apaterno[0]}${amaterno[0]}${randomDigits}`.toUpperCase();
-
-        const hashedPassword = await bcrypt.hash(password, 10);
-        const newstaff = new Training({ ...staffData, password: hashedPassword, staffid });
-        return this.staffRepository.create({ ...newstaff });
+        const newTraining = new Training({ description, startDate, type, duration, mode, status });
+        return this.trainingRepository.create({ ...newTraining });
     }
 
-    async update(id, staffData) {
-        const { password } = staffData
-        const updatestaff = await this.staffRepository.getById(id)
-
-        if (!updatestaff) {
-            throw { message: 'Staff No Encontrado', statusCode: 404 }
+    async update(id, trainingData) {
+        const existingTraining = await this.trainingRepository.getById(id);
+        if (!existingTraining) {
+            throw { message: 'Training No Encontrado', statusCode: 404 }
         }
-
-        if (password) {
-            updatestaff.password = await bcrypt.hash(password, 10)
-        }
-
-        const newstaff = new Training({ ...updatestaff, ...staffData, password: updatestaff.password })
-
-        return this.trainingRepository.update(id, { ...newstaff })
+        const updatedTraining = new Training({ ...existingTraining, ...trainingData });
+        return this.trainingRepository.update(id, { ...updatedTraining });
     }
 
     async delete(id) {

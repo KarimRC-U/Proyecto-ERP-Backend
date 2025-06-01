@@ -1,4 +1,4 @@
-export class Circular3D {
+export class Circular {
     constructor({ id, title, sentFrom, sentTo = [], date, message }) {
         this.id = id;
         this.title = title;
