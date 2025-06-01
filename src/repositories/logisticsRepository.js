@@ -91,4 +91,10 @@ export default class logisticsRepository extends IlogisticsRepository {
         const snapshot = await this.collection.where('status', '==', 'Approved').get();
         return snapshot.size;
     }
+
+    async getNextId() {
+        const snapshot = await this.collection.orderBy('id', 'desc').limit(1).get();
+        if (snapshot.empty) return 1;
+        return (snapshot.docs[0].data().id || 0) + 1;
+    }
 }

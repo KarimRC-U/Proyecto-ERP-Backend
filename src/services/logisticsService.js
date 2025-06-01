@@ -10,42 +10,31 @@ export default class logisticsService {
         this.tokenService = new TokenService()
     }
 
-    async getAll() {
-        return await this.logisticsRepository.getAll()
-    }
+    async create(logisticsData) {
+        const {
+            title,
+            purpose,
+            amount,
+            requestedBy,
+            sentTo,
+            date,
+            status = "Pending"
+        } = logisticsData;
 
-    async findByCorreo(correo) {
-        const logistics = this.logisticsRepository.findByCorreo(correo)
-        if (!logistics) {
-            throw { message: 'Logistics No Encontrado', statusCode: 404 }
-        }
+        const id = await this.logisticsRepository.getNextId();
 
-        return logistics
-    }
+        const newLogistics = new Logistics({
+            id,
+            title,
+            purpose,
+            amount,
+            requestedBy,
+            sentTo,
+            date,
+            status
+        });
 
-    async findByRol(rol) {
-        return await this.logisticsRepository.findByRol(rol)
-    }
-
-    async create(staffData) {
-        const { nombre, apaterno, amaterno, correo, password } = staffData;
-
-        const uniquestaff = await this.staffRepository.findByCorreo(correo);
-        if (uniquestaff) {
-            throw { message: 'El correo ya existe', statusCode: 400 };
-        }
-
-        const uniqueFullname = await this.staffRepository.findByFullname(nombre, apaterno, amaterno);
-        if (uniqueFullname) {
-            throw { message: 'Ya existe un correo con el mismo nombre completo', statusCode: 400 };
-        }
-
-        const randomDigits = Math.floor(100 + Math.random() * 900);
-        const staffid = `${nombre[0]}${apaterno[0]}${amaterno[0]}${randomDigits}`.toUpperCase();
-
-        const hashedPassword = await bcrypt.hash(password, 10);
-        const newstaff = new Logistics({ ...staffData, password: hashedPassword, staffid });
-        return this.staffRepository.create({ ...newstaff });
+        return this.logisticsRepository.create({ ...newLogistics });
     }
 
     async update(id, staffData) {
@@ -74,14 +63,8 @@ export default class logisticsService {
         await this.logisticsRepository.delete(id)
     }
 
-    async getByLogistics(correo) {
-        const staff = await this.staffRepository.findByCorreo(correo)
-
-        if (!staff) {
-            throw { message: 'El correo no existe', statusCode: 404 }
-        }
-
-        return logistics
+    async getAll() {
+        return await this.logisticsRepository.getAll()
     }
 
     async getById(id) {
