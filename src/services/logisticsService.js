@@ -19,6 +19,14 @@ export default class logisticsService {
             status = "Pending"
         } = logisticsData;
 
+        const allLogistics = await this.logisticsRepository.getAll();
+        const duplicate = allLogistics.find(
+            l => l.title === title && l.date === date
+        );
+        if (duplicate) {
+            throw { message: 'Ya existe una solicitud logística con este título y fecha', statusCode: 400 };
+        }
+
         const id = await this.logisticsRepository.getNextId();
 
         const newLogistics = new Logistics({

@@ -11,14 +11,14 @@ export default class circularService {
     }
 
     async create(circularData) {
-        const { circularNo, title, body, date, attachments = false, circularType } = circularData;
+        const { id, title, sentFrom, sentTo = [], date, message } = circularData;
 
-        const uniqueCircular = await this.circularRepository.findByNumber(circularNo);
+        const uniqueCircular = await this.circularRepository.getById(id);
         if (uniqueCircular) {
             throw { message: 'Este circular ya existe', statusCode: 400 };
         }
 
-        const newCircular = new Circular({ circularNo, title, body, date, attachments, circularType });
+        const newCircular = new Circular({ id, title, sentFrom, sentTo, date, message });
         return this.circularRepository.create({ ...newCircular });
     }
 

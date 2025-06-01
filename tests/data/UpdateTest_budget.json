@@ -1,0 +1,7 @@
+[
+  { "actualAmount": 900, "variance": 100 },
+  { "actualAmount": 1900, "variance": 100 },
+  { "actualAmount": 1300, "variance": 200 },
+  { "actualAmount": 2600, "variance": 400 },
+  { "actualAmount": 2100, "variance": 400 }
+]

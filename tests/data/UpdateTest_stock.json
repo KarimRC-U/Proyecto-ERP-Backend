@@ -1,0 +1,7 @@
+[
+  { "inStock": 8, "status": "Low In Stock" },
+  { "inStock": 40, "status": "In Stock" },
+  { "inStock": 18, "status": "Low In Stock" },
+  { "inStock": 25, "status": "Low In Stock" },
+  { "inStock": 10, "status": "Low In Stock" }
+]

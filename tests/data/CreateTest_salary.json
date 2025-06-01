@@ -1,0 +1,7 @@
+[
+  { "title": "Developer", "level": "Junior", "basicSalary": 1000, "allowance": 100, "deductions": 50 },
+  { "title": "Developer", "level": "Senior", "basicSalary": 2000, "allowance": 200, "deductions": 100 },
+  { "title": "Manager", "level": "Mid", "basicSalary": 3000, "allowance": 300, "deductions": 150 },
+  { "title": "QA", "level": "Junior", "basicSalary": 1200, "allowance": 120, "deductions": 60 },
+  { "title": "Support", "level": "Senior", "basicSalary": 1500, "allowance": 150, "deductions": 75 }
+]

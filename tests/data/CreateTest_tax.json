@@ -1,0 +1,7 @@
+[
+  { "taxType": "IVA", "percentageValue": 16 },
+  { "taxType": "ISR", "percentageValue": 30 },
+  { "taxType": "IEPS", "percentageValue": 8 },
+  { "taxType": "ISN", "percentageValue": 2 },
+  { "taxType": "Predial", "percentageValue": 1 }
+]

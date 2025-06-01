@@ -1,0 +1,7 @@
+[
+  { "housingAllowance": 110, "taxOrPaye": 55 },
+  { "housingAllowance": 210, "taxOrPaye": 105 },
+  { "housingAllowance": 160, "taxOrPaye": 80 },
+  { "housingAllowance": 130, "taxOrPaye": 65 },
+  { "housingAllowance": 190, "taxOrPaye": 95 }
+]

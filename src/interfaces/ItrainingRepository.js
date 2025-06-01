@@ -14,4 +14,19 @@ export default class ItrainingRepository {
     getById(id) {
         throw new Error('Metodo no implementado')
     }
+    getByDate(date) {
+        throw new Error('Metodo no implementado')
+    }
+    getNextId() {
+        throw new Error('Metodo no implementado')
+    }
+    getTotalRequests() {
+        throw new Error('Metodo no implementado')
+    }
+    getTotalStaffTrained() {
+        throw new Error('Metodo no implementado')
+    }
+    getTotalDone() {
+        throw new Error('Metodo no implementado')
+    }
 }

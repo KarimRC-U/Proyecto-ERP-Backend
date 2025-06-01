@@ -10,6 +10,16 @@ export default class trainingService {
 
     async create(trainingData) {
         const { description, startDate, type, duration, mode, status, staffList = [] } = trainingData;
+
+        // Prevent duplicate training by description and startDate
+        const allTrainings = await this.trainingRepository.getAll();
+        const duplicate = allTrainings.find(
+            t => t.description === description && t.startDate === startDate
+        );
+        if (duplicate) {
+            throw { message: 'Ya existe una capacitación con esta descripción y fecha', statusCode: 400 };
+        }
+
         const newTraining = new Training({ description, startDate, type, duration, mode, status });
         return this.trainingRepository.create({ ...newTraining, staffList });
     }

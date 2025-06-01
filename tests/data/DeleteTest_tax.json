@@ -1,0 +1,7 @@
+[
+  { "taxType": "IVA" },
+  { "taxType": "ISR" },
+  { "taxType": "IEPS" },
+  { "taxType": "ISN" },
+  { "taxType": "Predial" }
+]

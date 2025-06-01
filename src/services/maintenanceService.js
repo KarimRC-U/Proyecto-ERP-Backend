@@ -8,7 +8,15 @@ export default class maintenanceService {
 
     async create(maintenanceData) {
         const { itemName, itemNumber, date, type, isRecurring = false, status = "Unknown" } = maintenanceData;
-        
+
+        const allMaintenances = await this.maintenanceRepository.getAll();
+        const duplicate = allMaintenances.find(
+            m => m.itemName === itemName && m.itemNumber === itemNumber && m.date === date
+        );
+        if (duplicate) {
+            throw { message: 'Ya existe un mantenimiento para este artículo y fecha', statusCode: 400 };
+        }
+
         const newMaintenance = new MaintenanceSchedule({ itemName, itemNumber, date, type, isRecurring, status });
         return this.maintenanceRepository.create({ ...newMaintenance });
     }

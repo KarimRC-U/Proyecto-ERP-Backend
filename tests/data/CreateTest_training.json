@@ -1,0 +1,7 @@
+[
+  { "description": "React Basics", "startDate": "2024-07-01", "type": "Technical", "duration": "2 days", "mode": "Online", "status": "Scheduled", "staffList": [] },
+  { "description": "Node.js Advanced", "startDate": "2024-07-02", "type": "Technical", "duration": "3 days", "mode": "Offline", "status": "Scheduled", "staffList": [] },
+  { "description": "Soft Skills", "startDate": "2024-07-03", "type": "HR", "duration": "1 day", "mode": "Online", "status": "Scheduled", "staffList": [] },
+  { "description": "Security", "startDate": "2024-07-04", "type": "Technical", "duration": "2 days", "mode": "Offline", "status": "Scheduled", "staffList": [] },
+  { "description": "Leadership", "startDate": "2024-07-05", "type": "HR", "duration": "1 day", "mode": "Online", "status": "Scheduled", "staffList": [] }
+]

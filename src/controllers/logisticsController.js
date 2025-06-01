@@ -7,8 +7,8 @@ export default class logisticsController {
 
     async getAll(req, res, next) {
         try {
-            const logisticss = await this.logisticsService.getAll()
-            res.json({ logisticss })
+            const logistics = await this.logisticsService.getAll()
+            res.json({ logistics })
         } catch (error) {
             next(error)
         }
@@ -78,8 +78,8 @@ export default class logisticsController {
     async getByTitle(req, res, next) {
         try {
             const { title } = req.params;
-            const logisticss = await this.logisticsService.getByTitle(title);
-            res.json({ logisticss });
+            const logistics = await this.logisticsService.getByTitle(title);
+            res.json({ logistics });
         } catch (error) {
             next(error);
         }
@@ -88,8 +88,8 @@ export default class logisticsController {
     async getByStaff(req, res, next) {
         try {
             const { staffid } = req.params;
-            const logisticss = await this.logisticsService.getByStaff(staffid);
-            res.json({ logisticss });
+            const logistics = await this.logisticsService.getByStaff(staffid);
+            res.json({ logistics });
         } catch (error) {
             next(error);
         }

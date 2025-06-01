@@ -1,0 +1,7 @@
+[
+  { "budgetNo": "B001", "description": "Office Supplies", "budgetedAmount": 1000, "actualAmount": 800, "variance": 200, "date": "2024-07-01", "status": "approved" },
+  { "budgetNo": "B002", "description": "Travel", "budgetedAmount": 2000, "actualAmount": 1800, "variance": 200, "date": "2024-07-02", "status": "approved" },
+  { "budgetNo": "B003", "description": "Training", "budgetedAmount": 1500, "actualAmount": 1200, "variance": 300, "date": "2024-07-03", "status": "approved" },
+  { "budgetNo": "B004", "description": "Equipment", "budgetedAmount": 3000, "actualAmount": 2500, "variance": 500, "date": "2024-07-04", "status": "approved" },
+  { "budgetNo": "B005", "description": "Marketing", "budgetedAmount": 2500, "actualAmount": 2000, "variance": 500, "date": "2024-07-05", "status": "approved" }
+]

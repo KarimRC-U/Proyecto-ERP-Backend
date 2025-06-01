@@ -11,6 +11,16 @@ export default class payrollService {
     }
 
     async create(payrollData) {
+        const { paymentMonth, paymentYear } = payrollData;
+        
+        const allPayrolls = await this.payrollRepository.getAll();
+        const duplicate = allPayrolls.find(
+            p => p.paymentMonth === paymentMonth && p.paymentYear === paymentYear
+        );
+        if (duplicate) {
+            throw { message: 'Ya existe una nómina para este mes y año', statusCode: 400 };
+        }
+
         const newPayroll = new Payroll(payrollData);
         return this.payrollRepository.create({ ...newPayroll });
     }

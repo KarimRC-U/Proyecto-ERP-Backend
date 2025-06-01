@@ -12,6 +12,13 @@ export default class taxService {
 
     async create(taxData) {
         const { taxType, percentageValue } = taxData;
+
+        const allTaxes = await this.taxRepository.getAll();
+        const duplicate = allTaxes.find(t => t.taxType === taxType);
+        if (duplicate) {
+            throw { message: 'Ya existe un impuesto con este tipo', statusCode: 400 };
+        }
+
         const newTax = new Tax({ taxType, percentageValue });
         return this.taxRepository.create({ ...newTax });
     }

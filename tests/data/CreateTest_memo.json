@@ -1,0 +1,7 @@
+[
+  { "memoNo": "M001", "sentFrom": "Admin", "sentTo": ["Staff1"], "date": "2024-07-01", "attachments": false, "memoType": "sent", "body": "Welcome to the company." },
+  { "memoNo": "M002", "sentFrom": "HR", "sentTo": ["Staff2"], "date": "2024-07-02", "attachments": false, "memoType": "sent", "body": "Policy update." },
+  { "memoNo": "M003", "sentFrom": "IT", "sentTo": ["Staff3"], "date": "2024-07-03", "attachments": false, "memoType": "sent", "body": "System maintenance." },
+  { "memoNo": "M004", "sentFrom": "Manager", "sentTo": ["Staff4"], "date": "2024-07-04", "attachments": false, "memoType": "sent", "body": "Meeting schedule." },
+  { "memoNo": "M005", "sentFrom": "Support", "sentTo": ["Staff5"], "date": "2024-07-05", "attachments": false, "memoType": "sent", "body": "Support update." }
+]

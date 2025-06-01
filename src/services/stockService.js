@@ -21,6 +21,17 @@ export default class stockService {
             status = "In Stock"
         } = stockData;
 
+        const allStocks = await this.stockRepository.getAll();
+        const duplicate = allStocks.find(
+            stock =>
+                stock.productName === productName &&
+                stock.category === category &&
+                stock.supplier === supplier
+        );
+        if (duplicate) {
+            throw { message: 'Este producto ya existe con el mismo nombre, categoría y proveedor', statusCode: 400 };
+        }
+
         const productId = await this.stockRepository.getNextProductId();
 
         const newStock = new Stock({

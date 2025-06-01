@@ -1,0 +1,7 @@
+[
+  { "image": "img1.png", "productName": "Laptop", "category": "Electronics", "quantityPurchased": 10, "unitPrice": 15000, "totalPrice": 150000, "inStock": 10, "supplier": "Dell", "status": "In Stock" },
+  { "image": "img2.png", "productName": "Mouse", "category": "Electronics", "quantityPurchased": 50, "unitPrice": 200, "totalPrice": 10000, "inStock": 50, "supplier": "Logitech", "status": "In Stock" },
+  { "image": "img3.png", "productName": "Desk", "category": "Furniture", "quantityPurchased": 20, "unitPrice": 1200, "totalPrice": 24000, "inStock": 20, "supplier": "OfficeMax", "status": "In Stock" },
+  { "image": "img4.png", "productName": "Chair", "category": "Furniture", "quantityPurchased": 30, "unitPrice": 800, "totalPrice": 24000, "inStock": 30, "supplier": "OfficeDepot", "status": "In Stock" },
+  { "image": "img5.png", "productName": "Monitor", "category": "Electronics", "quantityPurchased": 15, "unitPrice": 3000, "totalPrice": 45000, "inStock": 15, "supplier": "Samsung", "status": "In Stock" }
+]

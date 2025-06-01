@@ -1,0 +1,7 @@
+[
+  { "staffid": "FCR123", "staffName": "Fernando Castillo", "title": "Developer", "level": "Junior", "basicSalary": 1000, "housingAllowance": 100, "transportAllowance": 50, "utilityAllowance": 20, "productivityAllowance": 30, "communicationAllowance": 10, "inconvenienceAllowance": 5, "taxOrPaye": 50, "pension": 20 },
+  { "staffid": "ALM456", "staffName": "Ana Lopez", "title": "Manager", "level": "Senior", "basicSalary": 2000, "housingAllowance": 200, "transportAllowance": 100, "utilityAllowance": 40, "productivityAllowance": 60, "communicationAllowance": 20, "inconvenienceAllowance": 10, "taxOrPaye": 100, "pension": 40 },
+  { "staffid": "LPG789", "staffName": "Luis Perez", "title": "QA", "level": "Mid", "basicSalary": 1500, "housingAllowance": 150, "transportAllowance": 75, "utilityAllowance": 30, "productivityAllowance": 45, "communicationAllowance": 15, "inconvenienceAllowance": 8, "taxOrPaye": 75, "pension": 30 },
+  { "staffid": "MHD012", "staffName": "Maria Hernandez", "title": "Support", "level": "Junior", "basicSalary": 1200, "housingAllowance": 120, "transportAllowance": 60, "utilityAllowance": 24, "productivityAllowance": 36, "communicationAllowance": 12, "inconvenienceAllowance": 6, "taxOrPaye": 60, "pension": 24 },
+  { "staffid": "CRS345", "staffName": "Carlos Ramirez", "title": "Admin", "level": "Senior", "basicSalary": 1800, "housingAllowance": 180, "transportAllowance": 90, "utilityAllowance": 36, "productivityAllowance": 54, "communicationAllowance": 18, "inconvenienceAllowance": 9, "taxOrPaye": 90, "pension": 36 }
+]

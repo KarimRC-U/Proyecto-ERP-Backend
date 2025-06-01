@@ -1,0 +1,57 @@
+[
+  {
+    "nombre": "Fernando",
+    "apaterno": "Castillo",
+    "amaterno": "Rodriguez",
+    "designacion": "Developer",
+    "telefono": "0987654321",
+    "genero": "Masculino",
+    "estado": "Activo",
+    "correo": "fernando1@ugto.mx",
+    "password": "1234"
+  },
+  {
+    "nombre": "Ana",
+    "apaterno": "Lopez",
+    "amaterno": "Martinez",
+    "designacion": "Manager",
+    "telefono": "1234567890",
+    "genero": "Femenino",
+    "estado": "Activo",
+    "correo": "ana1@ugto.mx",
+    "password": "abcd"
+  },
+  {
+    "nombre": "Luis",
+    "apaterno": "Perez",
+    "amaterno": "Gomez",
+    "designacion": "QA",
+    "telefono": "1112223333",
+    "genero": "Masculino",
+    "estado": "Activo",
+    "correo": "luis1@ugto.mx",
+    "password": "pass"
+  },
+  {
+    "nombre": "Maria",
+    "apaterno": "Hernandez",
+    "amaterno": "Diaz",
+    "designacion": "Support",
+    "telefono": "2223334444",
+    "genero": "Femenino",
+    "estado": "Activo",
+    "correo": "maria1@ugto.mx",
+    "password": "word"
+  },
+  {
+    "nombre": "Carlos",
+    "apaterno": "Ramirez",
+    "amaterno": "Sanchez",
+    "designacion": "Admin",
+    "telefono": "3334445555",
+    "genero": "Masculino",
+    "estado": "Activo",
+    "correo": "carlos1@ugto.mx",
+    "password": "admin"
+  }
+]
