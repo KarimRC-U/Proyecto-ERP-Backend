@@ -32,7 +32,4 @@ export default class IlogisticsRepository {
     getApproved() {
         throw new Error('Metodo no implementado')
     }
-    getNextId() {
-        throw new Error('Metodo no implementado')
-    }
 }

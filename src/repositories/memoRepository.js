@@ -1,6 +1,6 @@
 import ImemoRepository from "../interfaces/ImemoRepository.js"
 import { db } from "../config/firebase.js";
-
+import { getNextId } from "../utils/getNextId.js";
 export default class memoRepository extends ImemoRepository {
 
     constructor() {
@@ -9,11 +9,12 @@ export default class memoRepository extends ImemoRepository {
     }
 
     async create(memo) {
-        const memoCreated = await this.collection.add(memo)
-
+        const id = await getNextId('memo-node')
+        const memoWithId = { ...memo, id }
+        const memoCreated = await this.collection.add(memoWithId)
         return {
             id: memoCreated.id,
-            ...memo
+            ...memoWithId
         }
     }
 

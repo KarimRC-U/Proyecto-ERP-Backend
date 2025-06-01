@@ -1,6 +1,6 @@
 import ItrainingRepository from "../interfaces/ItrainingRepository.js"
 import { db } from "../config/firebase.js"
-
+import { getNextId } from "../utils/getNextId.js"
 export default class trainingRepository extends ItrainingRepository {
 
     constructor() {
@@ -8,15 +8,9 @@ export default class trainingRepository extends ItrainingRepository {
         this.collection = db.collection('training-node')
     }
 
-    async getNextId() {
-        const snapshot = await this.collection.orderBy('id', 'desc').limit(1).get();
-        if (snapshot.empty) return 1;
-        return (snapshot.docs[0].data().id || 0) + 1;
-    }
-
     async create(training) {
-        const id = await this.getNextId();
-        const trainingWithId = { ...training, id };
+        const id = await getNextId('training-node')
+        const trainingWithId = { ...training, id }
         const trainingCreated = await this.collection.add(trainingWithId)
         return {
             id: trainingCreated.id,

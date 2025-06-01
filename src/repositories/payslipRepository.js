@@ -1,6 +1,6 @@
 import IpayslipRepository from "../interfaces/IpayslipRepository.js"
 import { db } from "../config/firebase.js"
-
+import { getNextId } from "../utils/getNextId.js"
 export default class payslipRepository extends IpayslipRepository {
 
     constructor() {
@@ -9,10 +9,12 @@ export default class payslipRepository extends IpayslipRepository {
     }
 
     async create(payslip) {
-        const payslipCreated = await this.collection.add(payslip)
+        const id = await getNextId('payslip-node')
+        const payslipWithId = { ...payslip, id }
+        const payslipCreated = await this.collection.add(payslipWithId)
         return {
             id: payslipCreated.id,
-            ...payslip
+            ...payslipWithId
         }
     }
 

@@ -1,5 +1,6 @@
 import IbudgetRepository from "../interfaces/IbudgetRepository.js"
-import { db } from "../config/firebase.js";
+import { db } from "../config/firebase.js"
+import { getNextId } from "./idManager.js"
 
 export default class budgetRepository extends IbudgetRepository {
 
@@ -9,11 +10,12 @@ export default class budgetRepository extends IbudgetRepository {
     }
 
     async create(budget) {
-        const budgetCreated = await this.collection.add(budget)
-
+        const id = await getNextId('budget-node')
+        const budgetWithId = { ...budget, id }
+        const budgetCreated = await this.collection.add(budgetWithId)
         return {
             id: budgetCreated.id,
-            ...budget
+            ...budgetWithId
         }
     }
 
@@ -23,16 +25,16 @@ export default class budgetRepository extends IbudgetRepository {
     }
 
     async delete(id) {
-        await this.collection.doc(id).delete();
+        await this.collection.doc(id).delete()
         return { id, messaje: 'budget Eliminado'}
     }
     
     async getAll() {
         const presupuestos = await this.collection.get()
         return presupuestos.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data()
-        }));
+            id: doc.id,
+            ...doc.data()
+        }))
     } 
     
     async findByNumber(budgetNo) {

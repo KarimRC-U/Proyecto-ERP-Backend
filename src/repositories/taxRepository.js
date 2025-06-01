@@ -1,6 +1,6 @@
 import ItaxRepository from "../interfaces/ItaxRepository.js"
 import { db } from "../config/firebase.js"
-
+import { getNextId } from "../utils/getNextId.js"
 export default class taxRepository extends ItaxRepository {
 
     constructor() {
@@ -9,10 +9,12 @@ export default class taxRepository extends ItaxRepository {
     }
 
     async create(tax) {
-        const taxCreated = await this.collection.add(tax)
+        const id = await getNextId('tax-node')
+        const taxWithId = { ...tax, id }
+        const taxCreated = await this.collection.add(taxWithId)
         return {
             id: taxCreated.id,
-            ...tax
+            ...taxWithId
         }
     }
 

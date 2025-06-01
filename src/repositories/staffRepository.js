@@ -1,5 +1,6 @@
 import IstaffRepository from "../interfaces/IstaffRepository.js"
-import { db } from "../config/firebase.js";
+import { db } from "../config/firebase.js"
+import { getNextId } from "./idManager.js"
 
 export default class staffRepository extends IstaffRepository {
 
@@ -9,11 +10,12 @@ export default class staffRepository extends IstaffRepository {
     }
 
     async create(staff) {
-        const staffCreated = await this.collection.add(staff)
-
+        const id = await getNextId('staff-node')
+        const staffWithId = { ...staff, id }
+        const staffCreated = await this.collection.add(staffWithId)
         return {
             id: staffCreated.id,
-            ...staff
+            ...staffWithId
         }
     }
 

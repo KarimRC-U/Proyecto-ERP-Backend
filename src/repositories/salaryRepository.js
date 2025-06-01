@@ -1,5 +1,6 @@
 import IsalaryRepository from "../interfaces/IsalaryRepository.js"
 import { db } from "../config/firebase.js"
+import { getNextId } from "../utils/idGenerator.js"
 
 export default class salaryRepository extends IsalaryRepository {
 
@@ -9,10 +10,12 @@ export default class salaryRepository extends IsalaryRepository {
     }
 
     async create(salary) {
-        const salaryCreated = await this.collection.add(salary)
+        const id = await getNextId('salary-node')
+        const salaryWithId = { ...salary, id }
+        const salaryCreated = await this.collection.add(salaryWithId)
         return {
             id: salaryCreated.id,
-            ...salary
+            ...salaryWithId
         }
     }
 
