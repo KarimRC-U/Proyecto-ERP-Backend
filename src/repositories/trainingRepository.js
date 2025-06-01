@@ -8,11 +8,19 @@ export default class trainingRepository extends ItrainingRepository {
         this.collection = db.collection('training-node')
     }
 
+    async getNextId() {
+        const snapshot = await this.collection.orderBy('id', 'desc').limit(1).get();
+        if (snapshot.empty) return 1;
+        return (snapshot.docs[0].data().id || 0) + 1;
+    }
+
     async create(training) {
-        const trainingCreated = await this.collection.add(training)
+        const id = await this.getNextId();
+        const trainingWithId = { ...training, id };
+        const trainingCreated = await this.collection.add(trainingWithId)
         return {
             id: trainingCreated.id,
-            ...training
+            ...trainingWithId
         }
     }
 
@@ -34,22 +42,15 @@ export default class trainingRepository extends ItrainingRepository {
         }))
     }
 
-    async findByFullname(nombre, apaterno, amaterno) {
-        const datosDB = await this.collection
-            .where('nombre', '==', nombre)
-            .where('apaterno', '==', apaterno)
-            .where('amaterno', '==', amaterno)
-            .get()
-        return datosDB.empty ? null : { id: datosDB.docs[0].id, ...datosDB.docs[0].data() }
-    }
-
-    async findByRol(rol) {
-        const datosDB = await this.collection.where('rol', '==', rol).get()
-        return datosDB.empty ? null : { id: datosDB.docs[0].id, ...datosDB.docs[0].data() }
-    }
-
     async getById(id) {
-        const doc = await this.collection.doc(id).get()
-        return !doc.exists ? null : { id: doc.id, ...doc.data() }
+        const snapshot = await this.collection.where('id', '==', Number(id)).get();
+        return snapshot.empty ? null : { id: snapshot.docs[0].id, ...snapshot.docs[0].data() };
+    }
+
+    async getByDate(date) {
+        const snapshot = await this.collection.where('startDate', '==', date).get();
+        return snapshot.empty
+            ? []
+            : snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
     }
 }

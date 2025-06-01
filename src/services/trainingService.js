@@ -1,9 +1,7 @@
 import trainingRepository from "../repositories/trainingRepository.js"
 import { Training } from "../models/Training.js"
 import TokenService from "./tokenService.js"
-import bcrypt from 'bcrypt'
-import jwt from 'jsonwebtoken'
-
+import staffRepository from "../repositories/staffRepository.js"
 export default class trainingService {
     constructor() {
         this.trainingRepository = new trainingRepository()
@@ -11,10 +9,9 @@ export default class trainingService {
     }
 
     async create(trainingData) {
-        const { description, startDate, type, duration, mode, status } = trainingData;
-
+        const { description, startDate, type, duration, mode, status, staffList = [] } = trainingData;
         const newTraining = new Training({ description, startDate, type, duration, mode, status });
-        return this.trainingRepository.create({ ...newTraining });
+        return this.trainingRepository.create({ ...newTraining, staffList });
     }
 
     async update(id, trainingData) {
@@ -23,7 +20,7 @@ export default class trainingService {
             throw { message: 'Training No Encontrado', statusCode: 404 }
         }
         const updatedTraining = new Training({ ...existingTraining, ...trainingData });
-        return this.trainingRepository.update(id, { ...updatedTraining });
+        return this.trainingRepository.update(id, { ...updatedTraining, staffList: trainingData.staffList || existingTraining.staffList });
     }
 
     async delete(id) {
@@ -31,11 +28,51 @@ export default class trainingService {
         if (!trainingExists) {
             throw { message: 'Training No Encontrado', statusCode: 404 }
         }
-
         await this.trainingRepository.delete(id)
     }
 
     async getAll() {
         return await this.trainingRepository.getAll()
+    }
+
+    async getById(id) {
+        const training = await this.trainingRepository.getById(id);
+        if (!training) {
+            throw { message: 'Training No Encontrado', statusCode: 404 }
+        }
+        return training;
+    }
+
+    async getByDate(date) {
+        return await this.trainingRepository.getByDate(date);
+    }
+
+    async getTotalRequests() {
+        const allTrainings = await this.trainingRepository.getAll();
+        return allTrainings.length;
+    }
+
+    async getTotalStaffTrained() {
+        const allTrainings = await this.trainingRepository.getAll();
+        let total = 0;
+        allTrainings.forEach(t => {
+            if (Array.isArray(t.staffList)) {
+                total += t.staffList.length;
+            }
+        });
+        return total;
+    }
+
+    async getTotalDone() {
+        const allTrainings = await this.trainingRepository.getAll();
+        return allTrainings.filter(t => t.status === "Completed").length;
+    }
+
+    async getStaffTrainingRate() {
+        const totalStaffTrained = await this.getTotalStaffTrained();
+       const staffRepo = new staffRepository();
+        const totalStaff = (await staffRepo.getAll()).length;
+        if (!totalStaff || totalStaff === 0) return 0;
+        return (totalStaffTrained / totalStaff) * 100;
     }
 }
