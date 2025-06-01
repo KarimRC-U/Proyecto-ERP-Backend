@@ -34,22 +34,14 @@ export default class stockRepository extends IstockRepository {
         }))
     }
 
-    async findByFullname(nombre, apaterno, amaterno) {
-        const datosDB = await this.collection
-            .where('nombre', '==', nombre)
-            .where('apaterno', '==', apaterno)
-            .where('amaterno', '==', amaterno)
-            .get()
-        return datosDB.empty ? null : { id: datosDB.docs[0].id, ...datosDB.docs[0].data() }
-    }
-
-    async findByRol(rol) {
-        const datosDB = await this.collection.where('rol', '==', rol).get()
-        return datosDB.empty ? null : { id: datosDB.docs[0].id, ...datosDB.docs[0].data() }
-    }
-
     async getById(id) {
         const doc = await this.collection.doc(id).get()
         return !doc.exists ? null : { id: doc.id, ...doc.data() }
+    }
+
+    async getNextProductId() {
+        const snapshot = await this.collection.orderBy('productId', 'desc').limit(1).get();
+        if (snapshot.empty) return 1;
+        return (snapshot.docs[0].data().productId || 0) + 1;
     }
 }

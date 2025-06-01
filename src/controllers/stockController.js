@@ -14,26 +14,6 @@ export default class stockController {
         }
     }
 
-    async getByNumber(req, res, next) {
-        try {
-            const { stockNo } = req.params
-            const stock = await this.stockService.findByNumber(stockNo)
-            res.json({ stock })
-        } catch (error) {
-            next(error)
-        }
-    }
-
-    async getByDate(req, res, next) {
-        try {
-            const { date } = req.params
-            const stock = await this.stockService.findByDate(date)
-            res.json({ stock })
-        } catch (error) {
-            next(error)
-        }
-    }
-
     async create(req, res, next) {
         try {
             const stockData = req.body
@@ -65,4 +45,59 @@ export default class stockController {
         }
     }
 
+    async getByName(req, res, next) {
+        try {
+            const { productName } = req.params
+            const stocks = await this.stockService.getByName(productName)
+            res.json({ stocks })
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    async getById(req, res, next) {
+        try {
+            const { id } = req.params
+            const stock = await this.stockService.getById(id)
+            res.json({ stock })
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    async getTotalCategories(req, res, next) {
+        try {
+            const total = await this.stockService.getTotalCategories()
+            res.json({ total })
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    async getTotalItems(req, res, next) {
+        try {
+            const total = await this.stockService.getTotalItems()
+            res.json({ total })
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    async getTotalItemCost(req, res, next) {
+        try {
+            const total = await this.stockService.getTotalItemCost()
+            res.json({ total })
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    async getItemsInLowStock(req, res, next) {
+        try {
+            const items = await this.stockService.getItemsInLowStock()
+            res.json({ items })
+        } catch (error) {
+            next(error)
+        }
+    }
 }

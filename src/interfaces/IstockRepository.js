@@ -14,4 +14,7 @@ export default class IstockRepository {
     getById(id) {
         throw new Error('Metodo no implementado')
     }
+    getNextProductId() {
+        throw new Error('Metodo no implementado')
+    }
 }

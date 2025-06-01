@@ -1,8 +1,6 @@
 import stockRepository from "../repositories/stockRepository.js"
 import { Stock } from "../models/Stock.js"
 import TokenService from "./tokenService.js"
-import bcrypt from 'bcrypt'
-import jwt from 'jsonwebtoken'
 
 export default class stockService {
     constructor() {
@@ -10,59 +8,78 @@ export default class stockService {
         this.tokenService = new TokenService()
     }
 
-    async getAll() {
-        return await this.stockRepository.getAll()
+    async create(stockData) {
+        const {
+            image,
+            productName,
+            category,
+            quantityPurchased,
+            unitPrice,
+            totalPrice,
+            inStock,
+            supplier,
+            status = "In Stock"
+        } = stockData;
+
+        const productId = await this.stockRepository.getNextProductId();
+
+        const newStock = new Stock({
+            image,
+            productName,
+            productId,
+            category,
+            quantityPurchased,
+            unitPrice,
+            totalPrice,
+            inStock,
+            supplier,
+            status
+        });
+
+        return this.stockRepository.create({ ...newStock });
     }
 
-    async findByCorreo(correo) {
-        const stock = this.stockRepository.findByCorreo(correo)
+    async getByName(productName) {
+        const allStocks = await this.stockRepository.getAll();
+        return allStocks.filter(stock => stock.productName === productName);
+    }
+
+    async getById(id) {
+        const stock = await this.stockRepository.getById(id);
         if (!stock) {
+            throw { message: 'Stock no encontrado', statusCode: 404 };
+        }
+        return stock;
+    }
+
+    async getTotalCategories() {
+        const allStocks = await this.stockRepository.getAll();
+        const categories = new Set(allStocks.map(stock => stock.category));
+        return categories.size;
+    }
+
+    async getTotalItems() {
+        const allStocks = await this.stockRepository.getAll();
+        return allStocks.length;
+    }
+
+    async getTotalItemCost() {
+        const allStocks = await this.stockRepository.getAll();
+        return allStocks.reduce((sum, stock) => sum + (Number(stock.totalPrice) || 0), 0);
+    }
+
+    async getItemsInLowStock() {
+        const allStocks = await this.stockRepository.getAll();
+        return allStocks.filter(stock => stock.status === "Low In Stock");
+    }
+
+    async update(id, stockData) {
+        const stockExists = await this.stockRepository.getById(id);
+        if (!stockExists) {
             throw { message: 'Stock No Encontrado', statusCode: 404 }
         }
-
-        return stock
-    }
-
-    async findByRol(rol) {
-        return await this.stockRepository.findByRol(rol)
-    }
-
-    async create(staffData) {
-        const { nombre, apaterno, amaterno, correo, password } = staffData;
-
-        const uniquestaff = await this.staffRepository.findByCorreo(correo);
-        if (uniquestaff) {
-            throw { message: 'El correo ya existe', statusCode: 400 };
-        }
-
-        const uniqueFullname = await this.staffRepository.findByFullname(nombre, apaterno, amaterno);
-        if (uniqueFullname) {
-            throw { message: 'Ya existe un correo con el mismo nombre completo', statusCode: 400 };
-        }
-
-        const randomDigits = Math.floor(100 + Math.random() * 900);
-        const staffid = `${nombre[0]}${apaterno[0]}${amaterno[0]}${randomDigits}`.toUpperCase();
-
-        const hashedPassword = await bcrypt.hash(password, 10);
-        const newstaff = new Stock({ ...staffData, password: hashedPassword, staffid });
-        return this.staffRepository.create({ ...newstaff });
-    }
-
-    async update(id, staffData) {
-        const { password } = staffData
-        const updatestaff = await this.staffRepository.getById(id)
-
-        if (!updatestaff) {
-            throw { message: 'Staff No Encontrado', statusCode: 404 }
-        }
-
-        if (password) {
-            updatestaff.password = await bcrypt.hash(password, 10)
-        }
-
-        const newstaff = new Stock({ ...updatestaff, ...staffData, password: updatestaff.password })
-
-        return this.stockRepository.update(id, { ...newstaff })
+        const updatedStock = new Stock({ ...stockExists, ...stockData });
+        return this.stockRepository.update(id, { ...updatedStock });
     }
 
     async delete(id) {
@@ -70,17 +87,10 @@ export default class stockService {
         if (!stockExists) {
             throw { message: 'Stock No Encontrado', statusCode: 404 }
         }
-
         await this.stockRepository.delete(id)
     }
 
-    async getByStock(correo) {
-        const staff = await this.staffRepository.findByCorreo(correo)
-
-        if (!staff) {
-            throw { message: 'El correo no existe', statusCode: 404 }
-        }
-
-        return stock
+    async getAll() {
+        return await this.stockRepository.getAll()
     }
 }
