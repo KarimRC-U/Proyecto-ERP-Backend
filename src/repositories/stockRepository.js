@@ -43,25 +43,9 @@ export default class stockRepository extends IstockRepository {
         return datosDB.empty ? null : { id: datosDB.docs[0].id, ...datosDB.docs[0].data() }
     }
 
-    async findByCorreo(correo) {
-        const datosDB = await this.collection.where('correo', '==', correo).get()
-        return datosDB.empty ? null : { id: datosDB.docs[0].id, ...datosDB.docs[0].data() }
-    }
-
     async findByRol(rol) {
         const datosDB = await this.collection.where('rol', '==', rol).get()
         return datosDB.empty ? null : { id: datosDB.docs[0].id, ...datosDB.docs[0].data() }
-    }
-
-    async updateSessionToken(stockId, sessionToken) {
-        const stock = this.collection.doc(stockId)
-        await stock.update({ currentSessionToken: sessionToken })
-    }
-
-    async getSessionToken(stockId) {
-        const stock = this.collection.doc(stockId)
-        const stockLogged = await stock.get()
-        return stockLogged.exists ? stockLogged.data().currentSessionToken : null
     }
 
     async getById(id) {

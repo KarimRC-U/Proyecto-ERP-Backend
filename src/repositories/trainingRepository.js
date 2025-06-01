@@ -43,25 +43,9 @@ export default class trainingRepository extends ItrainingRepository {
         return datosDB.empty ? null : { id: datosDB.docs[0].id, ...datosDB.docs[0].data() }
     }
 
-    async findByCorreo(correo) {
-        const datosDB = await this.collection.where('correo', '==', correo).get()
-        return datosDB.empty ? null : { id: datosDB.docs[0].id, ...datosDB.docs[0].data() }
-    }
-
     async findByRol(rol) {
         const datosDB = await this.collection.where('rol', '==', rol).get()
         return datosDB.empty ? null : { id: datosDB.docs[0].id, ...datosDB.docs[0].data() }
-    }
-
-    async updateSessionToken(trainingId, sessionToken) {
-        const training = this.collection.doc(trainingId)
-        await training.update({ currentSessionToken: sessionToken })
-    }
-
-    async getSessionToken(trainingId) {
-        const training = this.collection.doc(trainingId)
-        const trainingLogged = await training.get()
-        return trainingLogged.exists ? trainingLogged.data().currentSessionToken : null
     }
 
     async getById(id) {

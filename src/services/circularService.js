@@ -10,25 +10,16 @@ export default class circularService {
         this.tokenService = new TokenService()
     }
 
-    async create(staffData) {
-        const { nombre, apaterno, amaterno, correo, password } = staffData;
+    async create(circularData) {
+        const { circularNo, title, body, date, attachments = false, circularType } = circularData;
 
-        const uniquestaff = await this.staffRepository.findByCorreo(correo);
-        if (uniquestaff) {
-            throw { message: 'El correo ya existe', statusCode: 400 };
+        const uniqueCircular = await this.circularRepository.findByNumber(circularNo);
+        if (uniqueCircular) {
+            throw { message: 'Este circular ya existe', statusCode: 400 };
         }
 
-        const uniqueFullname = await this.staffRepository.findByFullname(nombre, apaterno, amaterno);
-        if (uniqueFullname) {
-            throw { message: 'Ya existe un correo con el mismo nombre completo', statusCode: 400 };
-        }
-
-        const randomDigits = Math.floor(100 + Math.random() * 900);
-        const staffid = `${nombre[0]}${apaterno[0]}${amaterno[0]}${randomDigits}`.toUpperCase();
-
-        const hashedPassword = await bcrypt.hash(password, 10);
-        const newstaff = new Circular({ ...staffData, password: hashedPassword, staffid });
-        return this.staffRepository.create({ ...newstaff });
+        const newCircular = new Circular({ circularNo, title, body, date, attachments, circularType });
+        return this.circularRepository.create({ ...newCircular });
     }
 
     async update(id, staffData) {

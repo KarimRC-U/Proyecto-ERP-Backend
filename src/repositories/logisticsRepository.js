@@ -43,25 +43,9 @@ export default class logisticsRepository extends IlogisticsRepository {
         return datosDB.empty ? null : { id: datosDB.docs[0].id, ...datosDB.docs[0].data() }
     }
 
-    async findByCorreo(correo) {
-        const datosDB = await this.collection.where('correo', '==', correo).get()
-        return datosDB.empty ? null : { id: datosDB.docs[0].id, ...datosDB.docs[0].data() }
-    }
-
     async findByRol(rol) {
         const datosDB = await this.collection.where('rol', '==', rol).get()
         return datosDB.empty ? null : { id: datosDB.docs[0].id, ...datosDB.docs[0].data() }
-    }
-
-    async updateSessionToken(logisticsId, sessionToken) {
-        const logistics = this.collection.doc(logisticsId)
-        await logistics.update({ currentSessionToken: sessionToken })
-    }
-
-    async getSessionToken(logisticsId) {
-        const logistics = this.collection.doc(logisticsId)
-        const logisticsLogged = await logistics.get()
-        return logisticsLogged.exists ? logisticsLogged.data().currentSessionToken : null
     }
 
     async getById(id) {

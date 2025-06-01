@@ -43,25 +43,9 @@ export default class maintenanceRepository extends ImaintenanceRepository {
         return datosDB.empty ? null : { id: datosDB.docs[0].id, ...datosDB.docs[0].data() }
     }
 
-    async findByCorreo(correo) {
-        const datosDB = await this.collection.where('correo', '==', correo).get()
-        return datosDB.empty ? null : { id: datosDB.docs[0].id, ...datosDB.docs[0].data() }
-    }
-
     async findByRol(rol) {
         const datosDB = await this.collection.where('rol', '==', rol).get()
         return datosDB.empty ? null : { id: datosDB.docs[0].id, ...datosDB.docs[0].data() }
-    }
-
-    async updateSessionToken(maintenanceId, sessionToken) {
-        const maintenance = this.collection.doc(maintenanceId)
-        await maintenance.update({ currentSessionToken: sessionToken })
-    }
-
-    async getSessionToken(maintenanceId) {
-        const maintenance = this.collection.doc(maintenanceId)
-        const maintenanceLogged = await maintenance.get()
-        return maintenanceLogged.exists ? maintenanceLogged.data().currentSessionToken : null
     }
 
     async getById(id) {

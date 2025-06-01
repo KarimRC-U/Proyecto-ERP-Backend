@@ -43,25 +43,9 @@ export default class payslipRepository extends IpayslipRepository {
         return datosDB.empty ? null : { id: datosDB.docs[0].id, ...datosDB.docs[0].data() }
     }
 
-    async findByCorreo(correo) {
-        const datosDB = await this.collection.where('correo', '==', correo).get()
-        return datosDB.empty ? null : { id: datosDB.docs[0].id, ...datosDB.docs[0].data() }
-    }
-
     async findByRol(rol) {
         const datosDB = await this.collection.where('rol', '==', rol).get()
         return datosDB.empty ? null : { id: datosDB.docs[0].id, ...datosDB.docs[0].data() }
-    }
-
-    async updateSessionToken(payslipId, sessionToken) {
-        const payslip = this.collection.doc(payslipId)
-        await payslip.update({ currentSessionToken: sessionToken })
-    }
-
-    async getSessionToken(payslipId) {
-        const payslip = this.collection.doc(payslipId)
-        const payslipLogged = await payslip.get()
-        return payslipLogged.exists ? payslipLogged.data().currentSessionToken : null
     }
 
     async getById(id) {

@@ -5,36 +5,7 @@ export default class taxController {
         this.taxService = new taxService()
     }
 
-    async getAll(req, res, next) {
-        try {
-            const taxs = await this.taxService.getAll()
-            res.json({ taxs })
-        } catch (error) {
-            next(error)
-        }
-    }
-
-    async getByNumber(req, res, next) {
-        try {
-            const { taxNo } = req.params
-            const tax = await this.taxService.findByNumber(taxNo)
-            res.json({ tax })
-        } catch (error) {
-            next(error)
-        }
-    }
-
-    async getByDate(req, res, next) {
-        try {
-            const { date } = req.params
-            const tax = await this.taxService.findByDate(date)
-            res.json({ tax })
-        } catch (error) {
-            next(error)
-        }
-    }
-
-    async create(req, res, next) {
+        async create(req, res, next) {
         try {
             const taxData = req.body
             const tax = await this.taxService.create(taxData)
@@ -60,6 +31,25 @@ export default class taxController {
             const { id } = req.params
             await this.taxService.delete(id)
             res.status(204).end()
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    async getAll(req, res, next) {
+        try {
+            const taxs = await this.taxService.getAll()
+            res.json({ taxs })
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    async getByDate(req, res, next) {
+        try {
+            const { date } = req.params
+            const tax = await this.taxService.findByDate(date)
+            res.json({ tax })
         } catch (error) {
             next(error)
         }
