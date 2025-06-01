@@ -1,6 +1,6 @@
 import ItaxRepository from "../interfaces/ItaxRepository.js"
 import { db } from "../config/firebase.js"
-import { getNextId } from "../utils/getNextId.js"
+import { getNextId } from "./idManager.js"
 export default class taxRepository extends ItaxRepository {
 
     constructor() {

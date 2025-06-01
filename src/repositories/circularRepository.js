@@ -1,6 +1,6 @@
 import IcircularRepository from "../interfaces/IcircularRepository.js"
 import { db } from "../config/firebase.js"
-import { getNextId } from "../utils/getNextId.js"
+import { getNextId } from "./idManager.js"
 export default class circularRepository extends IcircularRepository {
 
     constructor() {
@@ -11,9 +11,9 @@ export default class circularRepository extends IcircularRepository {
     async create(circular) {
         const id = await getNextId('circular-node')
         const circularWithId = { ...circular, id }
-        const circularCreated = await this.collection.add(circularWithId)
+        await this.collection.doc(id.toString()).set(circularWithId)
         return {
-            id: circularCreated.id,
+            id,
             ...circularWithId
         }
     }

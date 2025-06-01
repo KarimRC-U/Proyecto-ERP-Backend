@@ -1,6 +1,6 @@
 import IsalaryRepository from "../interfaces/IsalaryRepository.js"
 import { db } from "../config/firebase.js"
-import { getNextId } from "../utils/idGenerator.js"
+import { getNextId } from "./idManager.js"
 
 export default class salaryRepository extends IsalaryRepository {
 

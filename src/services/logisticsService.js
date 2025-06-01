@@ -27,10 +27,7 @@ export default class logisticsService {
             throw { message: 'Ya existe una solicitud logística con este título y fecha', statusCode: 400 };
         }
 
-        const id = await this.logisticsRepository.();
-
         const newLogistics = new Logistics({
-            id,
             title,
             purpose,
             amount,

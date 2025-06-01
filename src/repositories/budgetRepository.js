@@ -10,13 +10,20 @@ export default class budgetRepository extends IbudgetRepository {
     }
 
     async create(budget) {
-        const id = await getNextId('budget-node')
-        const budgetWithId = { ...budget, id }
-        const budgetCreated = await this.collection.add(budgetWithId)
-        return {
-            id: budgetCreated.id,
-            ...budgetWithId
+        const existing = await this.collection
+            .where('date', '==', budget.date)
+            .where('description', '==', budget.description)
+            .get();
+        if (!existing.empty) {
+            throw { message: 'Ya existe un presupuesto con esta fecha y descripción', statusCode: 400 };
         }
+        const id = await getNextId('budget-node');
+        const budgetWithId = { ...budget, id };
+        await this.collection.doc(id.toString()).set(budgetWithId);
+        return {
+            id,
+            ...budgetWithId
+        };
     }
 
     async update(id, updateData) {

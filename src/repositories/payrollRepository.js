@@ -1,6 +1,6 @@
 import IpayrollRepository from "../interfaces/IpayrollRepository.js"
 import { db } from "../config/firebase.js"
-import { getNextId } from "../utils/getNextId.js"
+import { getNextId } from "./idManager.js"
 export default class payrollRepository extends IpayrollRepository {
 
     constructor() {

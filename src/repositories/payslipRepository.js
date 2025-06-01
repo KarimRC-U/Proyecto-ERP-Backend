@@ -1,6 +1,6 @@
 import IpayslipRepository from "../interfaces/IpayslipRepository.js"
 import { db } from "../config/firebase.js"
-import { getNextId } from "../utils/getNextId.js"
+import { getNextId } from "./idManager.js"
 export default class payslipRepository extends IpayslipRepository {
 
     constructor() {
