@@ -7,8 +7,38 @@ export default class payslipService {
     }
 
     async create(payslipData) {
-        const newPayslip = new Payslip(payslipData)
-        return this.payslipRepository.create({ ...newPayslip })
+        const {
+            staffid,
+            staffName,
+            title,
+            level,
+            basicSalary,
+            housingAllowance = 0,
+            transportAllowance = 0,
+            utilityAllowance = 0,
+            productivityAllowance = 0,
+            communicationAllowance = 0,
+            inconvenienceAllowance = 0,
+            taxOrPaye = 0,
+            pension = 0
+        } = payslipData;
+
+        const newPayslip = new Payslip({
+            staffid,
+            staffName,
+            title,
+            level,
+            basicSalary,
+            housingAllowance,
+            transportAllowance,
+            utilityAllowance,
+            productivityAllowance,
+            communicationAllowance,
+            inconvenienceAllowance,
+            taxOrPaye,
+            pension
+        });
+        return this.payslipRepository.create({ ...newPayslip });
     }
 
     async update(id, payslipData) {

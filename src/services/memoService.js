@@ -10,15 +10,15 @@ export default class memoService {
     }
 
     async create(memoData) {
-        const { memoNo } = memoData;
+        const { memoNo, sentFrom, sentTo = [], date, attachments = false, memoType, body } = memoData;
 
-        const uniquememo = await this.memoRepository.findByNumber(memoNo);
-        if (uniquememo) {
+        const uniqueMemo = await this.memoRepository.findByNumber(memoNo);
+        if (uniqueMemo) {
             throw { message: 'Este memo ya existe', statusCode: 400 };
         }
 
-        const newmemo = new Memo(memoData);
-        return this.memoRepository.create({ ...newmemo });
+        const newMemo = new Memo({ memoNo, sentFrom, sentTo, date, attachments, memoType, body });
+        return this.memoRepository.create({ ...newMemo });
     }
 
     async update(id, memoData) {

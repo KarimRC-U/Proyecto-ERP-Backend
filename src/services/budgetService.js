@@ -26,15 +26,15 @@ export default class budgetService {
     }
 
     async create(budgetData) {
-        const { budgetNo } = budgetData;
+        const { budgetNo, title, amount, date, description } = budgetData;
 
-        const uniquebudget = await this.budgetRepository.findByNumber(budgetNo);
-        if (uniquebudget) {
+        const uniqueBudget = await this.budgetRepository.findByNumber(budgetNo);
+        if (uniqueBudget) {
             throw { message: 'El presupuesto ya existe', statusCode: 400 };
         }
 
-        const newbudget = new Budget(budgetData);
-        return this.budgetRepository.create({ ...newbudget });
+        const newBudget = new Budget({ budgetNo, title, amount, date, description });
+        return this.budgetRepository.create({ ...newBudget });
     }
 
     async update(id, budgetData) {

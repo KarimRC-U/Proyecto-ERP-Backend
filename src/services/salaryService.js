@@ -28,28 +28,15 @@ export default class salaryService {
     }
 
     async create(salaryData) {
-        const { title, level } = salaryData;
+        const { title, level, basicSalary, allowance = 0, deductions = 0 } = salaryData;
 
         const existing = await this.salaryRepository.findByTitleAndLevel(title, level);
         if (existing) {
             throw { message: 'Salario ya existe para este titulo y rango.', statusCode: 400 };
         }
 
-        const {
-            basicSalary,
-            allowance = 0,
-            deductions = 0
-        } = salaryData;
-
-        const newsalary = new Salary({
-            title,
-            level,
-            basicSalary,
-            allowance,
-            deductions
-        });
-
-        return this.salaryRepository.create({ ...newsalary });
+        const newSalary = new Salary({ title, level, basicSalary, allowance, deductions });
+        return this.salaryRepository.create({ ...newSalary });
     }
 
     async update(id, salaryData) {

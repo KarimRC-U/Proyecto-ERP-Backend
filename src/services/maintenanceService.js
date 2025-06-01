@@ -8,6 +8,7 @@ export default class maintenanceService {
 
     async create(maintenanceData) {
         const { itemName, itemNumber, date, type, isRecurring = false, status = "Unknown" } = maintenanceData;
+        
         const newMaintenance = new MaintenanceSchedule({ itemName, itemNumber, date, type, isRecurring, status });
         return this.maintenanceRepository.create({ ...newMaintenance });
     }
