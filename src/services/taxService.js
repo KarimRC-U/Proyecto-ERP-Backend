@@ -10,23 +10,6 @@ export default class taxService {
         this.tokenService = new TokenService()
     }
 
-    async getAll() {
-        return await this.taxRepository.getAll()
-    }
-
-    async findByCorreo(correo) {
-        const tax = this.taxRepository.findByCorreo(correo)
-        if (!tax) {
-            throw { message: 'Tax No Encontrado', statusCode: 404 }
-        }
-
-        return tax
-    }
-
-    async findByRol(rol) {
-        return await this.taxRepository.findByRol(rol)
-    }
-
     async create(taxData) {
         const { taxType, percentageValue } = taxData;
         const newTax = new Tax({ taxType, percentageValue });
@@ -51,4 +34,7 @@ export default class taxService {
         await this.taxRepository.delete(id)
     }
 
+    async getAll() {
+        return await this.taxRepository.getAll()
+    }
 }

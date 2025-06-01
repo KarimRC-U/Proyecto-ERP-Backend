@@ -10,23 +10,6 @@ export default class trainingService {
         this.tokenService = new TokenService()
     }
 
-    async getAll() {
-        return await this.trainingRepository.getAll()
-    }
-
-    async findByCorreo(correo) {
-        const training = this.trainingRepository.findByCorreo(correo)
-        if (!training) {
-            throw { message: 'Training No Encontrado', statusCode: 404 }
-        }
-
-        return training
-    }
-
-    async findByRol(rol) {
-        return await this.trainingRepository.findByRol(rol)
-    }
-
     async create(trainingData) {
         const { description, startDate, type, duration, mode, status } = trainingData;
 
@@ -52,13 +35,7 @@ export default class trainingService {
         await this.trainingRepository.delete(id)
     }
 
-    async getByTraining(correo) {
-        const staff = await this.staffRepository.findByCorreo(correo)
-
-        if (!staff) {
-            throw { message: 'El correo no existe', statusCode: 404 }
-        }
-
-        return training
+    async getAll() {
+        return await this.trainingRepository.getAll()
     }
 }
