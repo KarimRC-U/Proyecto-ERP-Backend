@@ -4,7 +4,7 @@ export class Memo {
     static allowedTypes = ["sent", "received"];
 
     constructor({
-        memoNo,
+        id,
         sentFrom, 
         sentTo = [],
         date,
@@ -12,7 +12,7 @@ export class Memo {
         memoType,
         body
     }) {
-        this.memoNo = memoNo;
+        this.id = id;
         this.sentFrom = sentFrom;
         this.sentTo = Array.isArray(sentTo) ? sentTo : [];
         this.date = date;

@@ -2,9 +2,9 @@ export class Stock {
     static allowedStatuses = ["In Stock", "Out of Stock", "Low In Stock", "Discontinued"];
 
     constructor({
+        id,
         image,
         productName,
-        productId,
         category,
         quantityPurchased,
         unitPrice,
@@ -13,9 +13,9 @@ export class Stock {
         supplier,
         status = "In Stock"
     }) {
+        this.id = id;
         this.image = image;
         this.productName = productName;
-        this.productId = productId;
         this.category = category;
         this.quantityPurchased = quantityPurchased;
         this.unitPrice = unitPrice;

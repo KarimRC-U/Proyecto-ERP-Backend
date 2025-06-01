@@ -1,7 +1,8 @@
 export class Training {
     static allowedStatuses = ["Scheduled", "Ongoing", "Completed", "Canceled"];
 
-    constructor({ description, startDate, type, duration, mode, status = "Scheduled" }) {
+    constructor({ id, description, startDate, type, duration, mode, status = "Scheduled" }) {
+        this.id = id;
         this.description = description;
         this.startDate = startDate;
         this.type = type;

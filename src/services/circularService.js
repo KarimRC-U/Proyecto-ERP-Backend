@@ -19,24 +19,24 @@ export default class circularService {
         }
 
         const newCircular = new Circular({ id, title, sentFrom, sentTo, date, message });
-        return this.circularRepository.create({ ...newCircular });
+        const docRef = this.collection.doc(circular.id.toString());
+        await docRef.set(circular);
+        return {
+            id: circular.id,
+            ...circular
+        }
     }
 
-    async update(id, staffData) {
-        const { password } = staffData
-        const updatestaff = await this.staffRepository.getById(id)
+    async update(id, circularData) {
+        const existingCircular = await this.circularRepository.getById(id);
 
-        if (!updatestaff) {
-            throw { message: 'Staff No Encontrado', statusCode: 404 }
+        if (!existingCircular) {
+            throw { message: 'Circular No Encontrado', statusCode: 404 }
         }
 
-        if (password) {
-            updatestaff.password = await bcrypt.hash(password, 10)
-        }
+        const updatedCircular = new Circular({ ...existingCircular, ...circularData });
 
-        const newstaff = new Circular({ ...updatestaff, ...staffData, password: updatestaff.password })
-
-        return this.circularRepository.update(id, { ...newstaff })
+        return this.circularRepository.update(id, { ...updatedCircular });
     }
 
     async delete(id) {

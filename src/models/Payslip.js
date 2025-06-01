@@ -1,5 +1,6 @@
 export class Payslip {
     constructor({
+        id,
         staffid,
         staffName,
         title,
@@ -14,6 +15,7 @@ export class Payslip {
         taxOrPaye = 0,
         pension = 0
     }) {
+        this.id = id;
         this.staffid = staffid;
         this.staffName = staffName;
         this.title = title;

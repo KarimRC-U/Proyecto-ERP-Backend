@@ -1,5 +1,6 @@
 export class Salary {
-    constructor({ title, level, basicSalary, allowance = 0, deductions = 0 }) {
+    constructor({ id, title, level, basicSalary, allowance = 0, deductions = 0 }) {
+        this.id = id;
         this.title = title;
         this.level = level;
         this.basicSalary = basicSalary;

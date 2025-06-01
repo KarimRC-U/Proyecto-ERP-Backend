@@ -1,7 +1,8 @@
 export class MaintenanceSchedule {
     static allowedStatuses = ["Pending", "Completed", "Canceled", "Unknown"];
 
-    constructor({ itemName, itemNumber, date, type, isRecurring = false, status = "Unknown" }) {
+    constructor({ id, itemName, itemNumber, date, type, isRecurring = false, status = "Unknown" }) {
+        this.id = id;
         this.itemName = itemName;
         this.itemNumber = itemNumber;
         this.date = date;

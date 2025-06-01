@@ -23,38 +23,45 @@ const modelsToTest = [
   'maintenance'
 ]
 
+// Map model to delete endpoint, delete data, and identifier field
 const modelConfig = {
-  staff:      { endpoint: '/staffs/create',        dataFile: 'CreateTest_staff.json' },
-  training:   { endpoint: '/trainings/create',     dataFile: 'CreateTest_training.json' },
-  salary:     { endpoint: '/payroll/salary/create',dataFile: 'CreateTest_salary.json' },
-  budget:     { endpoint: '/budgets/create',       dataFile: 'CreateTest_budget.json' },
-  memo:       { endpoint: '/memos/create',         dataFile: 'CreateTest_memo.json' },
-  circular:   { endpoint: '/circulars/create',     dataFile: 'CreateTest_circular.json' },
-  logistics:  { endpoint: '/logistics/create',     dataFile: 'CreateTest_logistics.json' },
-  stock:      { endpoint: '/stocks/create',        dataFile: 'CreateTest_stock.json' },
-  tax:        { endpoint: '/payroll/taxes/create', dataFile: 'CreateTest_tax.json' },
-  payslip:    { endpoint: '/payroll/payslips/create', dataFile: 'CreateTest_payslip.json' },
-  payroll:    { endpoint: '/payroll/create',       dataFile: 'CreateTest_payroll.json' },
-  maintenance:{ endpoint: '/maintenances/create',  dataFile: 'CreateTest_maintenance.json' }
+  staff:      { endpoint: '/staffs/delete/',        deleteFile: 'DeleteTest_staff.json',      idField: 'correo' },
+  training:   { endpoint: '/trainings/delete/',     deleteFile: 'DeleteTest_training.json',   idField: 'description' },
+  salary:     { endpoint: '/payroll/salary/delete/',deleteFile: 'DeleteTest_salary.json',     idField: 'title' }, // Adjust if needed
+  budget:     { endpoint: '/budgets/delete/',       deleteFile: 'DeleteTest_budget.json',     idField: 'budgetNo' },
+  memo:       { endpoint: '/memos/delete/',         deleteFile: 'DeleteTest_memo.json',       idField: 'memoNo' },
+  circular:   { endpoint: '/circulars/delete/',     deleteFile: 'DeleteTest_circular.json',   idField: 'id' },
+  logistics:  { endpoint: '/logistics/delete/',     deleteFile: 'DeleteTest_logistics.json',  idField: 'title' },
+  stock:      { endpoint: '/stocks/delete/',        deleteFile: 'DeleteTest_stock.json',      idField: 'productName' },
+  tax:        { endpoint: '/payroll/taxes/delete/', deleteFile: 'DeleteTest_tax.json',        idField: 'taxType' },
+  payslip:    { endpoint: '/payroll/payslips/delete/', deleteFile: 'DeleteTest_payslip.json', idField: 'staffid' },
+  payroll:    { endpoint: '/payroll/delete/',       deleteFile: 'DeleteTest_payroll.json',    idField: 'paymentName' },
+  maintenance:{ endpoint: '/maintenances/delete/',  deleteFile: 'DeleteTest_maintenance.json',idField: 'itemNumber' }
 }
 
-async function runCreateTests() {
+async function runDeleteTests() {
   for (const model of modelsToTest) {
     const config = modelConfig[model]
     if (!config) {
       console.warn(`No config for model: ${model}`)
       continue
     }
-    const dataPath = path.join(__dirname, '../data', config.dataFile)
-    if (!fs.existsSync(dataPath)) {
-      console.warn(`Data file not found: ${dataPath}`)
+    const deletePath = path.join(__dirname, '../data', config.deleteFile)
+    if (!fs.existsSync(deletePath)) {
+      console.warn(`Delete data file not found for model: ${model}`)
       continue
     }
-    const testData = JSON.parse(fs.readFileSync(dataPath, 'utf-8'))
-    console.log(`\nTesting create for model: ${model}`)
-    for (const [i, entry] of testData.entries()) {
+    const deleteData = JSON.parse(fs.readFileSync(deletePath, 'utf-8'))
+    console.log(`\nTesting delete for model: ${model}`)
+    for (let i = 0; i < deleteData.length; i++) {
+      const identifier = deleteData[i][config.idField]
+      if (!identifier) {
+        console.warn(`  [${i + 1}] No identifier (${config.idField}) found in delete data for model: ${model}`)
+        continue
+      }
       try {
-        const res = await axios.post(API_BASE + config.endpoint, entry)
+        const url = API_BASE + config.endpoint + encodeURIComponent(identifier)
+        const res = await axios.delete(url)
         console.log(`  [${i + 1}] Success:`, res.data)
       } catch (err) {
         if (err.response) {
@@ -67,6 +74,6 @@ async function runCreateTests() {
   }
 }
 
-runCreateTests()
-  .then(() => console.log('\nAll create tests finished.'))
+runDeleteTests()
+  .then(() => console.log('\nAll delete tests finished.'))
   .catch(err => console.error('Test runner error:', err))

@@ -23,20 +23,19 @@ const modelsToTest = [
   'maintenance'
 ]
 
-// Map model to update endpoint, create data, update data, and identifier field
 const modelConfig = {
-  staff:      { endpoint: '/staffs/update/modified/',        createFile: 'CreateTest_staff.json',      updateFile: 'UpdateTest_staff.json',      idField: 'correo' },
-  training:   { endpoint: '/trainings/update/modified/',     createFile: 'CreateTest_training.json',   updateFile: 'UpdateTest_training.json',   idField: 'description' },
-  salary:     { endpoint: '/payroll/salary/update/',         createFile: 'CreateTest_salary.json',     updateFile: 'UpdateTest_salary.json',     idField: 'title' }, // Adjust if needed
-  budget:     { endpoint: '/budgets/update/',                createFile: 'CreateTest_budget.json',     updateFile: 'UpdateTest_budget.json',     idField: 'budgetNo' },
-  memo:       { endpoint: '/memos/update/',                  createFile: 'CreateTest_memo.json',       updateFile: 'UpdateTest_memo.json',       idField: 'memoNo' },
-  circular:   { endpoint: '/circulars/update/',              createFile: 'CreateTest_circular.json',   updateFile: 'UpdateTest_circular.json',   idField: 'id' },
-  logistics:  { endpoint: '/logistics/update/',              createFile: 'CreateTest_logistics.json',  updateFile: 'UpdateTest_logistics.json',  idField: 'title' },
-  stock:      { endpoint: '/stocks/update/',                 createFile: 'CreateTest_stock.json',      updateFile: 'UpdateTest_stock.json',      idField: 'productName' },
-  tax:        { endpoint: '/payroll/taxes/update/',          createFile: 'CreateTest_tax.json',        updateFile: 'UpdateTest_tax.json',        idField: 'taxType' },
-  payslip:    { endpoint: '/payroll/payslips/update/',       createFile: 'CreateTest_payslip.json',    updateFile: 'UpdateTest_payslip.json',    idField: 'staffid' },
-  payroll:    { endpoint: '/payroll/update/',                createFile: 'CreateTest_payroll.json',    updateFile: 'UpdateTest_payroll.json',    idField: 'paymentName' },
-  maintenance:{ endpoint: '/maintenances/update/',           createFile: 'CreateTest_maintenance.json',updateFile: 'UpdateTest_maintenance.json',idField: 'itemNumber' }
+  staff: { endpoint: '/staffs/update/modified/', createFile: 'CreateTest_staff.json', updateFile: 'UpdateTest_staff.json', idField: 'staffid' },
+  training: { endpoint: '/trainings/update/modified/', createFile: 'CreateTest_training.json', updateFile: 'UpdateTest_training.json', idField: 'id' },
+  salary: { endpoint: '/payroll/salary/update/', createFile: 'CreateTest_salary.json', updateFile: 'UpdateTest_salary.json', idField: 'id' },
+  budget: { endpoint: '/budgets/update/', createFile: 'CreateTest_budget.json', updateFile: 'UpdateTest_budget.json', idField: 'budgetNo' },
+  memo: { endpoint: '/memos/update/', createFile: 'CreateTest_memo.json', updateFile: 'UpdateTest_memo.json', idField: 'memoNo' },
+  circular: { endpoint: '/circulars/update/modified/', createFile: 'CreateTest_circular.json', updateFile: 'UpdateTest_circular.json', idField: 'id' },
+  logistics: { endpoint: '/logistics/update/', createFile: 'CreateTest_logistics.json', updateFile: 'UpdateTest_logistics.json', idField: 'id' },
+  stock: { endpoint: '/stocks/update/', createFile: 'CreateTest_stock.json', updateFile: 'UpdateTest_stock.json', idField: 'id' },
+  tax: { endpoint: '/payroll/taxes/update/', createFile: 'CreateTest_tax.json', updateFile: 'UpdateTest_tax.json', idField: 'id' },
+  payslip: { endpoint: '/payroll/payslips/update/', createFile: 'CreateTest_payslip.json', updateFile: 'UpdateTest_payslip.json', idField: 'id' },
+  payroll: { endpoint: '/payroll/update/', createFile: 'CreateTest_payroll.json', updateFile: 'UpdateTest_payroll.json', idField: 'id' },
+  maintenance: { endpoint: '/maintenances/update/', createFile: 'CreateTest_maintenance.json', updateFile: 'UpdateTest_maintenance.json', idField: 'id' }
 }
 
 async function runUpdateTests() {

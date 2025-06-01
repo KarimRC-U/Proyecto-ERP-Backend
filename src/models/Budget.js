@@ -1,9 +1,8 @@
 export class Budget {
-  
     static allowedStatus = ["approved", "modified", "pending"];
 
-    constructor({ budgetNo, description, budgetedAmount, actualAmount = 0, variance = 0, date, status }) {
-        this.budgetNo = budgetNo;
+    constructor({ id, description, budgetedAmount, actualAmount = 0, variance = 0, date, status }) {
+        this.id = id;
         this.description = description;
         this.budgetedAmount = budgetedAmount;
         this.actualAmount = actualAmount;

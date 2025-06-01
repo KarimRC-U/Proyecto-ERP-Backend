@@ -1,7 +1,8 @@
 export class Payroll {
     static allowedStatuses = ["Pending", "Paid", "Canceled", "Unknown"];
 
-    constructor({ paymentName, description, date, paymentMonth, paymentYear, status = "Unknown" }) {
+    constructor({ id, paymentName, description, date, paymentMonth, paymentYear, status = "Unknown" }) {
+        this.id = id;
         this.paymentName = paymentName;
         this.description = description;
         this.date = date;

@@ -11,7 +11,6 @@ export default class trainingService {
     async create(trainingData) {
         const { description, startDate, type, duration, mode, status, staffList = [] } = trainingData;
 
-        // Prevent duplicate training by description and startDate
         const allTrainings = await this.trainingRepository.getAll();
         const duplicate = allTrainings.find(
             t => t.description === description && t.startDate === startDate
