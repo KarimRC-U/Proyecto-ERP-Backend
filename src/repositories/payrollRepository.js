@@ -43,8 +43,6 @@ export default class payrollRepository extends IpayrollRepository {
 
     async getMonthGrossSalary(month, year) {
         const payslips = await db.collection('payslip-node')
-            .where('paymentMonth', '==', month)
-            .where('paymentYear', '==', year)
             .get();
         let total = 0;
         payslips.forEach(doc => {
@@ -56,8 +54,6 @@ export default class payrollRepository extends IpayrollRepository {
 
     async getMonthNetSalary(month, year) {
         const payslips = await db.collection('payslip-node')
-            .where('paymentMonth', '==', month)
-            .where('paymentYear', '==', year)
             .get();
         let total = 0;
         payslips.forEach(doc => {
@@ -69,8 +65,6 @@ export default class payrollRepository extends IpayrollRepository {
 
     async getMonthTotalTax(month, year) {
         const payslips = await db.collection('payslip-node')
-            .where('paymentMonth', '==', month)
-            .where('paymentYear', '==', year)
             .get();
         let total = 0;
         payslips.forEach(doc => {
@@ -82,8 +76,6 @@ export default class payrollRepository extends IpayrollRepository {
 
     async getMonthTotalLoan(month, year) {
         const payslips = await db.collection('payslip-node')
-            .where('paymentMonth', '==', month)
-            .where('paymentYear', '==', year)
             .get();
         let total = 0;
         payslips.forEach(doc => {

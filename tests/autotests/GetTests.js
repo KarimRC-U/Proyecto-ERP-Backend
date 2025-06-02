@@ -60,7 +60,7 @@ const getEndpoints = [
   },
   {
     name: 'Get Maintenance By Date',
-    url: `/maintenances/date/2024-07-01`
+    url: `/maintenances/date/2025-07-01`
   },
   {
     name: 'Get Maintenance Details',
@@ -74,11 +74,11 @@ const getEndpoints = [
   },
   {
     name: 'Get Memo By Date',
-    url: `/memos/date/2025-07-01`
+    url: `/memos/date/2025-07-05`
   },
   {
     name: 'Get Memo By Keywords',
-    url: `/memos/keywords/undefined`
+    url: `/memos/keywords/Policy`
   },
 
   // Payslip
@@ -148,7 +148,7 @@ const getEndpoints = [
   },
   {
     name: 'Get Training By Date',
-    url: `/trainings/date/2024-07-01`
+    url: `/trainings/date/2025-07-01`
   }
 ]
 

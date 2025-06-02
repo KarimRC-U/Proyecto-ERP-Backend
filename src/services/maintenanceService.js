@@ -82,4 +82,12 @@ export default class maintenanceService {
     async getDetails(itemName, itemNumber) {
         return await this.maintenanceRepository.getDetails(itemName, itemNumber);
     }
+
+    async getById(id) {
+        const maintenance = await this.maintenanceRepository.getById(id)
+        if (!maintenance) {
+            throw { message: 'No se pudo encontrar un mantenimiento con este ID.', statusCode: 404 }
+        }
+        return maintenance
+    }
 }

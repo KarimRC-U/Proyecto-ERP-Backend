@@ -1,7 +1,7 @@
 [
-  { "title": "Office Supplies", "purpose": "Purchase pens", "amount": 500, "requestedBy": "Staff1", "sentTo": "Admin", "date": "2024-07-01", "status": "Pending" },
-  { "title": "Travel", "purpose": "Conference", "amount": 2000, "requestedBy": "Staff2", "sentTo": "Manager", "date": "2024-07-02", "status": "Pending" },
-  { "title": "Training", "purpose": "React Course", "amount": 1500, "requestedBy": "Staff3", "sentTo": "HR", "date": "2024-07-03", "status": "Pending" },
-  { "title": "Equipment", "purpose": "Buy laptops", "amount": 30000, "requestedBy": "Staff4", "sentTo": "IT", "date": "2024-07-04", "status": "Pending" },
-  { "title": "Marketing", "purpose": "Ad campaign", "amount": 5000, "requestedBy": "Staff5", "sentTo": "Marketing", "date": "2024-07-05", "status": "Pending" }
+  { "title": "Office Supplies", "purpose": "Purchase pens", "amount": 500, "requestedBy": "1", "sentTo": "Admin", "date": "2025-07-01", "status": "Pending" },
+  { "title": "Travel", "purpose": "Conference", "amount": 2000, "requestedBy": "2", "sentTo": "Manager", "date": "2025-07-02", "status": "Pending" },
+  { "title": "Training", "purpose": "React Course", "amount": 1500, "requestedBy": "3", "sentTo": "HR", "date": "2025-07-03", "status": "Pending" },
+  { "title": "Equipment", "purpose": "Buy laptops", "amount": 30000, "requestedBy": "4", "sentTo": "IT", "date": "2025-07-04", "status": "Pending" },
+  { "title": "Marketing", "purpose": "Ad campaign", "amount": 5000, "requestedBy": "5", "sentTo": "Marketing", "date": "2025-07-05", "status": "Pending" }
 ]

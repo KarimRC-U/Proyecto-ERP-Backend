@@ -1,7 +1,7 @@
 [
-  { "id": 1, "title": "Welcome", "sentFrom": "Admin", "sentTo": ["All"], "date": "2024-07-01", "message": "Welcome to the new system." },
-  { "id": 2, "title": "Policy Update", "sentFrom": "HR", "sentTo": ["All"], "date": "2024-07-02", "message": "Please review the new policy." },
-  { "id": 3, "title": "Maintenance", "sentFrom": "IT", "sentTo": ["All"], "date": "2024-07-03", "message": "System maintenance scheduled." },
-  { "id": 4, "title": "Meeting", "sentFrom": "Manager", "sentTo": ["All"], "date": "2024-07-04", "message": "Team meeting at 10am." },
-  { "id": 5, "title": "Support", "sentFrom": "Support", "sentTo": ["All"], "date": "2024-07-05", "message": "Support contact updated." }
+  { "id": 1, "title": "Welcome", "sentFrom": "Admin", "sentTo": ["All"], "date": "2025-07-01", "message": "Welcome to the new system." },
+  { "id": 2, "title": "Policy Update", "sentFrom": "HR", "sentTo": ["All"], "date": "2025-07-02", "message": "Please review the new policy." },
+  { "id": 3, "title": "Maintenance", "sentFrom": "IT", "sentTo": ["All"], "date": "2025-07-03", "message": "System maintenance scheduled." },
+  { "id": 4, "title": "Meeting", "sentFrom": "Manager", "sentTo": ["All"], "date": "2025-07-04", "message": "Team meeting at 10am." },
+  { "id": 5, "title": "Support", "sentFrom": "Support", "sentTo": ["All"], "date": "2025-07-05", "message": "Support contact updated." }
 ]
