@@ -25,7 +25,7 @@ export default class maintenanceService {
         const { itemName, itemNumber, date, type, isRecurring = false, status = "Unknown" } = maintenanceData;
         const existingMaintenance = await this.maintenanceRepository.getById(id);
         if (!existingMaintenance) {
-            throw { message: 'Maintenance No Encontrado', statusCode: 404 }
+            throw { message: 'No se pudo encontrar un mantenimiento con estos datos.', statusCode: 404 }
         }
         const updatedMaintenance = new MaintenanceSchedule({
             ...existingMaintenance,
@@ -42,7 +42,7 @@ export default class maintenanceService {
     async delete(id) {
         const maintenanceExists = await this.maintenanceRepository.getById(id)
         if (!maintenanceExists) {
-            throw { message: 'Maintenance No Encontrado', statusCode: 404 }
+            throw { message: 'No se pudo encontrar un mantenimiento con estos datos.', statusCode: 404 }
         }
         await this.maintenanceRepository.delete(id)
     }

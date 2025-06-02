@@ -47,7 +47,7 @@ async function runDeleteTests() {
       continue
     }
     console.log(`\nTesting delete for model: ${model}`)
-    for (let id = 1; id <= 6; id++) {
+    for (let id = 1; id <= 10; id++) {
       try {
         const url = API_BASE + config.endpoint + encodeURIComponent(id)
         const res = await axios.delete(url)
