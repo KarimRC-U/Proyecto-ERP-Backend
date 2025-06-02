@@ -36,14 +36,7 @@ export default class budgetRepository extends IbudgetRepository {
             ...doc.data()
         }))
     } 
-    
-    async findByNumber(budgetNo) {
-        const numero = await this.collection
-            .where('budgetNo', '==', budgetNo)      
-            .get()      
-        return numero.empty ? null : { id: numero.docs[0].id, ...numero.docs[0].data() } 
-    } 
-    
+        
     async findByDate(date)  {
         const presupuesto = await this.collection.where('date' , '==', date).get()   
         return presupuesto.empty ? null : { id: presupuesto.docs[0].id, ...presupuesto.docs[0].data() } 

@@ -36,18 +36,11 @@ export default class memoRepository extends ImemoRepository {
         }));
     }
 
-    async findByNumber(memoNo) {
-        const numero = await this.collection
-            .where('memoNo', '==', memoNo)
-            .get()
-        return numero.empty ? null : { id: numero.docs[0].id, ...numero.docs[0].data() }
-    }
 
     async findByDate(date) {
         const memo = await this.collection.where('date', '==', date).get()
         return memo.empty ? null : { id: memo.docs[0].id, ...memo.docs[0].data() }
     }
-
 
     async getTotalCount() {
         const cuenta = await this.collection.get();
