@@ -11,9 +11,9 @@ export default class memoRepository extends ImemoRepository {
     async create(memo) {
         const id = await getNextId('memo-node')
         const memoWithId = { ...memo, id }
-        const memoCreated = await this.collection.add(memoWithId)
+        await this.collection.doc(id.toString()).set(memoWithId)
         return {
-            id: memoCreated.id,
+            id,
             ...memoWithId
         }
     }

@@ -11,9 +11,9 @@ export default class trainingRepository extends ItrainingRepository {
     async create(training) {
         const id = await getNextId('training-node')
         const trainingWithId = { ...training, id }
-        const trainingCreated = await this.collection.add(trainingWithId)
+        await this.collection.doc(id.toString()).set(trainingWithId)
         return {
-            id: trainingCreated.id,
+            id,
             ...trainingWithId
         }
     }

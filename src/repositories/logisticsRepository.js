@@ -1,6 +1,6 @@
 import IlogisticsRepository from "../interfaces/IlogisticsRepository.js"
 import { db } from "../config/firebase.js"
-
+import { getNextId } from "./idManager.js"
 export default class logisticsRepository extends IlogisticsRepository {
 
     constructor() {
@@ -9,10 +9,12 @@ export default class logisticsRepository extends IlogisticsRepository {
     }
 
     async create(logistics) {
-        const logisticsCreated = await this.collection.add(logistics)
+        const id = await getNextId('logistics-node')
+        const logisticsWithId = { ...logistics, id }
+        await this.collection.doc(id.toString()).set(logisticsWithId)
         return {
-            id: logisticsCreated.id,
-            ...logistics
+            id,
+            ...logisticsWithId
         }
     }
 

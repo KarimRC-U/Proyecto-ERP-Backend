@@ -12,9 +12,9 @@ export default class staffRepository extends IstaffRepository {
     async create(staff) {
         const id = await getNextId('staff-node')
         const staffWithId = { ...staff, id }
-        const staffCreated = await this.collection.add(staffWithId)
+        await this.collection.doc(id.toString()).set(staffWithId)
         return {
-            id: staffCreated.id,
+            id,
             ...staffWithId
         }
     }

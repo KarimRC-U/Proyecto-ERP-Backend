@@ -10,13 +10,6 @@ export default class budgetRepository extends IbudgetRepository {
     }
 
     async create(budget) {
-        const existing = await this.collection
-            .where('date', '==', budget.date)
-            .where('description', '==', budget.description)
-            .get();
-        if (!existing.empty) {
-            throw { message: 'Ya existe un presupuesto con esta fecha y descripción', statusCode: 400 };
-        }
         const id = await getNextId('budget-node');
         const budgetWithId = { ...budget, id };
         await this.collection.doc(id.toString()).set(budgetWithId);

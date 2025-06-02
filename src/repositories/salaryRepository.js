@@ -12,9 +12,9 @@ export default class salaryRepository extends IsalaryRepository {
     async create(salary) {
         const id = await getNextId('salary-node')
         const salaryWithId = { ...salary, id }
-        const salaryCreated = await this.collection.add(salaryWithId)
+        await this.collection.doc(id.toString()).set(salaryWithId)
         return {
-            id: salaryCreated.id,
+            id,
             ...salaryWithId
         }
     }

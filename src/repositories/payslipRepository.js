@@ -11,9 +11,9 @@ export default class payslipRepository extends IpayslipRepository {
     async create(payslip) {
         const id = await getNextId('payslip-node')
         const payslipWithId = { ...payslip, id }
-        const payslipCreated = await this.collection.add(payslipWithId)
+        await this.collection.doc(id.toString()).set(payslipWithId)
         return {
-            id: payslipCreated.id,
+            id,
             ...payslipWithId
         }
     }

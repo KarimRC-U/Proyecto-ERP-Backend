@@ -11,9 +11,9 @@ export default class payrollRepository extends IpayrollRepository {
     async create(payroll) {
         const id = await getNextId('payroll-node')
         const payrollWithId = { ...payroll, id }
-        const payrollCreated = await this.collection.add(payrollWithId)
+        await this.collection.doc(id.toString()).set(payrollWithId)
         return {
-            id: payrollCreated.id,
+            id,
             ...payrollWithId
         }
     }

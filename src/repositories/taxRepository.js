@@ -11,9 +11,9 @@ export default class taxRepository extends ItaxRepository {
     async create(tax) {
         const id = await getNextId('tax-node')
         const taxWithId = { ...tax, id }
-        const taxCreated = await this.collection.add(taxWithId)
+        await this.collection.doc(id.toString()).set(taxWithId)
         return {
-            id: taxCreated.id,
+            id,
             ...taxWithId
         }
     }

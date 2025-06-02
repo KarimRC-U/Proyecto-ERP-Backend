@@ -1,5 +1,6 @@
 import IstockRepository from "../interfaces/IstockRepository.js"
 import { db } from "../config/firebase.js"
+import { getNextId } from "./idManager.js"
 
 export default class stockRepository extends IstockRepository {
 
@@ -9,10 +10,12 @@ export default class stockRepository extends IstockRepository {
     }
 
     async create(stock) {
-        const stockCreated = await this.collection.add(stock)
+        const id = await getNextId('stock-node')
+        const stockWithId = { ...stock, id }
+        await this.collection.doc(id.toString()).set(stockWithId)
         return {
-            id: stockCreated.id,
-            ...stock
+            id,
+            ...stockWithId
         }
     }
 

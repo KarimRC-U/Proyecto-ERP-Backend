@@ -1,8 +1,8 @@
 import IcircularRepository from "../interfaces/IcircularRepository.js"
 import { db } from "../config/firebase.js"
 import { getNextId } from "./idManager.js"
-export default class circularRepository extends IcircularRepository {
 
+export default class circularRepository extends IcircularRepository {
     constructor() {
         super()
         this.collection = db.collection('circular-node')

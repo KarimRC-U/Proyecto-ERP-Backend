@@ -1,30 +1,23 @@
 import circularRepository from "../repositories/circularRepository.js"
 import { Circular } from "../models/Circular.js"
-import TokenService from "./tokenService.js"
-import bcrypt from 'bcrypt'
-import jwt from 'jsonwebtoken'
-
 export default class circularService {
     constructor() {
         this.circularRepository = new circularRepository()
-        this.tokenService = new TokenService()
     }
 
     async create(circularData) {
         const { id, title, sentFrom, sentTo = [], date, message } = circularData;
 
-        const uniqueCircular = await this.circularRepository.getById(id);
-        if (uniqueCircular) {
-            throw { message: 'Este circular ya existe', statusCode: 400 };
+        const allCirculars = await this.circularRepository.getAll();
+        const duplicate = allCirculars.find(
+            c => c.title === title && c.date === date
+        );
+        if (duplicate) {
+            throw { message: 'Ya existe una circular con este título y fecha', statusCode: 400 };
         }
 
-        const newCircular = new Circular({ id, title, sentFrom, sentTo, date, message });
-        const docRef = this.collection.doc(circular.id.toString());
-        await docRef.set(circular);
-        return {
-            id: circular.id,
-            ...circular
-        }
+        const newCircular = new Circular(circularData);
+        return this.circularRepository.create({ ...newCircular });
     }
 
     async update(id, circularData) {

@@ -1,5 +1,6 @@
 import ImaintenanceRepository from "../interfaces/ImaintenanceRepository.js"
 import { db } from "../config/firebase.js"
+import { getNextId } from "./idManager.js"
 
 export default class maintenanceRepository extends ImaintenanceRepository {
 
@@ -9,10 +10,12 @@ export default class maintenanceRepository extends ImaintenanceRepository {
     }
 
     async create(maintenance) {
-        const maintenanceCreated = await this.collection.add(maintenance)
+        const id = await getNextId('maintenance-node')
+        const maintenanceWithId = { ...maintenance, id }
+        await this.collection.doc(id.toString()).set(maintenanceWithId)
         return {
-            id: maintenanceCreated.id,
-            ...maintenance
+            id,
+            ...maintenanceWithId
         }
     }
 
