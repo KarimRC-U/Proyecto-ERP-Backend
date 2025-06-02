@@ -74,4 +74,9 @@ export default class memoRepository extends ImemoRepository {
         const doc = await this.collection.doc(id).get();
         return !doc.exists ? null : { id: doc.id, ...doc.data() };
     }
+
+    async getById(id) {
+        const doc = await this.collection.doc(id).get()
+        return !doc.exists ? null : { id: doc.id, ...doc.data() }
+    }
 }

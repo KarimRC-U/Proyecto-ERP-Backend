@@ -21,7 +21,7 @@ const stockRoutes = [
     },
     {
         method: 'put',
-        path: '/update/:id',
+        path: '/update/modified/:id',
         // middleware: [authMiddleware, roleMiddleware('admin')],
         handle: 'update'
     },

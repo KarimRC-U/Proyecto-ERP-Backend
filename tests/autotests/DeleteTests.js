@@ -25,18 +25,18 @@ const modelsToTest = [
 
 // Map model to delete endpoint, delete data, and identifier field
 const modelConfig = {
-  staff:      { endpoint: '/staffs/delete/',        deleteFile: 'DeleteTest_staff.json',      idField: 'correo' },
-  training:   { endpoint: '/trainings/delete/',     deleteFile: 'DeleteTest_training.json',   idField: 'description' },
-  salary:     { endpoint: '/payroll/salary/delete/',deleteFile: 'DeleteTest_salary.json',     idField: 'title' }, // Adjust if needed
-  budget:     { endpoint: '/budgets/delete/',       deleteFile: 'DeleteTest_budget.json',     idField: 'budgetNo' },
-  memo:       { endpoint: '/memos/delete/',         deleteFile: 'DeleteTest_memo.json',       idField: 'memoNo' },
-  circular:   { endpoint: '/circulars/delete/',     deleteFile: 'DeleteTest_circular.json',   idField: 'id' },
-  logistics:  { endpoint: '/logistics/delete/',     deleteFile: 'DeleteTest_logistics.json',  idField: 'title' },
-  stock:      { endpoint: '/stocks/delete/',        deleteFile: 'DeleteTest_stock.json',      idField: 'productName' },
-  tax:        { endpoint: '/payroll/taxes/delete/', deleteFile: 'DeleteTest_tax.json',        idField: 'taxType' },
-  payslip:    { endpoint: '/payroll/payslips/delete/', deleteFile: 'DeleteTest_payslip.json', idField: 'staffid' },
-  payroll:    { endpoint: '/payroll/delete/',       deleteFile: 'DeleteTest_payroll.json',    idField: 'paymentName' },
-  maintenance:{ endpoint: '/maintenances/delete/',  deleteFile: 'DeleteTest_maintenance.json',idField: 'itemNumber' }
+  staff:      { endpoint: '/staffs/delete/',            deleteFile: 'DeleteTest_staff.json',      idField: 'id' },
+  training:   { endpoint: '/trainings/delete/',         deleteFile: 'DeleteTest_training.json',   idField: 'id' },
+  salary:     { endpoint: '/payroll/salary/delete/',    deleteFile: 'DeleteTest_salary.json',     idField: 'id' },
+  budget:     { endpoint: '/budgets/delete/',           deleteFile: 'DeleteTest_budget.json',     idField: 'id' },
+  memo:       { endpoint: '/memos/delete/',             deleteFile: 'DeleteTest_memo.json',       idField: 'id' },
+  circular:   { endpoint: '/circulars/delete/',         deleteFile: 'DeleteTest_circular.json',   idField: 'id' },
+  logistics:  { endpoint: '/logistics/delete/',         deleteFile: 'DeleteTest_logistics.json',  idField: 'id' },
+  stock:      { endpoint: '/stocks/delete/',            deleteFile: 'DeleteTest_stock.json',      idField: 'id' },
+  tax:        { endpoint: '/payroll/taxes/delete/',     deleteFile: 'DeleteTest_tax.json',        idField: 'id' },
+  payslip:    { endpoint: '/payroll/payslips/delete/',  deleteFile: 'DeleteTest_payslip.json',    idField: 'id' },
+  payroll:    { endpoint: '/payroll/delete/',           deleteFile: 'DeleteTest_payroll.json',    idField: 'id' },
+  maintenance:{ endpoint: '/maintenances/delete/',      deleteFile: 'DeleteTest_maintenance.json',idField: 'id' }
 }
 
 async function runDeleteTests() {
@@ -46,28 +46,17 @@ async function runDeleteTests() {
       console.warn(`No config for model: ${model}`)
       continue
     }
-    const deletePath = path.join(__dirname, '../data', config.deleteFile)
-    if (!fs.existsSync(deletePath)) {
-      console.warn(`Delete data file not found for model: ${model}`)
-      continue
-    }
-    const deleteData = JSON.parse(fs.readFileSync(deletePath, 'utf-8'))
     console.log(`\nTesting delete for model: ${model}`)
-    for (let i = 0; i < deleteData.length; i++) {
-      const identifier = deleteData[i][config.idField]
-      if (!identifier) {
-        console.warn(`  [${i + 1}] No identifier (${config.idField}) found in delete data for model: ${model}`)
-        continue
-      }
+    for (let id = 1; id <= 6; id++) {
       try {
-        const url = API_BASE + config.endpoint + encodeURIComponent(identifier)
+        const url = API_BASE + config.endpoint + encodeURIComponent(id)
         const res = await axios.delete(url)
-        console.log(`  [${i + 1}] Success:`, res.data)
+        console.log(`  [${id}] Success:`, res.data)
       } catch (err) {
         if (err.response) {
-          console.error(`  [${i + 1}] Error:`, err.response.status, err.response.data)
+          console.error(`  [${id}] Error:`, err.response.status, err.response.data)
         } else {
-          console.error(`  [${i + 1}] Error:`, err.message)
+          console.error(`  [${id}] Error:`, err.message)
         }
       }
     }
