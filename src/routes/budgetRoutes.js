@@ -39,12 +39,6 @@ const budgetRoutes = [
     },
     {
         method: 'get',
-        path: '/number/:budgetNo',
-        // middleware: [authMiddleware],
-        handle: 'getByNumber'
-    },
-    {
-        method: 'get',
         path: '/date/:date',
         // middleware: [authMiddleware],
         handle: 'getByDate'
@@ -54,6 +48,12 @@ const budgetRoutes = [
         path: '/annual',
         // middleware: [authMiddleware, roleMiddleware('admin')],
         handle: 'getAnnualBudget'
+    },
+    {
+        method: 'get',
+        path: '/details/:id',
+        //middleware: [authMiddleware, roleMiddleware('admin')],
+        handle: 'getById'
     }
 ]
 

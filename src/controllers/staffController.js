@@ -118,4 +118,14 @@ export default class staffController {
             next(staff)
         }
     }
+
+    async getById(req, res, next) {
+        try {
+            const { id } = req.params
+            const staff = await this.staffService.getById(id)
+            res.json({ staff })
+        } catch (error) {
+            next(error)
+        }
+    }
 }

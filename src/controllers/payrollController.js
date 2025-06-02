@@ -85,4 +85,14 @@ export default class payrollController {
         }
     }
 
+    async getById(req, res, next) {
+        try {
+            const { id } = req.params
+            const payroll = await this.payrollService.getById(id)
+            res.json({ payroll })
+        } catch (error) {
+            next(error)
+        }
+    }
+
 }

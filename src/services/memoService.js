@@ -10,14 +10,8 @@ export default class memoService {
     }
 
     async create(memoData) {
-        const { memoNo, sentFrom, sentTo = [], date, attachments = false, memoType, body } = memoData;
-
-        const uniqueMemo = await this.memoRepository.findByNumber(memoNo);
-        if (uniqueMemo) {
-            throw { message: 'Este memo ya existe', statusCode: 400 };
-        }
-
-        const newMemo = new Memo({ memoNo, sentFrom, sentTo, date, attachments, memoType, body });
+        const { sentFrom, sentTo = [], date, attachments = false, memoType, body } = memoData;
+        const newMemo = new Memo({ sentFrom, sentTo, date, attachments, memoType, body });
         return this.memoRepository.create({ ...newMemo });
     }
 
@@ -49,8 +43,8 @@ export default class memoService {
         return await this.memoRepository.findByDate(date)
     }
 
-    async findByNumber(memoNo) {
-        const memo = await this.memoRepository.findByNumber(memoNo)
+    async getById(id) {
+        const memo = await this.memoRepository.getById(id)
         if (!memo) {
             throw { message: 'El memo no existe', statusCode: 404 }
         }
@@ -66,10 +60,10 @@ export default class memoService {
     }
 
     async getMemoDetails(id) {
-    const memo = await this.memoRepository.getMemoDetails(id);
-    if (!memo) {
-        throw { message: 'Memo no encontrado', statusCode: 404 };
+        const memo = await this.memoRepository.getMemoDetails(id);
+        if (!memo) {
+            throw { message: 'Memo no encontrado', statusCode: 404 };
+        }
+        return memo;
     }
-    return memo;
-}
 }

@@ -22,21 +22,27 @@ const taxRoutes = [
     {
         method: 'put',
         path: '/update/modified/:id',
-       // middleware: [authMiddleware, roleMiddleware('admin')],
+        // middleware: [authMiddleware, roleMiddleware('admin')],
         handle: 'update'
     },
     {
         method: 'put',
         path: '/update/approve/:id',
-       // middleware: [authMiddleware, roleMiddleware('admin')],
+        // middleware: [authMiddleware, roleMiddleware('admin')],
         handle: 'update'
     },
     {
         method: 'delete',
         path: '/delete/:id',
-       // middleware: [authMiddleware, roleMiddleware('admin')],
+        // middleware: [authMiddleware, roleMiddleware('admin')],
         handle: 'delete'
     },
+    {
+        method: 'get',
+        path: '/details/:id',
+        // middleware: [authMiddleware, roleMiddleware('admin')],
+        handle: 'getById'
+    }
 ]
 
 taxRoutes.forEach(route => {

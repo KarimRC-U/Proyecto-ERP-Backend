@@ -73,4 +73,14 @@ export default class budgetController {
             next(error)
         }
     }
+
+    async getById(req, res, next) {
+        try {
+            const { id } = req.params
+            const budget = await this.budgetService.getById(id)
+            res.json({ budget })
+        } catch (error) {
+            next(error)
+        }
+    }
 }

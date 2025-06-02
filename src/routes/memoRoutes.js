@@ -39,12 +39,6 @@ const memoRoutes = [
     },
     {
         method: 'get',
-        path: '/number/:memoNo',
-        // middleware: [authMiddleware],
-        handle: 'getByNumber'
-    },
-    {
-        method: 'get',
         path: '/date/:date',
         // middleware: [authMiddleware],
         handle: 'getByDate'
@@ -64,8 +58,8 @@ const memoRoutes = [
     {
         method: 'get',
         path: '/details/:id',
-        // middleware: [authMiddleware],
-        handle: 'getMemoDetails'
+        //middleware: [authMiddleware, roleMiddleware('admin')],
+        handle: 'getById'
     }
 ]
 

@@ -14,10 +14,10 @@ export default class payslipController {
         }
     }
 
-    async getByNumber(req, res, next) {
+    async getById(req, res, next) {
         try {
-            const { payslipNo } = req.params
-            const payslip = await this.payslipService.findByNumber(payslipNo)
+            const { id } = req.params
+            const payslip = await this.payslipService.getById(id)
             res.json({ payslip })
         } catch (error) {
             next(error)
@@ -64,7 +64,6 @@ export default class payslipController {
             next(error)
         }
     }
-
 
     async getPayslipsByStaffId(req, res, next) {
         try {

@@ -41,10 +41,10 @@ export default class staffService {
         }
 
         const randomDigits = Math.floor(100 + Math.random() * 900);
-        const staffid = `${nombre[0]}${apaterno[0]}${amaterno[0]}${randomDigits}`.toUpperCase();
+        const id = `${nombre[0]}${apaterno[0]}${amaterno[0]}${randomDigits}`.toUpperCase();
 
         const hashedPassword = await bcrypt.hash(password, 10);
-        const newstaff = new Staff({ ...staffData, password: hashedPassword, staffid });
+        const newstaff = new Staff({ ...staffData, password: hashedPassword, id });
         return this.staffRepository.create({ ...newstaff });
     }
 
@@ -147,6 +147,14 @@ export default class staffService {
             throw { message: 'El correo no existe', statusCode: 404 }
         }
 
+        return staff
+    }
+
+    async getById(id) {
+        const staff = await this.staffRepository.getById(id)
+        if (!staff) {
+            throw { message: 'Staff No Encontrado', statusCode: 404 }
+        }
         return staff
     }
 }

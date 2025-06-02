@@ -94,4 +94,14 @@ export default class memoController {
         }
     }
 
+    async getById(req, res, next) {
+        try {
+            const { id } = req.params
+            const memo = await this.memoService.getById(id)
+            res.json({ memo })
+        } catch (error) {
+            next(error)
+        }
+    }
+
 }

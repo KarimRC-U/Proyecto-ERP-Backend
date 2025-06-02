@@ -65,4 +65,12 @@ export default class payslipService {
     async getPayslipsByStaffId(staffid) {
         return await this.payslipRepository.findByStaffId(staffid)
     }
+
+    async getById(id) {
+        const payslip = await this.payslipRepository.getById(id)
+        if (!payslip) {
+            throw { message: 'El payslip no existe', statusCode: 404 }
+        }
+        return payslip
+    }
 }

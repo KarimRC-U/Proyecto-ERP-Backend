@@ -55,4 +55,17 @@ export default class taxController {
         }
     }
 
+    async getById(req, res, next) {
+        try {
+            const { id } = req.params
+            const tax = await this.taxService.getById(id)
+            if (!tax) {
+                return res.status(404).json({ message: 'Tax not found' })
+            }
+            res.json({ tax })
+        } catch (error) {
+            next(error)
+        }
+    }
+
 }

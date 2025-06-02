@@ -42,6 +42,12 @@ const payslipRoutes = [
         path: '/staff/:staffid',
         // middleware: [authMiddleware, roleMiddleware('admin')],
         handle: 'getPayslipsByStaffId'
+    },
+    {
+        method: 'get',
+        path: '/details/:id',
+        //middleware: [authMiddleware, roleMiddleware('admin')],
+        handle: 'getById'
     }
 ]
 

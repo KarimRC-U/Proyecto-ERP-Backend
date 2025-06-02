@@ -47,7 +47,7 @@ export default class payrollService {
         return await this.payrollRepository.getAll()
     }
 
-    async findById(id) {
+    async getById(id) {
         const payroll = await this.payrollRepository.getById(id)
         if (!payroll) {
             throw { message: 'Payroll No Encontrado', statusCode: 404 }

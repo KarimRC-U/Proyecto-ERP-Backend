@@ -44,4 +44,12 @@ export default class taxService {
     async getAll() {
         return await this.taxRepository.getAll()
     }
+
+    async getById(id) {
+        const tax = await this.taxRepository.getById(id)
+        if (!tax) {
+            throw { message: 'Tax No Encontrado', statusCode: 404 }
+        }
+        return tax
+    }
 }

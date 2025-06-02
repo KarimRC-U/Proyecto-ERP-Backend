@@ -22,19 +22,19 @@ const maintenanceRoutes = [
     {
         method: 'put',
         path: '/update/modified/:id',
-       // middleware: [authMiddleware, roleMiddleware('admin')],
+        // middleware: [authMiddleware, roleMiddleware('admin')],
         handle: 'update'
     },
     {
         method: 'put',
         path: '/update/approve/:id',
-       // middleware: [authMiddleware, roleMiddleware('admin')],
+        // middleware: [authMiddleware, roleMiddleware('admin')],
         handle: 'update'
     },
     {
         method: 'delete',
         path: '/delete/:id',
-       // middleware: [authMiddleware, roleMiddleware('admin')],
+        // middleware: [authMiddleware, roleMiddleware('admin')],
         handle: 'delete'
     },
     {
@@ -76,6 +76,12 @@ const maintenanceRoutes = [
         method: 'get',
         path: '/details/:itemName/:itemNumber',
         handle: 'getDetails'
+    },
+    {
+        method: 'get',
+        path: '/details/:id',
+        //middleware: [authMiddleware, roleMiddleware('admin')],
+        handle: 'getById'
     }
 ]
 

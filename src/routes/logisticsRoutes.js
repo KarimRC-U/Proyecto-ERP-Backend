@@ -39,7 +39,7 @@ const logisticsRoutes = [
     },
     {
         method: 'get',
-        path: '/id/:id',
+        path: '/details/:id',
         // middleware: [authMiddleware, roleMiddleware('admin')],
         handle: 'getById'
     },

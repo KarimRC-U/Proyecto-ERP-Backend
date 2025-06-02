@@ -22,19 +22,19 @@ const payrollRoutes = [
     {
         method: 'put',
         path: '/update/modified/:id',
-       // middleware: [authMiddleware, roleMiddleware('admin')],
+        // middleware: [authMiddleware, roleMiddleware('admin')],
         handle: 'update'
     },
     {
         method: 'put',
         path: '/update/approve/:id',
-       // middleware: [authMiddleware, roleMiddleware('admin')],
+        // middleware: [authMiddleware, roleMiddleware('admin')],
         handle: 'update'
     },
     {
         method: 'delete',
         path: '/delete/:id',
-       // middleware: [authMiddleware, roleMiddleware('admin')],
+        // middleware: [authMiddleware, roleMiddleware('admin')],
         handle: 'delete'
     },
     {
@@ -56,6 +56,12 @@ const payrollRoutes = [
         method: 'get',
         path: '/loan/:month/:year',
         handle: 'getMonthTotalLoan'
+    },
+    {
+        method: 'get',
+        path: '/details/:id',
+        //middleware: [authMiddleware, roleMiddleware('admin')],
+        handle: 'getById'
     }
 ]
 

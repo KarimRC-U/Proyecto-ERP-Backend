@@ -121,4 +121,14 @@ export default class maintenanceController {
         }
     }
 
+    async getById(req, res, next) {
+        try {
+            const { id } = req.params
+            const maintenance = await this.maintenanceService.getById(id)
+            res.json({ maintenance })
+        } catch (error) {
+            next(error)
+        }
+    }
+
 }

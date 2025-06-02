@@ -39,7 +39,7 @@ const salaryRoutes = [
     },
     {
         method: 'get',
-        path: '/:id',
+        path: '/details/:id',
         //middleware: [authMiddleware, roleMiddleware('admin')],
         handle: 'getById'
     }

@@ -54,6 +54,12 @@ const staffRoutes = [
         path: '/staff',
        // middleware: [authMiddleware],
         handle: 'getstaffBystaffname'
+    },
+    {
+        method: 'get',
+        path: '/details/:id',
+        //middleware: [authMiddleware, roleMiddleware('admin')],
+        handle: 'getById'
     }
 ]
 
