@@ -28,7 +28,7 @@ export default class payrollService {
     async update(id, payrollData) {
         const existingPayroll = await this.payrollRepository.getById(id);
         if (!existingPayroll) {
-            throw { message: 'Payroll No Encontrado', statusCode: 404 }
+            throw { message: 'No se pudo encontrar un payroll con estos datos.', statusCode: 404 }
         }
         const updatedPayroll = new Payroll({ ...existingPayroll, ...payrollData });
         return this.payrollRepository.update(id, { ...updatedPayroll });
@@ -37,7 +37,7 @@ export default class payrollService {
     async delete(id) {
         const payrollExists = await this.payrollRepository.getById(id)
         if (!payrollExists) {
-            throw { message: 'Payroll No Encontrado', statusCode: 404 }
+            throw { message: 'No se pudo encontrar un payroll con estos datos.', statusCode: 404 }
         }
 
         await this.payrollRepository.delete(id)
@@ -50,7 +50,7 @@ export default class payrollService {
     async getById(id) {
         const payroll = await this.payrollRepository.getById(id)
         if (!payroll) {
-            throw { message: 'Payroll No Encontrado', statusCode: 404 }
+            throw { message: 'No se pudo encontrar un payroll con estos datos.', statusCode: 404 }
         }
 
         return payroll

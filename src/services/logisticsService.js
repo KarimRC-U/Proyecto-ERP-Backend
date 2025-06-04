@@ -43,7 +43,7 @@ export default class logisticsService {
     async update(id, logisticsData) {
         const existingLogistics = await this.logisticsRepository.getById(id);
         if (!existingLogistics) {
-            throw { message: 'Logistics No Encontrado', statusCode: 404 }
+            throw { message: 'No se pudo encontrar una entrada logistica con estos datos.', statusCode: 404 }
         }
         const updatedLogistics = new Logistics({ ...existingLogistics, ...logisticsData });
         return this.logisticsRepository.update(id, { ...updatedLogistics });
@@ -52,7 +52,7 @@ export default class logisticsService {
     async delete(id) {
         const logisticsExists = await this.logisticsRepository.getById(id)
         if (!logisticsExists) {
-            throw { message: 'Logistics No Encontrado', statusCode: 404 }
+            throw { message: 'No se pudo encontrar una entrada logistica con estos datos.', statusCode: 404 }
         }
 
         await this.logisticsRepository.delete(id)
@@ -65,7 +65,7 @@ export default class logisticsService {
     async getById(id) {
         const logistics = await this.logisticsRepository.getById(id);
         if (!logistics) {
-            throw { message: 'Logistics No Encontrado', statusCode: 404 };
+            throw { message: 'No se pudo encontrar una entrada logistica con estos datos.', statusCode: 404 };
         }
         return logistics;
     }

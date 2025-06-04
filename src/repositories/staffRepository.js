@@ -65,7 +65,8 @@ export default class staffRepository extends IstaffRepository {
     }
 
     async getSessionToken(staffId) {
-        const staff = this.collection.doc(staffId)
+        if (!staffId) throw new Error('staffId is required for getSessionToken');
+        const staff = await this.collection.doc(staffId) 
         const staffLogged = await staff.get()
         return staffLogged.exists ? staffLogged.data().currentSessionToken : null
     }

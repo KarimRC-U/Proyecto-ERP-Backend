@@ -55,7 +55,7 @@ export default class budgetService {
     async delete(id) {
         const budgetExists = await this.budgetRepository.getById(id)
         if (!budgetExists) {
-            throw { message: 'Budget No Encontrado', statusCode: 404 }
+            throw { message: 'No se pudo encontrar un presupuesto con estos datos.', statusCode: 404 }
         }
         await this.budgetRepository.delete(id)
     }

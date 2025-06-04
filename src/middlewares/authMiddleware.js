@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken'
 import TokenService from '../services/tokenService.js'
-import staffRepository from '../repositories/staffRepository.js'
+import StaffRepository from '../repositories/staffRepository.js'
 
 const authMiddleware = async (req, res, next) => {
     const authHeader = req.headers.authorization
@@ -9,7 +9,7 @@ const authMiddleware = async (req, res, next) => {
     }
 
     const token = authHeader.split(' ')[1]
-    const staffRepository = new staffRepository()
+    const staffRepository = new StaffRepository()
 
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET)

@@ -16,8 +16,8 @@ export default class staffService {
 
     async findByCorreo(correo) {
         const staff = this.staffRepository.findByCorreo(correo)
-        if(!staff) {
-            throw { message: 'Staff No Encontrado', statusCode: 404 }
+        if (!staff) {
+            throw { message: 'No se pudo encontrar un miembro del staff con estos datos.', statusCode: 404 }
         }
 
         return staff
@@ -53,10 +53,10 @@ export default class staffService {
         const updatestaff = await this.staffRepository.getById(id)
 
         if (!updatestaff) {
-            throw { message: 'Staff No Encontrado', statusCode: 404 }
+            throw { message: 'No se pudo encontrar un miembro del staff con estos datos.', statusCode: 404 }
         }
 
-        if(password) {
+        if (password) {
             updatestaff.password = await bcrypt.hash(password, 10)
         }
 
@@ -67,8 +67,8 @@ export default class staffService {
 
     async delete(id) {
         const staffExists = await this.staffRepository.getById(id)
-        if(!staffExists) {
-            throw { message: 'Staff No Encontrado', statusCode: 404 }
+        if (!staffExists) {
+            throw { message: 'No se pudo encontrar un miembro del staff con estos datos.', statusCode: 404 }
         }
 
         await this.staffRepository.delete(id)
@@ -76,53 +76,55 @@ export default class staffService {
 
     async login(correo, password) {
         const staff = await this.staffRepository.findByCorreo(correo)
-        if(!staff) {
+        if (!staff) {
             throw { message: 'El correo no existe', statusCode: 404 }
         }
 
-        if(staff.bloqueado) {
+        if (staff.bloqueado) {
             throw { message: 'Cuenta Bloqueada, contacta al administrador.', statusCode: 401 }
         }
+        try {
+            const existingToken = await this.staffRepository.getSessionToken(staff.id)
+            
+            if (TokenService.isTokenRevoked(existingToken)) {
+                await this.staffRepository.updateSessionToken(staff.id, null)
+            } else if (existingToken) {
+                throw { message: 'Ya hay un sesión activa', statusCode: 401 }
+            }
 
-        const existingToken = await this.staffRepository.getSessionToken(staff.id)
-        console.log(existingToken);
-        
-        if (TokenService.isTokenRevoked(existingToken)) {
-            await this.staffRepository.updateSessionToken(staff.id, null)
-        }else if(existingToken) {
-            throw { message: 'Ya hay un sesión activa', statusCode: 401 }
+            const validPassword = await bcrypt.compare(password, staff.password)
+            if (!validPassword) {
+                await this.handleFailedLogin(staff.id)
+                throw { message: 'Contraseña Incorrecta', statusCode: 401 }
+            }
+
+            const token = jwt.sign({
+                id: staff.id,
+                correo: staff.correo,
+                rol: staff.rol
+            }, process.env.JWT_SECRET, { expiresIn: '1h' })
+
+            await this.staffRepository.updateSessionToken(staff.id, token)
+            return token
+        } catch (error) {
+            throw { message: 'Error al obtener el token de sesión', statusCode: 500 }
         }
-
-        const validPassword = await bcrypt.compare(password, staff.password)
-        if(!validPassword) {
-            await this.handleFailedLogin(staff.id)
-            throw { message: 'Contraseña Incorrecta', statusCode: 401 }
-        }
-
-        const token = jwt.sign({ 
-            id: staff.id, 
-            correo: staff.correo, 
-            rol: staff.rol
-        }, process.env.JWT_SECRET, { expiresIn: '1h' })
-
-        await this.staffRepository.updateSessionToken(staff.id, token)
-        return token
     }
 
     async logout(staffId, token) {
         const sessionToken = await this.staffRepository.getSessionToken(staffId)
 
-        if(sessionToken !== token) {
+        if (sessionToken !== token) {
             throw { message: 'Token Invalido', statusCode: 401 }
         }
 
         await this.staffRepository.updateSessionToken(staffId, null)
-        await TokenService.revokedToken(token)
+        await TokenService.revokeToken(token)
     }
 
     async unlockstaff(id) {
         const staff = await this.staffRepository.getById(id)
-        if(!staff) {
+        if (!staff) {
             throw { message: 'El correo no existe', statusCode: 404 }
         }
 
@@ -133,17 +135,17 @@ export default class staffService {
         const staff = await this.staffRepository.getById(id)
         const intentos = parseInt(staff.intentos) + 1
         console.log('@@@ intentos => ', intentos, staff)
-        if(intentos >= 3) {
+        if (intentos >= 3) {
             await this.staffRepository.update(id, { bloqueado: true })
             throw { message: 'Staff Bloqueado despues de 3 intentos, contacta al Administrados', statusCode: 401 }
         }
         await this.staffRepository.update(id, { intentos })
     }
-    
+
     async getBystaff(correo) {
         const staff = await this.staffRepository.findByCorreo(correo)
 
-        if(!staff) {
+        if (!staff) {
             throw { message: 'El correo no existe', statusCode: 404 }
         }
 
@@ -153,7 +155,7 @@ export default class staffService {
     async getById(id) {
         const staff = await this.staffRepository.getById(id)
         if (!staff) {
-            throw { message: 'Staff No Encontrado', statusCode: 404 }
+            throw { message: 'No se pudo encontrar un miembro del staff con estos datos.', statusCode: 404 }
         }
         return staff
     }

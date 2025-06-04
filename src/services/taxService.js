@@ -26,7 +26,7 @@ export default class taxService {
     async update(id, taxData) {
         const existingTax = await this.taxRepository.getById(id);
         if (!existingTax) {
-            throw { message: 'Tax No Encontrado', statusCode: 404 }
+            throw { message: 'No se pudo encontrar un impuesto con estos datos.', statusCode: 404 }
         }
         const updatedTax = new Tax({ ...existingTax, ...taxData });
         return this.taxRepository.update(id, { ...updatedTax });
@@ -35,7 +35,7 @@ export default class taxService {
     async delete(id) {
         const taxExists = await this.taxRepository.getById(id)
         if (!taxExists) {
-            throw { message: 'Tax No Encontrado', statusCode: 404 }
+            throw { message: 'No se pudo encontrar un impuesto con estos datos.', statusCode: 404 }
         }
 
         await this.taxRepository.delete(id)
@@ -48,7 +48,7 @@ export default class taxService {
     async getById(id) {
         const tax = await this.taxRepository.getById(id)
         if (!tax) {
-            throw { message: 'Tax No Encontrado', statusCode: 404 }
+            throw { message: 'No se pudo encontrar un impuesto con estos datos.', statusCode: 404 }
         }
         return tax
     }

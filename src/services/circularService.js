@@ -24,7 +24,7 @@ export default class circularService {
         const existingCircular = await this.circularRepository.getById(id);
 
         if (!existingCircular) {
-            throw { message: 'Circular No Encontrado', statusCode: 404 }
+            throw { message: 'No se pudo encontrar una circular con estos datos.', statusCode: 404 }
         }
 
         const updatedCircular = new Circular({ ...existingCircular, ...circularData });
@@ -35,7 +35,7 @@ export default class circularService {
     async delete(id) {
         const circularExists = await this.circularRepository.getById(id)
         if (!circularExists) {
-            throw { message: 'Circular No Encontrado', statusCode: 404 }
+            throw { message: 'No se pudo encontrar una circular con estos datos.', statusCode: 404 }
         }
 
         await this.circularRepository.delete(id)

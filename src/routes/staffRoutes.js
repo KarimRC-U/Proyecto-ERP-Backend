@@ -34,13 +34,13 @@ const staffRoutes = [
     {
         method: 'post',
         path: '/login',
-        //middleware: [authMiddleware, roleMiddleware('admin')],
+        // middleware: [authMiddleware, roleMiddleware('admin')],
         handle: 'login'
     },
     {
         method: 'post',
         path: '/logout',
-       // middleware: [authMiddleware],
+        middleware: [authMiddleware],
         handle: 'logout'
     },
     {

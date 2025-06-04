@@ -26,7 +26,7 @@ export default class trainingService {
     async update(id, trainingData) {
         const existingTraining = await this.trainingRepository.getById(id);
         if (!existingTraining) {
-            throw { message: 'Training No Encontrado', statusCode: 404 }
+            throw { message: 'No se pudo encontrar un entrenamiento del staff con estos datos.', statusCode: 404 }
         }
         const updatedTraining = new Training({ ...existingTraining, ...trainingData });
         return this.trainingRepository.update(id, { ...updatedTraining, staffList: trainingData.staffList || existingTraining.staffList });
@@ -35,7 +35,7 @@ export default class trainingService {
     async delete(id) {
         const trainingExists = await this.trainingRepository.getById(id)
         if (!trainingExists) {
-            throw { message: 'Training No Encontrado', statusCode: 404 }
+            throw { message: 'No se pudo encontrar un entrenamiento del staff con estos datos.', statusCode: 404 }
         }
         await this.trainingRepository.delete(id)
     }
@@ -47,7 +47,7 @@ export default class trainingService {
     async getById(id) {
         const training = await this.trainingRepository.getById(id);
         if (!training) {
-            throw { message: 'Training No Encontrado', statusCode: 404 }
+            throw { message: 'No se pudo encontrar un entrenamiento del staff con estos datos.', statusCode: 404 }
         }
         return training;
     }

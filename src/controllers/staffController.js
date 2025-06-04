@@ -115,7 +115,7 @@ export default class staffController {
             }
             res.json({staff})
         } catch (error) {
-            next(staff)
+            next(error)
         }
     }
 

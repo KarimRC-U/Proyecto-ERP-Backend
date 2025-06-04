@@ -30,7 +30,7 @@ export default class memoService {
     async delete(id) {
         const memoExists = await this.memoRepository.getById(id)
         if (!memoExists) {
-            throw { message: 'Memo No Encontrado', statusCode: 404 }
+            throw { message: 'No se pudo encontrar un memo con estos datos.', statusCode: 404 }
         }
         await this.memoRepository.delete(id)
     }

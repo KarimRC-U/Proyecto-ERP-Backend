@@ -43,7 +43,7 @@ export default class salaryService {
         const updatesalary = await this.salaryRepository.getById(id);
 
         if (!updatesalary) {
-            throw { message: 'Salario no Encontrado', statusCode: 404 };
+            throw { message: 'No se pudo encontrar un salario con estos datos.', statusCode: 404 };
         }
 
         const newsalary = new Salary({ ...updatesalary, ...salaryData });
@@ -54,7 +54,7 @@ export default class salaryService {
     async delete(id) {
         const salaryExists = await this.salaryRepository.getById(id)
         if (!salaryExists) {
-            throw { message: 'Salario no Encontrado', statusCode: 404 }
+            throw { message: 'No se pudo encontrar un salario con estos datos.', statusCode: 404 }
         }
 
         await this.salaryRepository.delete(id)

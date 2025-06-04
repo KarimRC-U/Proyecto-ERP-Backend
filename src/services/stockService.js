@@ -87,7 +87,7 @@ export default class stockService {
     async update(id, stockData) {
         const stockExists = await this.stockRepository.getById(id);
         if (!stockExists) {
-            throw { message: 'Stock No Encontrado', statusCode: 404 }
+            throw { message: 'No se pudo encontrar un articulo con estos datos.', statusCode: 404 }
         }
         const updatedStock = new Stock({ ...stockExists, ...stockData });
         return this.stockRepository.update(id, { ...updatedStock });
@@ -96,7 +96,7 @@ export default class stockService {
     async delete(id) {
         const stockExists = await this.stockRepository.getById(id)
         if (!stockExists) {
-            throw { message: 'Stock No Encontrado', statusCode: 404 }
+            throw { message: 'No se pudo encontrar un articulo con estos datos.', statusCode: 404 }
         }
         await this.stockRepository.delete(id)
     }

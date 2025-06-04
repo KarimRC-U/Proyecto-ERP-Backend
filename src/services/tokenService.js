@@ -3,7 +3,7 @@ import { db } from "../config/firebase.js";
 export default class TokenService {
     static async revokeToken(token, expiresAt) {
         try {
-            await db.collection('revoked_tokens').doc(token).set({
+            await db.collection('revoked-tokens').doc(token).set({
                 token,
                 expiresAt: expiresAt || Date.now() + 60 * 60 * 1000
             });
@@ -14,14 +14,14 @@ export default class TokenService {
 
     static async isTokenRevoked(token) {
         try {
-            const tokenDoc = await db.collection('revoked_tokens').doc(token).get();
+            let tokenDoc = await db.collection('revoked-tokens')
             if (!tokenDoc.exists) {
                 return false;
             }
-
+            tokenDoc = await tokenDoc.get();
             const { expiresAt } = tokenDoc.data();
             if (Date.now() > expiresAt) {
-                await db.collection('revoked_tokens').doc(token).delete();
+                await db.collection('revoked-tokens').doc(token).delete();
                 return false;
             }
 
@@ -34,7 +34,7 @@ export default class TokenService {
     /*static async cleanupExpiredTokens() {
         try {
             const now = Date.now();
-            const datosDB = await db.collection('revoked_tokens')
+            const datosDB = await db.collection('revoked-tokens')
                 .where('expiresAt', '<=', now)
                 .get();
 

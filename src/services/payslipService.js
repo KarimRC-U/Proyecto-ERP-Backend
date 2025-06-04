@@ -44,7 +44,7 @@ export default class payslipService {
     async update(id, payslipData) {
         const existingPayslip = await this.payslipRepository.getById(id)
         if (!existingPayslip) {
-            throw { message: 'Payslip No Encontrado', statusCode: 404 }
+            throw { message: 'No se pudo encontrar un payslip con estos datos.', statusCode: 404 }
         }
         const updatedPayslip = new Payslip({ ...existingPayslip, ...payslipData })
         return this.payslipRepository.update(id, { ...updatedPayslip })
@@ -53,7 +53,7 @@ export default class payslipService {
     async delete(id) {
         const payslipExists = await this.payslipRepository.getById(id)
         if (!payslipExists) {
-            throw { message: 'Payslip No Encontrado', statusCode: 404 }
+            throw { message: 'No se pudo encontrar un payslip con estos datos.', statusCode: 404 }
         }
         await this.payslipRepository.delete(id)
     }
