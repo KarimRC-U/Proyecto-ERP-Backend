@@ -6,7 +6,7 @@ import { fileURLToPath } from 'url'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
-const API_BASE = 'http://localhost:5050/api'
+const API_BASE = 'https://backend-node-computo-rc-fwd5afd2a3fzareb.canadacentral-01.azurewebsites.net/api'
 
 const modelsToTest = [
   'staff',
@@ -23,7 +23,6 @@ const modelsToTest = [
   'maintenance'
 ]
 
-// Map model to delete endpoint, delete data, and identifier field
 const modelConfig = {
   staff:      { endpoint: '/staffs/delete/',            deleteFile: 'DeleteTest_staff.json',      idField: 'id' },
   training:   { endpoint: '/trainings/delete/',         deleteFile: 'DeleteTest_training.json',   idField: 'id' },
@@ -47,7 +46,8 @@ async function runDeleteTests() {
       continue
     }
     console.log(`\nTesting delete for model: ${model}`)
-    for (let id = 1; id <= 10; id++) {
+    for (let i = 1; i <= 5; i++) {
+      const id = `A${i}`
       try {
         const url = API_BASE + config.endpoint + encodeURIComponent(id)
         const res = await axios.delete(url)

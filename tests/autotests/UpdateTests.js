@@ -6,7 +6,7 @@ import { fileURLToPath } from 'url'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
-const API_BASE = 'http://localhost:5050/api'
+const API_BASE = 'https://backend-node-computo-rc-fwd5afd2a3fzareb.canadacentral-01.azurewebsites.net/api'
 
 const modelsToTest = [
   'staff',
@@ -52,8 +52,9 @@ async function runUpdateTests() {
     }
     const updateData = JSON.parse(fs.readFileSync(updatePath, 'utf-8'))
     console.log(`\nTesting update for model: ${model}`)
-    for (let id = 1; id < Math.min(7, updateData.length); id++) {
+    for (let i = 1; i < Math.min(7, updateData.length); i++) {
       try {
+        const id = `A${i}`
         const url = API_BASE + config.endpoint + encodeURIComponent(id)
         const res = await axios.put(url, updateData[id])
         console.log(`  [${id}] Success:`, res.data)
