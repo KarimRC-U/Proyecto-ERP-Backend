@@ -15,7 +15,7 @@ import maintenanceRoutes from './maintenanceRoutes.js'
 const router = express.Router()
 
 router.get('/', (req, res) => {
-    res.json({ message: 'API v1' })
+    res.send('API Online!')
 })
 
 router.use('/staffs', staffRoutes)

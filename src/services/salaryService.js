@@ -1,8 +1,6 @@
 import salaryRepository from "../repositories/salaryRepository.js"
 import { Salary } from "../models/Salary.js"
 import TokenService from "./tokenService.js"
-import bcrypt from 'bcrypt'
-import jwt from 'jsonwebtoken'
 
 export default class salaryService {
     constructor() {
