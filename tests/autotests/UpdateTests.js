@@ -52,9 +52,9 @@ async function runUpdateTests() {
     }
     const updateData = JSON.parse(fs.readFileSync(updatePath, 'utf-8'))
     console.log(`\nTesting update for model: ${model}`)
-    for (let i = 1; i < Math.min(7, updateData.length); i++) {
+    for (let i = 1; i <= 5; i++) {
+      const id = `A${i}`
       try {
-        const id = `A${i}`
         const url = API_BASE + config.endpoint + encodeURIComponent(id)
         const res = await axios.put(url, updateData[id])
         console.log(`  [${id}] Success:`, res.data)

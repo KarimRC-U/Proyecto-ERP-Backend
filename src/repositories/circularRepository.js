@@ -37,8 +37,8 @@ export default class circularRepository extends IcircularRepository {
     }
 
     async getById(id) {
-        const snapshot = await this.collection.where('id', '==', Number(id)).get();
-        return snapshot.empty ? null : { id: snapshot.docs[0].id, ...snapshot.docs[0].data() };
+        const doc = await this.collection.doc(id).get();
+        return !doc.exists ? null : { id: doc.id, ...doc.data() };
     }
 
     async getByDate(date) {
